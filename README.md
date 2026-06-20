@@ -1,22 +1,31 @@
 # NEST Website
 
-Base progetto per trasformare la landing NEST in un sito pubblicabile.
+Sito statico NEST Pavia, pronto per hosting statico.
 
 ## File
 
-- `index.html`: versione corrente apribile nel browser.
+- `index.html`: pagina principale.
+- `assets/css/styles.css`: stile principale.
+- `assets/js/main.js`: interazioni, menu, gift card e widget Sportigo.
+- `assets/images/hero-gym.jpg`: immagine hero estratta dal prototipo.
+- `privacy.html`, `cookie.html`, `terms.html`: pagine legali placeholder.
+- `robots.txt`, `sitemap.xml`, `site.webmanifest`: file tecnici per pubblicazione.
+- `netlify.toml`, `vercel.json`: configurazione base per deploy statico.
 - `source/nest-landing-final-original.html`: copia intatta del file ricevuto su Discord.
-- `docs/launch-checklist.md`: cose da chiudere prima della pubblicazione.
+- `docs/launch-checklist.md`: cose da chiudere prima del go-live.
 
-## Stato
+## Comandi
 
-Il file ricevuto e' un HTML monolitico: include CSS, JavaScript, immagini inline e dipendenze CDN.
-Va bene come base visuale, ma per un sito definitivo conviene separare asset, SEO, privacy, contatti e deploy.
+```bash
+npm run check
+npm run start
+```
+
+Il sito e' statico: puo' essere pubblicato direttamente da root su GitHub Pages, Netlify, Vercel o hosting equivalente.
 
 ## Prossimo lavoro
 
-1. Separare `style.css` e `main.js`.
-2. Sostituire immagini inline/base64 con file ottimizzati.
-3. Confermare dominio, email, link social e sistemi di prenotazione.
-4. Aggiungere privacy policy, cookie policy e SEO tecnico.
-5. Preparare deploy su hosting statico o server.
+1. Confermare dominio finale: per ora i meta usano `https://nest-pavia.it/`.
+2. Confermare P.IVA e testi legali definitivi.
+3. Confermare link Instagram e dati contatto.
+4. Sostituire le pagine legali placeholder con testi ufficiali.
