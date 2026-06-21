@@ -64,28 +64,68 @@ function initSportigoDialogTitleGuard(){
   if(!document.getElementById('sportigo-container')&&!document.getElementById('sportigo-container-giftcard')) return;
   window.__nestSportigoDialogTitleGuard=true;
 
+  const nativeGetElementById=Document.prototype.getElementById;
   const observedRoots=new WeakSet();
   let scheduled=false;
 
+  function byLabelledbySelector(id){
+    return `[role="dialog"][aria-labelledby="${String(id).replace(/["\\]/g,'\\$&')}"]`;
+  }
+
+  function findInShadowRoots(id,root=document){
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
+    let node=walker.currentNode;
+    while(node){
+      if(node.shadowRoot){
+        const found=node.shadowRoot.getElementById?.(id);
+        if(found) return found;
+        const nested=findInShadowRoots(id,node.shadowRoot);
+        if(nested) return nested;
+      }
+      node=walker.nextNode();
+    }
+    return null;
+  }
+
+  function findDialogByLabelledby(id,root=document){
+    const selector=byLabelledbySelector(id);
+    const direct=root.querySelector?.(selector);
+    if(direct) return direct;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
+    let node=walker.currentNode;
+    while(node){
+      if(node.shadowRoot){
+        const found=findDialogByLabelledby(id,node.shadowRoot);
+        if(found) return found;
+      }
+      node=walker.nextNode();
+    }
+    return null;
+  }
+
   function createHiddenDialogTitle(id,dialog){
-    if(!id||document.getElementById(id)) return;
+    if(!id||nativeGetElementById.call(document,id)||findInShadowRoots(id)) return null;
+    const shadowRoot=dialog?.getRootNode?.();
     const title=document.createElement('h2');
     title.id=id;
     title.textContent=dialog?.getAttribute('aria-label')||'Prenotazione Sportigo';
-    title.dataset.nestSportigoDialogTitle='true';
-    Object.assign(title.style,{
-      position:'absolute',
-      width:'1px',
-      height:'1px',
-      padding:'0',
-      margin:'-1px',
-      overflow:'hidden',
-      clip:'rect(0, 0, 0, 0)',
-      whiteSpace:'nowrap',
-      border:'0'
-    });
-    document.body.appendChild(title);
+    title.style.cssText='position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0;';
+    if(shadowRoot instanceof ShadowRoot){
+      shadowRoot.appendChild(title);
+    }else{
+      document.body.appendChild(title);
+    }
+    return title;
   }
+
+  Document.prototype.getElementById=function(id){
+    const found=nativeGetElementById.call(this,id);
+    if(found||this!==document||!id) return found;
+    const shadowTitle=findInShadowRoots(String(id));
+    if(shadowTitle) return shadowTitle;
+    const dialog=findDialogByLabelledby(String(id));
+    return dialog ? createHiddenDialogTitle(String(id),dialog) : null;
+  };
 
   function scanRoot(root){
     if(!root) return;
