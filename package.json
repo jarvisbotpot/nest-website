@@ -4,7 +4,8 @@
   "private": true,
   "description": "Next.js website for NEST Pavia.",
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_OPTIONS='--require ./scripts/dev-listeners.cjs' next dev",
+    "dev:lan": "NODE_OPTIONS='--require ./scripts/dev-listeners.cjs' next dev --hostname 0.0.0.0 --port 7001",
     "build": "next build",
     "start": "next dev",
     "preview": "npx serve out",
