@@ -317,6 +317,23 @@ function initSportigoDialogTitleGuard(){
     root.appendChild(style);
   }
 
+  function setSportigoItalianPhoneDefault(root){
+    root.querySelectorAll?.('.PhoneInputCountrySelect').forEach(function(select){
+      if(select.dataset.nestDefaultCountryApplied==='true') return;
+      if(!select.querySelector('option[value="IT"]')) return;
+      select.dataset.nestDefaultCountryApplied='true';
+      if(select.value==='IT') return;
+      const setter=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value')?.set;
+      if(setter){
+        setter.call(select,'IT');
+      }else{
+        select.value='IT';
+      }
+      select.dispatchEvent(new Event('input',{bubbles:true}));
+      select.dispatchEvent(new Event('change',{bubbles:true}));
+    });
+  }
+
   Document.prototype.getElementById=function(id){
     const found=nativeGetElementById.call(this,id);
     if(found||this!==document||!id) return found;
@@ -333,6 +350,7 @@ function initSportigoDialogTitleGuard(){
       observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role','aria-hidden','hidden','style','class','data-state']});
     }
     installDialogTheme(root);
+    setSportigoItalianPhoneDefault(root);
     root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
       createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
     });
