@@ -38,7 +38,8 @@ const sportigoDialogThemeCss=`
   max-height:calc(100vh - 88px)!important;
   padding:30px 30px 24px!important;
   gap:16px!important;
-  overflow:hidden!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
   border:1px solid rgba(27,27,27,0.16)!important;
   border-radius:0!important;
   background:#F7F5F2!important;
@@ -64,12 +65,14 @@ const sportigoDialogThemeCss=`
   line-height:1.65!important;
 }
 [role="dialog"]>div[class*="overflow-y-auto"]{
-  max-height:min(60vh,520px)!important;
-  padding-right:6px!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding-right:0!important;
 }
-[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar{width:5px;}
-[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar-track{background:rgba(27,27,27,0.06);}
-[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb{background:rgba(27,27,27,0.24);}
+[role="dialog"]::-webkit-scrollbar{width:5px;}
+[role="dialog"]::-webkit-scrollbar-track{background:rgba(27,27,27,0.06);}
+[role="dialog"]::-webkit-scrollbar-thumb{background:rgba(27,27,27,0.24);}
 [role="dialog"] hr{margin:18px 0!important;border-color:rgba(27,27,27,0.12)!important;}
 [role="dialog"] label{
   color:#1B1B1B!important;
@@ -190,7 +193,6 @@ const sportigoDialogThemeCss=`
   }
   [role="dialog"] h2{font-size:12px!important;letter-spacing:1.4px!important;}
   [role="dialog"]>button[class*="right-4"][class*="top-4"]{top:16px!important;right:16px!important;}
-  [role="dialog"]>div[class*="overflow-y-auto"]{max-height:calc(100vh - 156px)!important;}
 }
 `;
 
