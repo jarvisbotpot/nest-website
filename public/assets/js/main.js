@@ -82,9 +82,36 @@ function handleSectionRoute(path, behavior='smooth'){
 const cursor=document.getElementById('cursor');
 const follower=document.getElementById('cursorFollower');
 let mx=0,my=0,fx=0,fy=0;
+const darkCursorSelector=[
+  '#hero',
+  '#highlight-quote',
+  '#parallax-gallery',
+  '#prenotazione',
+  '.exp-card',
+  '.gc-overlay.active',
+  'footer'
+].join(',');
+function isDarkBackground(color){
+  const match=color&&color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+  if(!match||match[4]==='0') return false;
+  const r=Number(match[1]);
+  const g=Number(match[2]);
+  const b=Number(match[3]);
+  return (r*0.299+g*0.587+b*0.114)<96;
+}
+function isOnDarkSurface(element){
+  if(!element) return false;
+  if(element.closest(darkCursorSelector)) return true;
+  let node=element;
+  while(node&&node!==document.body){
+    if(isDarkBackground(getComputedStyle(node).backgroundColor)) return true;
+    node=node.parentElement;
+  }
+  return false;
+}
 function updateCursorContrast(){
   const hovered=document.elementFromPoint(mx,my);
-  document.body.classList.toggle('cursor-on-dark',!!hovered?.closest('footer'));
+  document.body.classList.toggle('cursor-on-dark',isOnDarkSurface(hovered));
 }
 if(cursor&&follower){
   document.addEventListener('mousemove',e=>{
