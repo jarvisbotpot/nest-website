@@ -1,4 +1,4 @@
-import { buildSectionMetadata, SectionPage } from '../seo/SectionPage';
+import { buildSectionMetadata, SectionLandingPage } from '../seo/SectionLandingPage';
 import { sections } from '../seo/sections';
 
 const section = sections.servizi;
@@ -6,5 +6,5 @@ const section = sections.servizi;
 export const metadata = buildSectionMetadata(section);
 
 export default function ServiziPage() {
-  return <SectionPage section={section} />;
+  return <SectionLandingPage section={section} targetId="servizi" />;
 }

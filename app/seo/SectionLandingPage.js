@@ -1,4 +1,5 @@
-import { siteUrl } from './sections';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 export function buildSectionMetadata(section) {
   return {
@@ -16,33 +17,34 @@ export function buildSectionMetadata(section) {
   };
 }
 
-export function SectionPage({ section }) {
+export function SectionLandingPage({ section, targetId }) {
+  const html = readFileSync(join(process.cwd(), 'content/home.html'), 'utf8');
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${section.title} - NEST Pavia`,
     description: section.description,
-    url: `${siteUrl}${section.path}`,
+    url: `https://nest-pavia.it${section.path}`,
     isPartOf: {
       '@type': 'WebSite',
       name: 'NEST Pavia',
-      url: siteUrl,
+      url: 'https://nest-pavia.it',
     },
   };
 
+  const scrollScript = `
+    window.__NEST_TARGET_SECTION__ = ${JSON.stringify(targetId)};
+    requestAnimationFrame(function(){
+      var target = document.getElementById(window.__NEST_TARGET_SECTION__);
+      if(target) target.scrollIntoView({block:'start'});
+    });
+  `;
+
   return (
-    <main className="seo-page">
+    <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <a href="/" className="seo-back">NEST Pavia</a>
-      <span className="eyebrow">{section.eyebrow}</span>
-      <h1 className="section-title">{section.title}</h1>
-      <p className="section-body">{section.description}</p>
-      <ul className="seo-list">
-        {section.bullets.map((bullet) => (
-          <li key={bullet}>{bullet}</li>
-        ))}
-      </ul>
-      <a href={section.ctaHref} className="btn-primary">{section.cta}</a>
-    </main>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <script dangerouslySetInnerHTML={{ __html: scrollScript }} />
+    </>
   );
 }

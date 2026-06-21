@@ -1,4 +1,4 @@
-import { buildSectionMetadata, SectionPage } from '../seo/SectionPage';
+import { buildSectionMetadata, SectionLandingPage } from '../seo/SectionLandingPage';
 import { sections } from '../seo/sections';
 
 const section = sections['gift-card'];
@@ -6,5 +6,5 @@ const section = sections['gift-card'];
 export const metadata = buildSectionMetadata(section);
 
 export default function GiftCardPage() {
-  return <SectionPage section={section} />;
+  return <SectionLandingPage section={section} targetId="giftcard" />;
 }
