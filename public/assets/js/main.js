@@ -368,22 +368,155 @@ runWhenReady(function() {
   }
 });
 
+// COOKIE CONSENT
+const consentKey='nest_cookie_consent_v1';
+const defaultConsent={functional:false,marketing:false};
+function getCookieConsent(){
+  try{
+    const saved=localStorage.getItem(consentKey);
+    return saved?{...defaultConsent,...JSON.parse(saved)}:null;
+  }catch(e){
+    return null;
+  }
+}
+function saveCookieConsent(consent){
+  const nextConsent={...defaultConsent,...consent,updatedAt:new Date().toISOString()};
+  try{
+    localStorage.setItem(consentKey,JSON.stringify(nextConsent));
+  }catch(e){}
+  applyCookieConsent(nextConsent);
+  window.dispatchEvent(new CustomEvent('nest:consent-changed',{detail:nextConsent}));
+}
+function loadScriptOnce(id,src,onload){
+  const existing=document.getElementById(id);
+  if(existing){
+    if(onload) existing.addEventListener('load',onload,{once:true});
+    return existing;
+  }
+  const script=document.createElement('script');
+  script.id=id;
+  script.async=true;
+  script.src=src;
+  if(onload) script.addEventListener('load',onload,{once:true});
+  document.head.appendChild(script);
+  return script;
+}
+function loadMetaPixel(){
+  const pixelId=window.NEST_META_PIXEL_ID;
+  if(!pixelId) return;
+  if(window.fbq){
+    fbq('consent','grant');
+    return;
+  }
+  (function(f,b,e,v,n,t,s){
+    if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments);};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=true;n.version='2.0';n.queue=[];
+    t=b.createElement(e);t.async=true;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+  })(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('consent','grant');
+  fbq('init',pixelId);
+  fbq('track','PageView');
+}
+function applyCookieConsent(consent){
+  const banner=document.getElementById('cookieBanner');
+  const preferences=document.getElementById('cookiePreferences');
+  if(banner) banner.hidden=true;
+  if(preferences) preferences.hidden=false;
+  if(consent.marketing){
+    loadMetaPixel();
+  }else if(window.fbq){
+    fbq('consent','revoke');
+  }
+}
+function openCookieBanner(showPanel=false){
+  const banner=document.getElementById('cookieBanner');
+  const preferences=document.getElementById('cookiePreferences');
+  const panel=document.getElementById('cookiePanel');
+  const saved=getCookieConsent()||defaultConsent;
+  const functional=document.getElementById('cookieFunctional');
+  const marketing=document.getElementById('cookieMarketing');
+  if(functional) functional.checked=!!saved.functional;
+  if(marketing) marketing.checked=!!saved.marketing;
+  if(panel) panel.hidden=!showPanel;
+  if(banner) banner.hidden=false;
+  if(preferences) preferences.hidden=true;
+}
+function initCookieBanner(){
+  const banner=document.getElementById('cookieBanner');
+  if(!banner) return;
+  const saved=getCookieConsent();
+  const preferences=document.getElementById('cookiePreferences');
+  const panel=document.getElementById('cookiePanel');
+  const functional=document.getElementById('cookieFunctional');
+  const marketing=document.getElementById('cookieMarketing');
+  document.getElementById('cookieAccept')?.addEventListener('click',function(){
+    saveCookieConsent({functional:true,marketing:true});
+  });
+  document.getElementById('cookieReject')?.addEventListener('click',function(){
+    saveCookieConsent({functional:false,marketing:false});
+  });
+  document.getElementById('cookieClose')?.addEventListener('click',function(){
+    saveCookieConsent({functional:false,marketing:false});
+  });
+  document.getElementById('cookieCustomize')?.addEventListener('click',function(){
+    if(panel) panel.hidden=!panel.hidden;
+  });
+  document.getElementById('cookieSave')?.addEventListener('click',function(){
+    saveCookieConsent({functional:!!functional?.checked,marketing:!!marketing?.checked});
+  });
+  preferences?.addEventListener('click',function(){openCookieBanner(true);});
+  if(saved){
+    applyCookieConsent(saved);
+  }else{
+    openCookieBanner(false);
+  }
+}
+runWhenReady(initCookieBanner);
+
 // SPORTIGO WIDGETS
+function loadSportigoScript(){
+  loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);
+}
+function showSportigoConsentMessage(container){
+  if(!container||container.dataset.consentMessage==='true') return;
+  container.dataset.consentMessage='true';
+  container.dataset.initialized='';
+  container.innerHTML='<div class="sportigo-consent-message"><div>Per usare prenotazioni e gift card devi abilitare i cookie funzionali.<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button></div></div>';
+}
 function initSportigoWidgets(){
-  if(typeof initComponent !== 'function') return;
+  const consent=getCookieConsent();
   const booking = document.getElementById('sportigo-container');
+  const giftcard = document.getElementById('sportigo-container-giftcard');
+
+  if(!consent?.functional){
+    showSportigoConsentMessage(booking);
+    showSportigoConsentMessage(giftcard);
+    return;
+  }
+  if(typeof initComponent !== 'function'){
+    loadSportigoScript();
+    return;
+  }
+  if(typeof initComponent !== 'function') return;
   if(booking && !booking.dataset.initialized){
     booking.dataset.initialized = 'true';
+    booking.dataset.consentMessage='';
+    booking.innerHTML='';
     initComponent('Appointment','sportigo-container','4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d',{colored:true,readOnly:false});
   }
-  const giftcard = document.getElementById('sportigo-container-giftcard');
   if(giftcard && !giftcard.dataset.initialized){
     giftcard.dataset.initialized = 'true';
+    giftcard.dataset.consentMessage='';
+    giftcard.innerHTML='';
     initComponent('GiftCard','sportigo-container-giftcard','4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d');
   }
 }
 runWhenReady(initSportigoWidgets);
 window.addEventListener('load', initSportigoWidgets);
+window.addEventListener('nest:consent-changed', initSportigoWidgets);
+document.addEventListener('click',function(e){
+  if(e.target.closest('[data-open-cookie-preferences]')) openCookieBanner(true);
+});
 let sportigoAttempts=0;
 const sportigoTimer=setInterval(function(){
   initSportigoWidgets();

@@ -61,9 +61,69 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <div className="cookie-banner" id="cookieBanner" role="dialog" aria-modal="false" aria-labelledby="cookieTitle" hidden>
+          <button className="cookie-close" id="cookieClose" type="button" aria-label="Rifiuta cookie non necessari">
+            ×
+          </button>
+          <div className="cookie-copy">
+            <span className="cookie-eyebrow">Privacy</span>
+            <h2 id="cookieTitle">Gestione cookie</h2>
+            <p>
+              Usiamo cookie tecnici necessari. Con il tuo consenso possiamo attivare servizi funzionali per
+              prenotazioni/gift card e strumenti marketing come Meta Pixel per misurare le campagne.
+            </p>
+            <a href="/cookie/">Leggi la Cookie Policy</a>
+          </div>
+          <div className="cookie-actions">
+            <button className="cookie-btn cookie-btn-muted" id="cookieReject" type="button">
+              Rifiuta
+            </button>
+            <button className="cookie-btn cookie-btn-secondary" id="cookieCustomize" type="button">
+              Personalizza
+            </button>
+            <button className="cookie-btn cookie-btn-primary" id="cookieAccept" type="button">
+              Accetta tutto
+            </button>
+          </div>
+          <div className="cookie-panel" id="cookiePanel" hidden>
+            <label className="cookie-toggle cookie-toggle-disabled">
+              <span>
+                <strong>Necessari</strong>
+                <small>Richiesti per sicurezza e funzionamento del sito.</small>
+              </span>
+              <input type="checkbox" checked disabled readOnly />
+            </label>
+            <label className="cookie-toggle">
+              <span>
+                <strong>Funzionali</strong>
+                <small>Attivano Sportigo per prenotazioni, area utente e gift card.</small>
+              </span>
+              <input id="cookieFunctional" type="checkbox" />
+            </label>
+            <label className="cookie-toggle">
+              <span>
+                <strong>Marketing</strong>
+                <small>Attivano Meta Pixel per campagne e misurazione conversioni.</small>
+              </span>
+              <input id="cookieMarketing" type="checkbox" />
+            </label>
+            <button className="cookie-btn cookie-btn-primary cookie-save" id="cookieSave" type="button">
+              Salva preferenze
+            </button>
+          </div>
+        </div>
+        <button className="cookie-preferences" id="cookiePreferences" type="button" hidden>
+          Cookie
+        </button>
+        <Script
+          id="nest-consent-config"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `window.NEST_META_PIXEL_ID=${JSON.stringify(process.env.NEXT_PUBLIC_META_PIXEL_ID || '')};`,
+          }}
+        />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" strategy="afterInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" strategy="afterInteractive" />
-        <Script src="https://standalone.api.sportigo.fr/component-standalone.js" strategy="afterInteractive" />
         <Script src="/assets/js/main.js" strategy="afterInteractive" />
       </body>
     </html>

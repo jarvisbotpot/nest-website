@@ -100,7 +100,8 @@ const pages = {
         title: 'Servizi esterni',
         body: [
           'Il sito carica font da Google Fonts e script esterni necessari per animazioni e componenti integrati. Questi servizi possono ricevere dati tecnici come indirizzo IP e informazioni sul browser.',
-          'Al momento non sono stati configurati strumenti di analytics marketing proprietari. Se saranno aggiunti, la policy dovrà essere aggiornata.',
+          'Le campagne Meta possono usare Meta Pixel solo previo consenso marketing. In assenza di consenso marketing, il relativo codice di tracciamento non viene caricato.',
+          'Al momento non è previsto Google Analytics. Se saranno aggiunti altri strumenti di analytics o marketing, la policy dovrà essere aggiornata.',
         ],
       },
       {
