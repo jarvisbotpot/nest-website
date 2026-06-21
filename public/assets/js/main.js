@@ -151,6 +151,7 @@ runWhenReady(function(){
     e.preventDefault();
     closeMobileMenu();
     history.pushState({sectionId:targetId},'',url.pathname);
+    trackMetaPageView();
     scrollToSectionId(targetId);
   });
 
@@ -159,6 +160,7 @@ runWhenReady(function(){
       window.scrollTo({top:0,behavior:'smooth'});
       requestAnimationFrame(updateNav);
     }
+    trackMetaPageView();
   });
 
   const initialTarget=window.__NEST_TARGET_SECTION__||sectionRoutes[normalizePath(window.location.pathname)];
@@ -248,6 +250,9 @@ function closeGiftCard(){
 runWhenReady(function(){
   const ov=document.getElementById('gcOverlay');
   const back=document.getElementById('gcBack');
+  document.querySelectorAll('[data-open-gift-card]').forEach(function(btn){
+    btn.addEventListener('click',openGiftCard);
+  });
   if(back) back.addEventListener('click',closeGiftCard);
   if(ov) ov.addEventListener('click',function(e){if(e.target===this) closeGiftCard();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape') closeGiftCard();});
@@ -371,6 +376,7 @@ runWhenReady(function() {
 // COOKIE CONSENT
 const consentKey='nest_cookie_consent_v1';
 const defaultConsent={functional:false,marketing:false};
+let lastMetaPageViewUrl='';
 function getCookieConsent(){
   try{
     const saved=localStorage.getItem(consentKey);
@@ -403,10 +409,10 @@ function loadScriptOnce(id,src,onload){
 }
 function loadMetaPixel(){
   const pixelId=window.NEST_META_PIXEL_ID;
-  if(!pixelId) return;
+  if(!pixelId) return false;
   if(window.fbq){
     fbq('consent','grant');
-    return;
+    return true;
   }
   (function(f,b,e,v,n,t,s){
     if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments);};
@@ -415,7 +421,22 @@ function loadMetaPixel(){
   })(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('consent','grant');
   fbq('init',pixelId);
-  fbq('track','PageView');
+  return true;
+}
+function trackMetaPageView(){
+  const consent=getCookieConsent();
+  if(!consent?.marketing||!window.NEST_META_PIXEL_ID) return;
+  if(!loadMetaPixel()) return;
+  const pageUrl=window.location.pathname+window.location.search;
+  if(lastMetaPageViewUrl===pageUrl) return;
+  lastMetaPageViewUrl=pageUrl;
+  if(window.fbq) fbq('track','PageView');
+}
+function trackMetaEvent(eventName,params={}){
+  const consent=getCookieConsent();
+  if(!consent?.marketing||!eventName||!window.NEST_META_PIXEL_ID) return;
+  loadMetaPixel();
+  if(window.fbq) fbq('track',eventName,params);
 }
 function applyCookieConsent(consent){
   const banner=document.getElementById('cookieBanner');
@@ -423,7 +444,7 @@ function applyCookieConsent(consent){
   if(banner) banner.hidden=true;
   if(preferences) preferences.hidden=false;
   if(consent.marketing){
-    loadMetaPixel();
+    trackMetaPageView();
   }else if(window.fbq){
     fbq('consent','revoke');
   }
@@ -472,6 +493,15 @@ function initCookieBanner(){
   }
 }
 runWhenReady(initCookieBanner);
+
+document.addEventListener('click',function(e){
+  const target=e.target.closest('[data-meta-event]');
+  if(!target) return;
+  trackMetaEvent(target.dataset.metaEvent,{
+    content_name:target.textContent.trim().replace(/\s+/g,' '),
+    content_category:target.dataset.metaSource||'site_interaction'
+  });
+});
 
 // SPORTIGO WIDGETS
 function loadSportigoScript(){
