@@ -82,8 +82,17 @@ function handleSectionRoute(path, behavior='smooth'){
 const cursor=document.getElementById('cursor');
 const follower=document.getElementById('cursorFollower');
 let mx=0,my=0,fx=0,fy=0;
+function updateCursorContrast(){
+  const hovered=document.elementFromPoint(mx,my);
+  document.body.classList.toggle('cursor-on-dark',!!hovered?.closest('footer'));
+}
 if(cursor&&follower){
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;
+    my=e.clientY;
+    cursor.style.transform=`translate(${mx-4}px,${my-4}px)`;
+    updateCursorContrast();
+  });
   (function tick(){fx+=(mx-fx)*0.1;fy+=(my-fy)*0.1;follower.style.transform=`translate(${fx-15}px,${fy-15}px)`;requestAnimationFrame(tick);})();
 }
 
@@ -95,6 +104,7 @@ function updateNav(){
   navbar.classList.toggle('scrolled',scrolled);
   const heroBottom=document.getElementById('hero').getBoundingClientRect().bottom;
   document.body.classList.toggle('light-bg',scrolled||heroBottom<=60);
+  updateCursorContrast();
 }
 window.addEventListener('scroll',updateNav,{passive:true});
 updateNav();

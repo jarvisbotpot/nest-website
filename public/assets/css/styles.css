@@ -30,6 +30,8 @@ body:has(.legal-page){background:var(--off-white);cursor:auto}
 .cursor-follower{width:30px;height:30px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998}
 body.light-bg .cursor{background:var(--black)}
 body.light-bg .cursor-follower{border-color:rgba(27,27,27,0.3)}
+body.cursor-on-dark .cursor{background:var(--white)}
+body.cursor-on-dark .cursor-follower{border-color:rgba(255,255,255,0.45)}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;transition:padding 0.4s ease,background 0.4s ease,box-shadow 0.4s ease}
 nav.scrolled{padding:14px 60px;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(0,0,0,0.07)}
