@@ -6,24 +6,6 @@ function runWhenReady(fn){
   }
 }
 
-function patchSportigoSvgClassName(){
-  const proto=window.SVGAnimatedString&&window.SVGAnimatedString.prototype;
-  if(!proto) return;
-  if(!proto.includes){
-    Object.defineProperty(proto,'includes',{
-      configurable:true,
-      value:function(search,start){return String(this.baseVal||'').includes(search,start);}
-    });
-  }
-  if(!proto.trim){
-    Object.defineProperty(proto,'trim',{
-      configurable:true,
-      value:function(){return String(this.baseVal||'').trim();}
-    });
-  }
-}
-patchSportigoSvgClassName();
-
 const sectionRoutes={
   '/spazio-privato/':'cosa',
   '/come-funziona/':'funziona',
@@ -547,8 +529,6 @@ document.addEventListener('click',function(e){
 // DYNAMIC SPORTIGO SLOTS PREVIEW
 const sportigoPublicKey='4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d';
 const sportigoServiceUrl='https://standalone.api.sportigo.fr/api/sportigo/service';
-let selectedSlotsDate='';
-let pendingSportigoDate='';
 function formatDateForSportigo(date){
   return new Intl.DateTimeFormat('en-CA',{
     timeZone:'Europe/Rome',
@@ -561,28 +541,6 @@ function addDays(date,days){
   const next=new Date(date);
   next.setDate(next.getDate()+days);
   return next;
-}
-function parseSportigoDate(value){
-  const match=String(value||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if(!match) return new Date();
-  return new Date(Number(match[1]),Number(match[2])-1,Number(match[3]),12);
-}
-function addDaysToSportigoDate(value,days){
-  return formatDateForSportigo(addDays(parseSportigoDate(value),days));
-}
-function getSportigoDateBounds(){
-  const today=new Date();
-  return {
-    min:formatDateForSportigo(today),
-    max:formatDateForSportigo(addDays(today,90))
-  };
-}
-function clampSportigoDate(value){
-  const bounds=getSportigoDateBounds();
-  if(!value) return bounds.min;
-  if(value<bounds.min) return bounds.min;
-  if(value>bounds.max) return bounds.max;
-  return value;
 }
 function getItalyNowValue(){
   const parts=new Intl.DateTimeFormat('sv-SE',{
@@ -614,10 +572,8 @@ function normalizeSportigoSlot(slot){
     reservation:Number(slot.reservation||0)
   };
 }
-async function fetchSportigoSlots(options={}){
+async function fetchSportigoSlots(){
   const today=new Date();
-  const dateStart=options.dateStart||formatDateForSportigo(today);
-  const dateEnd=options.dateEnd||formatDateForSportigo(addDays(today,7));
   const response=await fetch(sportigoServiceUrl,{
     method:'POST',
     headers:{'content-type':'application/json'},
@@ -625,8 +581,8 @@ async function fetchSportigoSlots(options={}){
       url:'/planningdx',
       method:'post',
       data:{
-        dateStart,
-        dateEnd
+        dateStart:formatDateForSportigo(today),
+        dateEnd:formatDateForSportigo(addDays(today,7))
       },
       secretKey:sportigoPublicKey
     })
@@ -640,25 +596,17 @@ async function fetchSportigoSlots(options={}){
     .map(normalizeSportigoSlot)
     .filter(function(slot){return slot.availablePlaces>0;})
     .sort(function(a,b){return a.startDate.localeCompare(b.startDate);})
-    .slice(0,options.limit||slots.length);
+    .slice(0,8);
 }
 function formatSlotDay(startDate){
   const date=new Date(startDate.replace(' ','T'));
   if(Number.isNaN(date.getTime())) return startDate.split(' ')[0]||'';
   return new Intl.DateTimeFormat('it-IT',{weekday:'short',day:'2-digit',month:'short'}).format(date);
 }
-function formatSelectedSlotDate(value){
-  return new Intl.DateTimeFormat('it-IT',{weekday:'long',day:'2-digit',month:'long'}).format(parseSportigoDate(value));
-}
 function formatSlotsUpdated(value){
   const date=new Date(value);
   if(Number.isNaN(date.getTime())) return '';
   return `Aggiornato alle ${new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit'}).format(date)}`;
-}
-function escapeHtml(value){
-  return String(value ?? '').replace(/[&<>"']/g,function(char){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char];
-  });
 }
 function renderSlotsMessage(message,withPreferences=false){
   const body=document.getElementById('slotsPreviewBody');
@@ -667,53 +615,10 @@ function renderSlotsMessage(message,withPreferences=false){
   body.innerHTML=`<div class="slots-empty">${message}${withPreferences?'<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button>':''}</div>`;
   if(updated) updated.textContent='';
 }
-function updateSlotsDateControls(){
-  selectedSlotsDate=clampSportigoDate(selectedSlotsDate);
-  const input=document.getElementById('slotsDateInput');
-  const label=document.getElementById('slotsDateLabel');
-  const bounds=getSportigoDateBounds();
-  if(input){
-    input.min=bounds.min;
-    input.max=bounds.max;
-    input.value=selectedSlotsDate;
-  }
-  if(label) label.textContent=formatSelectedSlotDate(selectedSlotsDate);
-  document.querySelectorAll('[data-slots-quick-offset]').forEach(function(button){
-    const quickDate=addDaysToSportigoDate(bounds.min,Number(button.dataset.slotsQuickOffset||0));
-    button.dataset.slotsQuick=quickDate;
-    button.classList.toggle('is-active',quickDate===selectedSlotsDate);
-  });
-}
-function renderSlotsList(slots){
-  const groups=[
-    {label:'Mattina',match:function(slot){return Number(slot.hourStart.split(':')[0])<12;}},
-    {label:'Pomeriggio',match:function(slot){const hour=Number(slot.hourStart.split(':')[0]);return hour>=12&&hour<18;}},
-    {label:'Sera',match:function(slot){return Number(slot.hourStart.split(':')[0])>=18;}}
-  ];
-  return groups.map(function(group){
-    const groupSlots=slots.filter(group.match);
-    if(!groupSlots.length) return '';
-    return `<div class="slots-time-group">
-      <span class="slots-time-label">${group.label}</span>
-      <div class="slots-time-grid">
-        ${groupSlots.map(function(slot){
-          const places=slot.availablePlaces===1?'Ultimo posto':`${slot.availablePlaces} posti`;
-          return `<button type="button" class="slot-card" data-slot-date="${escapeHtml(slot.startDate.split(' ')[0])}" data-slot-time="${escapeHtml(slot.hourStart)}" data-meta-event="ViewContent" data-meta-source="slot_preview">
-            <span class="slot-card-day">${escapeHtml(formatSlotDay(slot.startDate))}</span>
-            <span class="slot-card-time">${escapeHtml(slot.hourStart)}</span>
-            <span class="slot-card-meta"><span>${escapeHtml(slot.duration)} min</span><span class="slot-card-badge">${escapeHtml(places)}</span></span>
-          </button>`;
-        }).join('')}
-      </div>
-    </div>`;
-  }).join('');
-}
 async function loadDynamicSlots(){
   const body=document.getElementById('slotsPreviewBody');
   const updated=document.getElementById('slotsUpdated');
   if(!body) return;
-  selectedSlotsDate=clampSportigoDate(selectedSlotsDate||formatDateForSportigo(new Date()));
-  updateSlotsDateControls();
   const consent=getCookieConsent();
   if(!consent?.functional){
     renderSlotsMessage('Abilita i cookie funzionali per vedere gli slot disponibili.',true);
@@ -722,44 +627,29 @@ async function loadDynamicSlots(){
   body.innerHTML='<div class="slots-loading">Caricamento slot</div>';
   if(updated) updated.textContent='';
   try{
-    const slots=await fetchSportigoSlots({dateStart:selectedSlotsDate,dateEnd:selectedSlotsDate,limit:80});
+    const slots=await fetchSportigoSlots();
     if(!slots.length){
-      renderSlotsMessage('Nessuno slot disponibile in questa data.');
+      renderSlotsMessage('Nessuno slot disponibile nei prossimi giorni.');
       return;
     }
-    body.innerHTML=renderSlotsList(slots);
-    if(updated) updated.textContent=`${formatSlotsUpdated(new Date().toISOString())} · ${formatSelectedSlotDate(selectedSlotsDate)}`;
+    body.innerHTML=slots.map(function(slot){
+      const places=slot.availablePlaces===1?'Ultimo posto':`${slot.availablePlaces} posti`;
+      return `<button type="button" class="slot-card" data-scroll-to-booking data-meta-event="ViewContent" data-meta-source="slot_preview">
+        <span class="slot-card-day">${formatSlotDay(slot.startDate)}</span>
+        <span class="slot-card-time">${slot.hourStart}</span>
+        <span class="slot-card-meta"><span>${slot.duration} min</span><span class="slot-card-badge">${places}</span></span>
+      </button>`;
+    }).join('');
+    if(updated) updated.textContent=formatSlotsUpdated(new Date().toISOString());
   }catch(e){
     renderSlotsMessage('Slot non disponibili ora. Riprova tra poco.');
   }
 }
 function initDynamicSlots(){
   if(!document.getElementById('slotsPreview')) return;
-  selectedSlotsDate=clampSportigoDate(selectedSlotsDate||formatDateForSportigo(new Date()));
-  updateSlotsDateControls();
   document.getElementById('slotsRefresh')?.addEventListener('click',loadDynamicSlots);
-  document.getElementById('slotsDateInput')?.addEventListener('change',function(e){
-    selectedSlotsDate=clampSportigoDate(e.target.value);
-    loadDynamicSlots();
-  });
-  document.querySelectorAll('[data-slots-date-shift]').forEach(function(button){
-    button.addEventListener('click',function(){
-      selectedSlotsDate=clampSportigoDate(addDaysToSportigoDate(selectedSlotsDate,Number(button.dataset.slotsDateShift||0)));
-      loadDynamicSlots();
-    });
-  });
-  document.querySelectorAll('[data-slots-quick]').forEach(function(button){
-    button.addEventListener('click',function(){
-      selectedSlotsDate=clampSportigoDate(button.dataset.slotsQuick);
-      loadDynamicSlots();
-    });
-  });
   document.addEventListener('click',function(e){
-    const slotButton=e.target.closest('[data-slot-date]');
-    if(!slotButton) return;
-    selectedSlotsDate=clampSportigoDate(slotButton.dataset.slotDate);
-    updateSlotsDateControls();
-    focusSportigoBookingDate(selectedSlotsDate);
+    if(!e.target.closest('[data-scroll-to-booking]')) return;
     document.querySelector('.sportigo-widget-frame')?.scrollIntoView({behavior:'smooth',block:'start'});
   });
   loadDynamicSlots();
@@ -770,18 +660,6 @@ window.addEventListener('nest:consent-changed',loadDynamicSlots);
 // SPORTIGO WIDGETS
 function loadSportigoScript(){
   loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);
-}
-function getSportigoBookingData(dateString){
-  return {
-    colored:true,
-    readOnly:false,
-    readonly:false,
-    displayMode:'dayList',
-    fromDate:clampSportigoDate(dateString||selectedSlotsDate||formatDateForSportigo(new Date())),
-    hideCoach:true,
-    hideDiscipline:true,
-    forceBookBtn:true
-  };
 }
 function getSportigoFrame(container){
   return container?.closest('.sportigo-widget-frame');
@@ -804,35 +682,6 @@ function showSportigoConsentMessage(container){
   container.dataset.initialized='';
   container.innerHTML='<div class="sportigo-consent-message"><div><strong>Consenso funzionale richiesto</strong>Per usare prenotazioni e gift card devi abilitare i cookie funzionali.<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button></div></div>';
 }
-function replaceSportigoContainer(container){
-  const next=container.cloneNode(false);
-  container.replaceWith(next);
-  return next;
-}
-function mountSportigoAppointment(dateString,force=false){
-  let booking=document.getElementById('sportigo-container');
-  if(!booking) return;
-  if(booking.dataset.initialized==='true'&&!force) return;
-  if(force&&booking.dataset.initialized==='true') booking=replaceSportigoContainer(booking);
-  booking.dataset.initialized='true';
-  booking.dataset.consentMessage='';
-  booking.innerHTML='';
-  initComponent('Appointment','sportigo-container',sportigoPublicKey,getSportigoBookingData(dateString));
-  markSportigoReady(booking);
-}
-function focusSportigoBookingDate(dateString){
-  pendingSportigoDate=clampSportigoDate(dateString);
-  const consent=getCookieConsent();
-  if(!consent?.functional){
-    openCookieBanner(true);
-    return;
-  }
-  if(typeof initComponent !== 'function'){
-    loadSportigoScript();
-    return;
-  }
-  mountSportigoAppointment(pendingSportigoDate,true);
-}
 function initSportigoWidgets(){
   const consent=getCookieConsent();
   const booking = document.getElementById('sportigo-container');
@@ -850,7 +699,13 @@ function initSportigoWidgets(){
     return;
   }
   if(typeof initComponent !== 'function') return;
-  mountSportigoAppointment(pendingSportigoDate||selectedSlotsDate||formatDateForSportigo(new Date()));
+  if(booking && !booking.dataset.initialized){
+    booking.dataset.initialized = 'true';
+    booking.dataset.consentMessage='';
+    booking.innerHTML='';
+    initComponent('Appointment','sportigo-container',sportigoPublicKey,{colored:true,readOnly:false});
+    markSportigoReady(booking);
+  }
   if(giftcard && !giftcard.dataset.initialized){
     giftcard.dataset.initialized = 'true';
     giftcard.dataset.consentMessage='';
