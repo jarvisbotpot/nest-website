@@ -118,6 +118,34 @@ function initSportigoDialogTitleGuard(){
     return title;
   }
 
+  function isVisibleDialog(dialog){
+    if(!dialog||!dialog.isConnected||dialog.getAttribute('aria-hidden')==='true'||dialog.hidden) return false;
+    const style=getComputedStyle(dialog);
+    if(style.display==='none'||style.visibility==='hidden') return false;
+    const rect=dialog.getBoundingClientRect();
+    return rect.width>0&&rect.height>0;
+  }
+
+  function hasVisibleDialog(root=document){
+    const direct=root instanceof ShadowRoot&&Array.from(root.querySelectorAll?.('[role="dialog"]')||[]).some(isVisibleDialog);
+    if(direct) return true;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
+    let node=walker.currentNode;
+    while(node){
+      if(node.shadowRoot&&hasVisibleDialog(node.shadowRoot)) return true;
+      node=walker.nextNode();
+    }
+    return false;
+  }
+
+  function installDialogCursorStyle(root){
+    if(!(root instanceof ShadowRoot)||root.getElementById('nest-sportigo-dialog-cursor-style')) return;
+    const style=document.createElement('style');
+    style.id='nest-sportigo-dialog-cursor-style';
+    style.textContent='[role="dialog"],[role="dialog"] *{cursor:auto!important;}';
+    root.appendChild(style);
+  }
+
   Document.prototype.getElementById=function(id){
     const found=nativeGetElementById.call(this,id);
     if(found||this!==document||!id) return found;
@@ -131,8 +159,9 @@ function initSportigoDialogTitleGuard(){
     if(!root) return;
     if(!observedRoots.has(root)){
       observedRoots.add(root);
-      observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role']});
+      observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role','aria-hidden','hidden','style','class','data-state']});
     }
+    installDialogCursorStyle(root);
 
     root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
       createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
@@ -148,11 +177,13 @@ function initSportigoDialogTitleGuard(){
     requestAnimationFrame(function(){
       scheduled=false;
       scanRoot(document);
+      document.body.classList.toggle('sportigo-dialog-open',hasVisibleDialog());
     });
   }
 
   const observer=new MutationObserver(scheduleScan);
   scanRoot(document);
+  document.body.classList.toggle('sportigo-dialog-open',hasVisibleDialog());
 }
 runWhenReady(initSportigoDialogTitleGuard);
 
