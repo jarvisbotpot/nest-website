@@ -278,14 +278,26 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .slots-preview-head strong{display:block;font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:1px;text-transform:uppercase;color:var(--black)}
 .slots-refresh{border:1px solid rgba(27,27,27,0.14);background:var(--white);color:var(--black);font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 12px;cursor:pointer;transition:border-color 0.25s,color 0.25s}
 .slots-refresh:hover{border-color:var(--accent);color:var(--accent)}
-.slots-preview-body{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.slots-date-controls{display:grid;grid-template-columns:38px minmax(190px,1fr) 38px;gap:8px;align-items:stretch;margin-bottom:18px}
+.slots-date-nav{border:1px solid rgba(27,27,27,0.12);background:var(--white);color:var(--black);font-family:var(--serif);font-size:24px;line-height:1;cursor:pointer;transition:border-color 0.25s,color 0.25s}
+.slots-date-nav:hover{border-color:var(--accent);color:var(--accent)}
+.slots-date-field{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid rgba(27,27,27,0.12);background:var(--white);padding:9px 12px;min-width:0}
+.slots-date-field span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--black);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slots-date-field input{border:0;border-left:1px solid rgba(27,27,27,0.1);padding-left:12px;background:transparent;color:var(--gray-dark);font-family:var(--sans);font-size:12px;min-width:136px}
+.slots-date-presets{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px}
+.slots-date-presets button{border:1px solid rgba(27,27,27,0.12);background:transparent;color:var(--gray-dark);font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 11px;cursor:pointer;transition:border-color 0.25s,color 0.25s,background 0.25s}
+.slots-date-presets button:hover,.slots-date-presets button.is-active{border-color:var(--accent);background:rgba(155,107,79,0.08);color:var(--accent)}
+.slots-preview-body{display:grid;gap:16px}
+.slots-time-group{display:grid;gap:10px}
+.slots-time-label{display:block;font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:var(--gray-mid)}
+.slots-time-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .slot-card{border:1px solid rgba(27,27,27,0.09);background:var(--white);padding:14px 12px;text-align:left;cursor:pointer;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
 .slot-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 22px rgba(27,27,27,0.08)}
 .slot-card-day{display:block;font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid);margin-bottom:8px}
 .slot-card-time{display:block;font-family:var(--serif);font-size:28px;font-style:italic;line-height:1;color:var(--black);margin-bottom:8px}
 .slot-card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--gray-dark)}
 .slot-card-badge{color:var(--accent)}
-.slots-loading,.slots-empty{border:1px solid rgba(27,27,27,0.08);background:var(--white);padding:18px;text-align:center;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid);grid-column:1 / -1}
+.slots-loading,.slots-empty{border:1px solid rgba(27,27,27,0.08);background:var(--white);padding:18px;text-align:center;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid)}
 .slots-empty button{display:inline-block;margin-top:12px;border:1px solid rgba(27,27,27,0.16);background:transparent;color:var(--black);font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 12px;cursor:pointer}
 .slots-updated{min-height:14px;margin-top:12px;font-family:var(--sans);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gray-mid)}
 .sportigo-widget-frame{position:relative;min-height:544px;background:var(--off-white);padding:18px;overflow:hidden}
@@ -588,7 +600,11 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .sportigo-panel-top .sportigo-powered { display: none; }
   .slots-preview { padding: 18px 16px; }
   .slots-preview-head { align-items:flex-start; }
-  .slots-preview-body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .slots-date-controls { grid-template-columns: 34px minmax(0, 1fr) 34px; }
+  .slots-date-field { gap: 8px; padding: 8px 10px; }
+  .slots-date-field span { font-size: 9px; }
+  .slots-date-field input { min-width: 120px; font-size: 11px; }
+  .slots-time-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .slot-card { padding: 12px 10px; }
   .slot-card-time { font-size: 24px; }
   .sportigo-widget-frame { padding: 10px; min-height: 480px; }
