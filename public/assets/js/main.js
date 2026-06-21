@@ -6,6 +6,31 @@ function runWhenReady(fn){
   }
 }
 
+function patchSportigoSvgClassNameStringMethods(){
+  const proto=window.SVGAnimatedString&&window.SVGAnimatedString.prototype;
+  if(!proto||window.__nestSportigoSvgClassNamePatch) return;
+  window.__nestSportigoSvgClassNamePatch=true;
+
+  function asString(value){
+    return String(value?.baseVal||'');
+  }
+
+  [
+    ['toString',function(){return asString(this);}],
+    ['includes',function(search,start){return asString(this).includes(search,start);}],
+    ['trim',function(){return asString(this).trim();}],
+    ['split',function(separator,limit){return asString(this).split(separator,limit);}]
+  ].forEach(function(entry){
+    const name=entry[0];
+    const value=entry[1];
+    if(typeof proto[name]==='function') return;
+    try{
+      Object.defineProperty(proto,name,{configurable:true,value});
+    }catch(e){}
+  });
+}
+patchSportigoSvgClassNameStringMethods();
+
 const sectionRoutes={
   '/spazio-privato/':'cosa',
   '/come-funziona/':'funziona',
