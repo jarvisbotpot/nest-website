@@ -1,13 +1,24 @@
+function runWhenReady(fn){
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',fn,{once:true});
+  }else{
+    fn();
+  }
+}
+
 // CURSOR
 const cursor=document.getElementById('cursor');
 const follower=document.getElementById('cursorFollower');
 let mx=0,my=0,fx=0,fy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.transform=`translate(${mx-4}px,${my-4}px)`;});
-(function tick(){fx+=(mx-fx)*0.1;fy+=(my-fy)*0.1;follower.style.transform=`translate(${fx-15}px,${fy-15}px)`;requestAnimationFrame(tick);})();
+if(cursor&&follower){
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+  (function tick(){fx+=(mx-fx)*0.1;fy+=(my-fy)*0.1;follower.style.transform=`translate(${fx-15}px,${fy-15}px)`;requestAnimationFrame(tick);})();
+}
 
 // NAV
 const navbar=document.getElementById('navbar');
 function updateNav(){
+  if(!navbar||!document.getElementById('hero')) return;
   const scrolled=window.scrollY>50;
   navbar.classList.toggle('scrolled',scrolled);
   const heroBottom=document.getElementById('hero').getBoundingClientRect().bottom;
@@ -17,8 +28,11 @@ window.addEventListener('scroll',updateNav,{passive:true});
 updateNav();
 
 // HERO ANIMATION — GSAP cinematic entrance
-window.addEventListener('load',()=>{
+let heroAnimated=false;
+function animateHero(){
+  if(heroAnimated) return;
   if(window.gsap){
+    heroAnimated=true;
     const tl=gsap.timeline({defaults:{ease:'power3.out'}});
     // eyebrow fades + slides up
     tl.to('#h-ey',{opacity:1,y:0,duration:0.8},0.3)
@@ -37,18 +51,24 @@ window.addEventListener('load',()=>{
     .to('.hero-stat-num',{opacity:1,y:0,duration:0.5,stagger:0.08},1.9)
     .to('.hero-stat-label',{opacity:1,duration:0.4,stagger:0.08},2.1);
   }
-});
+}
+runWhenReady(animateHero);
+window.addEventListener('load',animateHero,{once:true});
 
 // PARALLAX HERO
 const heroBg=document.getElementById('heroBg');
 window.addEventListener('scroll',()=>{
-  if(window.scrollY<window.innerHeight) heroBg.style.transform=`scale(1.15) translateY(${window.scrollY*0.4}px)`;
+  if(heroBg&&window.scrollY<window.innerHeight) heroBg.style.transform=`scale(1.15) translateY(${window.scrollY*0.4}px)`;
 },{passive:true});
 
 // REVEAL ON SCROLL
 const revEls=document.querySelectorAll('.reveal');
-const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible');});},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
-revEls.forEach(el=>revObs.observe(el));
+if('IntersectionObserver' in window){
+  const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible');});},{threshold:0.08,rootMargin:'0px 0px -50px 0px'});
+  revEls.forEach(el=>revObs.observe(el));
+}else{
+  revEls.forEach(el=>el.classList.add('visible'));
+}
 
 // EXPANDING CARDS TRAINER
 const expCards=document.querySelectorAll('.exp-card');
@@ -58,6 +78,7 @@ expCards.forEach((card,i)=>{
   card.addEventListener('click',()=>activateCard(i));
 });
 function activateCard(i){
+  if(!expGrid||!expCards[i]) return;
   expCards.forEach(c=>c.classList.remove('active'));
   expCards[i].classList.add('active');
   expGrid.className='expanding-cards active-'+i;
@@ -171,8 +192,10 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // HAMBURGER MENU
 function closeMobileMenu() {
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
+  const mobileMenu=document.getElementById('mobileMenu');
+  const hamburger=document.getElementById('hamburger');
+  if(mobileMenu) mobileMenu.classList.remove('open');
+  if(hamburger) hamburger.classList.remove('open');
   document.body.style.overflow = '';
 }
 document.addEventListener('DOMContentLoaded', function() {
@@ -201,4 +224,11 @@ function initSportigoWidgets(){
     initComponent('GiftCard','sportigo-container-giftcard','4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d');
   }
 }
+runWhenReady(initSportigoWidgets);
 window.addEventListener('load', initSportigoWidgets);
+let sportigoAttempts=0;
+const sportigoTimer=setInterval(function(){
+  initSportigoWidgets();
+  sportigoAttempts++;
+  if(sportigoAttempts>20||document.querySelector('[data-initialized="true"]')) clearInterval(sportigoTimer);
+},500);

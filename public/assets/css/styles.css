@@ -16,6 +16,11 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--white);color:var(--black);overflow-x:hidden;cursor:none}
 
+.legal-page{max-width:760px;margin:0 auto;padding:80px 24px;font-family:var(--sans);cursor:auto}
+.legal-page a{color:var(--accent);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.legal-page .section-title{margin-top:32px}
+body:has(.legal-page){background:var(--off-white);cursor:auto}
+
 .cursor{width:8px;height:8px;background:var(--white);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
 .cursor-follower{width:30px;height:30px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998}
 body.light-bg .cursor{background:var(--black)}

@@ -5,15 +5,15 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nest-pavia.it/privacy.html</loc>
+    <loc>https://nest-pavia.it/privacy/</loc>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nest-pavia.it/cookie.html</loc>
+    <loc>https://nest-pavia.it/cookie/</loc>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://nest-pavia.it/terms.html</loc>
+    <loc>https://nest-pavia.it/terms/</loc>
     <priority>0.3</priority>
   </url>
 </urlset>

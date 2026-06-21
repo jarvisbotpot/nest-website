@@ -1,31 +1,31 @@
 # NEST Website
 
-Sito statico NEST Pavia, pronto per hosting statico.
+Sito NEST Pavia migrato a Next.js.
 
-## File
+## Struttura
 
-- `index.html`: pagina principale.
-- `assets/css/styles.css`: stile principale.
-- `assets/js/main.js`: interazioni, menu, gift card e widget Sportigo.
-- `assets/images/hero-gym.jpg`: immagine hero estratta dal prototipo.
-- `privacy.html`, `cookie.html`, `terms.html`: pagine legali placeholder.
-- `robots.txt`, `sitemap.xml`, `site.webmanifest`: file tecnici per pubblicazione.
-- `netlify.toml`, `vercel.json`: configurazione base per deploy statico.
-- `source/nest-landing-final-original.html`: copia intatta del file ricevuto su Discord.
+- `app/`: route Next.js.
+- `content/home.html`: markup principale della landing, importato dalla homepage.
+- `public/assets/css/styles.css`: stile principale.
+- `public/assets/js/main.js`: interazioni, menu, gift card e widget Sportigo.
+- `public/assets/images/hero-gym.jpg`: immagine hero.
+- `app/privacy`, `app/cookie`, `app/terms`: pagine legali placeholder.
+- `source/nest-static-before-next.html`: ultima versione statica prima della migrazione.
 - `docs/launch-checklist.md`: cose da chiudere prima del go-live.
 
 ## Comandi
 
 ```bash
-npm run check
-npm run start
+npm run dev
+npm run build
+npm run preview
 ```
 
-Il sito e' statico: puo' essere pubblicato direttamente da root su GitHub Pages, Netlify, Vercel o hosting equivalente.
+`npm run build` genera `out/`, pubblicabile anche su hosting statico economico. Se l'integrazione Sportigo richiedera' API server-side, si potra' rimuovere l'export statico e pubblicare come app Next.js completa.
 
 ## Prossimo lavoro
 
 1. Confermare dominio finale: per ora i meta usano `https://nest-pavia.it/`.
 2. Confermare P.IVA e testi legali definitivi.
 3. Confermare link Instagram e dati contatto.
-4. Sostituire le pagine legali placeholder con testi ufficiali.
+4. Capire da Sportigo se serve solo widget embed o integrazione API/SSO.
