@@ -6,6 +6,16 @@ function runWhenReady(fn){
   }
 }
 
+function patchSportigoSvgClassName(){
+  const proto=window.SVGAnimatedString&&window.SVGAnimatedString.prototype;
+  if(!proto||proto.includes) return;
+  Object.defineProperty(proto,'includes',{
+    configurable:true,
+    value:function(search,start){return String(this.baseVal||'').includes(search,start);}
+  });
+}
+patchSportigoSvgClassName();
+
 const sectionRoutes={
   '/spazio-privato/':'cosa',
   '/come-funziona/':'funziona',
