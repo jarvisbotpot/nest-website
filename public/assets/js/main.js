@@ -124,6 +124,23 @@ const sportigoDialogThemeCss=`
   border-color:#CC8A66!important;
   box-shadow:0 0 0 1px #CC8A66!important;
 }
+[role="dialog"] .PhoneInputInput:focus,
+[role="dialog"] .PhoneInputInput:focus-visible,
+[role="dialog"] .PhoneInput input:focus,
+[role="dialog"] .PhoneInput input:focus-visible,
+[role="dialog"] .PhoneInputCountrySelect,
+[role="dialog"] .PhoneInputCountrySelect:focus,
+[role="dialog"] .PhoneInputCountrySelect:focus-visible{
+  outline:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+[role="dialog"] .PhoneInputCountrySelect{
+  height:100%!important;
+  min-height:0!important;
+  padding:0!important;
+  background:transparent!important;
+}
 [role="dialog"] button[type="submit"]{
   height:44px!important;
   border:1px solid #1B1B1B!important;
