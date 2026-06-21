@@ -530,11 +530,26 @@ document.addEventListener('click',function(e){
 function loadSportigoScript(){
   loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);
 }
+function getSportigoFrame(container){
+  return container?.closest('.sportigo-widget-frame');
+}
+function resetSportigoFrame(container){
+  const frame=getSportigoFrame(container);
+  if(!frame) return;
+  frame.classList.remove('has-consent-message');
+  frame.classList.toggle('is-ready',container?.dataset.initialized==='true');
+}
+function markSportigoReady(container){
+  const frame=getSportigoFrame(container);
+  if(frame) frame.classList.add('is-ready');
+}
 function showSportigoConsentMessage(container){
   if(!container||container.dataset.consentMessage==='true') return;
+  const frame=getSportigoFrame(container);
+  if(frame) frame.classList.add('has-consent-message');
   container.dataset.consentMessage='true';
   container.dataset.initialized='';
-  container.innerHTML='<div class="sportigo-consent-message"><div>Per usare prenotazioni e gift card devi abilitare i cookie funzionali.<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button></div></div>';
+  container.innerHTML='<div class="sportigo-consent-message"><div><strong>Consenso funzionale richiesto</strong>Per usare prenotazioni e gift card devi abilitare i cookie funzionali.<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button></div></div>';
 }
 function initSportigoWidgets(){
   const consent=getCookieConsent();
@@ -546,6 +561,8 @@ function initSportigoWidgets(){
     showSportigoConsentMessage(giftcard);
     return;
   }
+  resetSportigoFrame(booking);
+  resetSportigoFrame(giftcard);
   if(typeof initComponent !== 'function'){
     loadSportigoScript();
     return;
@@ -556,12 +573,14 @@ function initSportigoWidgets(){
     booking.dataset.consentMessage='';
     booking.innerHTML='';
     initComponent('Appointment','sportigo-container','4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d',{colored:true,readOnly:false});
+    markSportigoReady(booking);
   }
   if(giftcard && !giftcard.dataset.initialized){
     giftcard.dataset.initialized = 'true';
     giftcard.dataset.consentMessage='';
     giftcard.innerHTML='';
     initComponent('GiftCard','sportigo-container-giftcard','4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d');
+    markSportigoReady(giftcard);
   }
 }
 runWhenReady(initSportigoWidgets);

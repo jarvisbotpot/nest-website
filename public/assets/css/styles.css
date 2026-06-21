@@ -50,10 +50,14 @@ body:has(.legal-page){background:var(--off-white);cursor:auto}
 .cookie-save{justify-self:end}
 .cookie-preferences{position:fixed;left:18px;bottom:18px;z-index:650;border:1px solid rgba(27,27,27,0.16);background:rgba(247,245,242,0.94);color:var(--black);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.12);transition:opacity 0.25s ease,transform 0.25s ease}
 .cookie-preferences.footer-hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
-.sportigo-consent-message{display:flex;min-height:260px;align-items:center;justify-content:center;text-align:center;padding:28px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.72);font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8}
-.sportigo-consent-message button{margin-top:16px;border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;cursor:pointer}
-.gc-widget-wrap .sportigo-consent-message{background:var(--off-white);border-color:var(--gray-light);color:var(--gray-dark)}
-.gc-widget-wrap .sportigo-consent-message button{border-color:rgba(27,27,27,0.2);color:var(--black)}
+.sportigo-consent-message{display:flex;min-height:360px;align-items:center;justify-content:center;text-align:center;padding:36px;border:1px solid rgba(255,255,255,0.12);background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.025));color:rgba(255,255,255,0.72);font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8}
+.sportigo-consent-message strong{display:block;font-family:var(--sans);font-size:15px;font-weight:400;letter-spacing:1px;color:var(--white);margin-bottom:8px}
+.sportigo-consent-message button{margin-top:18px;border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);color:var(--white);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;cursor:pointer;transition:border-color 0.25s,background 0.25s,color 0.25s}
+.sportigo-consent-message button:hover{border-color:var(--accent);background:var(--accent);color:var(--white)}
+.sportigo-widget-frame-light .sportigo-consent-message{background:var(--off-white);border-color:var(--gray-light);color:var(--gray-dark)}
+.sportigo-widget-frame-light .sportigo-consent-message strong{color:var(--black)}
+.sportigo-widget-frame-light .sportigo-consent-message button{border-color:rgba(27,27,27,0.2);background:var(--white);color:var(--black)}
+.sportigo-widget-frame-light .sportigo-consent-message button:hover{background:var(--black);border-color:var(--black);color:var(--white)}
 
 .cursor{width:8px;height:8px;background:var(--white);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
 .cursor-follower{width:30px;height:30px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998}
@@ -247,14 +251,38 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .giftcard-title em{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.06em;color:var(--accent)}
 .giftcard-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:var(--gray-dark);max-width:480px}
 .giftcard-eyebrow{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
+.giftcard-cta{border:none;cursor:pointer}
 
 /* ── PRENOTAZIONE ── */
 #prenotazione{padding:120px 60px;background:#201E1B}
-.prenotazione-inner{max-width:1100px;margin:0 auto}
+.prenotazione-inner{max-width:1180px;margin:0 auto}
 .prenotazione-header{text-align:center;margin-bottom:60px}
 .prenotazione-header .section-title{color:var(--white)}
 .prenotazione-header .section-body{color:rgba(255,255,255,0.4);max-width:480px;margin:0 auto;text-align:center}
-.sportigo-booking-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);padding:60px;min-height:420px}
+.sportigo-booking-shell{display:grid;grid-template-columns:minmax(260px,0.36fr) minmax(0,1fr);gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1)}
+.booking-summary{background:rgba(255,255,255,0.045);padding:44px 36px;display:flex;flex-direction:column;justify-content:space-between;gap:32px;min-height:620px}
+.booking-kicker{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+.booking-summary h3{font-family:var(--sans);font-size:28px;font-weight:300;line-height:1.25;color:var(--white);letter-spacing:0;margin-top:18px;max-width:280px}
+.booking-points{list-style:none;display:grid;gap:18px;margin-top:auto}
+.booking-points li{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.6;color:rgba(255,255,255,0.62);display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.booking-points span{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--accent);line-height:1}
+.booking-summary p{font-family:var(--sans);font-size:11px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.36);border-top:1px solid rgba(255,255,255,0.08);padding-top:22px}
+.sportigo-panel{background:var(--off-white);min-width:0}
+.sportigo-panel-top{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 28px;border-bottom:1px solid var(--gray-light);background:var(--white)}
+.sportigo-panel-top span{display:block;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.sportigo-panel-top strong{display:block;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:1px;color:var(--black);text-transform:uppercase}
+.sportigo-panel-top .sportigo-powered{margin:0;padding:8px 12px;border:1px solid var(--gray-light);color:var(--gray-mid);font-size:8px}
+.sportigo-widget-frame{position:relative;min-height:544px;background:var(--off-white);padding:18px;overflow:hidden}
+.sportigo-widget-frame::before{content:'';position:absolute;inset:18px;border:1px solid rgba(27,27,27,0.06);pointer-events:none;z-index:1}
+.sportigo-widget-frame.is-ready::before,.sportigo-widget-frame.has-consent-message::before{display:none}
+.sportigo-widget{position:relative;z-index:2;min-height:508px}
+.sportigo-widget iframe{width:100%;min-height:508px;border:0;display:block;background:var(--white)}
+.sportigo-loading{position:absolute;z-index:3;inset:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:linear-gradient(145deg,var(--white),var(--off-white));border:1px solid var(--gray-light);font-family:var(--sans)}
+.sportigo-loading span{width:34px;height:34px;border:1px solid rgba(27,27,27,0.16);border-top-color:var(--accent);border-radius:50%;animation:sportigoSpin 0.9s linear infinite}
+.sportigo-loading p{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray-mid)}
+.sportigo-loading-dark{background:linear-gradient(145deg,var(--white),var(--off-white))}
+.sportigo-widget-frame.is-ready .sportigo-loading,.sportigo-widget-frame.has-consent-message .sportigo-loading{display:none}
+@keyframes sportigoSpin{to{transform:rotate(360deg)}}
 .prenotazione-access{text-align:center;margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .prenotazione-access p{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25)}
 
@@ -345,7 +373,10 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 .gc-overlay-bar{position:sticky;top:0;z-index:10;background:var(--white);border-bottom:1px solid var(--gray-light);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
 .gc-overlay-back{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--black);cursor:pointer;border:none;background:none;transition:color 0.3s;padding:0}
 .gc-overlay-back:hover{color:var(--accent)}
-.gc-widget-wrap{padding:0 0 60px}
+.gc-widget-wrap{padding:0 40px 60px}
+.gc-widget-intro{padding:36px 0 24px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}
+.gc-widget-intro span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+.gc-widget-intro p{max-width:360px;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.7;color:var(--gray-dark);text-align:right}
 
 
 /* ═══════════════════════════════
@@ -533,7 +564,17 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 
   /* PRENOTAZIONE */
   #prenotazione { padding: 80px 20px; }
-  .sportigo-booking-box { padding: 24px 16px; }
+  .sportigo-booking-shell { grid-template-columns: 1fr; }
+  .booking-summary { min-height: auto; padding: 28px 22px; gap: 24px; }
+  .booking-summary h3 { font-size: 22px; max-width: none; }
+  .booking-points { margin-top: 0; }
+  .sportigo-panel-top { padding: 18px 16px; align-items: flex-start; }
+  .sportigo-panel-top .sportigo-powered { display: none; }
+  .sportigo-widget-frame { padding: 10px; min-height: 480px; }
+  .sportigo-widget-frame::before { inset: 10px; }
+  .sportigo-widget { min-height: 460px; }
+  .sportigo-widget iframe { min-height: 460px; }
+  .sportigo-loading { inset: 10px; }
 
   /* FAQ */
   #faq { padding: 80px 20px; }
@@ -560,6 +601,8 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .gc-overlay-inner { min-height: 100svh; }
   .gc-overlay-bar { padding: 14px 20px; }
   .gc-widget-wrap { padding: 0 16px 40px; }
+  .gc-widget-intro { display:block; padding: 28px 0 18px; }
+  .gc-widget-intro p { max-width: none; text-align:left; margin-top: 10px; }
 
   /* BUTTONS */
   .btn-primary { padding: 14px 32px; }

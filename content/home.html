@@ -394,7 +394,7 @@
         <p class="giftcard-desc">Una gift card NEST &egrave; un pensiero raffinato. Il destinatario sceglie quando e con chi allenarsi, in un ambiente disegnato per lui.</p>
       </div>
       <div>
-        <button class="btn-dark" style="border:none;cursor:pointer" data-open-gift-card data-meta-event="InitiateCheckout" data-meta-source="gift_card_cta">
+        <button class="btn-dark giftcard-cta" data-open-gift-card data-meta-event="InitiateCheckout" data-meta-source="gift_card_cta">
           Acquista Gift Card
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
         </button>
@@ -411,8 +411,33 @@
       <h2 class="section-title reveal reveal-delay-1">Scegli il tuo <em>slot.</em></h2>
       <p class="section-body reveal reveal-delay-2">Seleziona giorno e ora. Lo spazio sar&agrave; completamente tuo.</p>
     </div>
-    <div class="sportigo-booking-box reveal">
-      <div id="sportigo-container"></div>
+    <div class="sportigo-booking-shell reveal">
+      <aside class="booking-summary">
+        <span class="booking-kicker">Prenotazione online</span>
+        <h3>Il tuo accesso riservato a NEST</h3>
+        <ul class="booking-points">
+          <li><span>01</span> Scegli giorno e fascia oraria</li>
+          <li><span>02</span> Conferma dalla piattaforma Sportigo</li>
+          <li><span>03</span> Accedi allo spazio nella tua sessione</li>
+        </ul>
+        <p>La gestione account, disponibilit&agrave; e pagamenti passa da Sportigo. NEST mantiene l&rsquo;esperienza visiva e il controllo del consenso.</p>
+      </aside>
+      <div class="sportigo-panel">
+        <div class="sportigo-panel-top">
+          <div>
+            <span>Calendario NEST</span>
+            <strong>Slot disponibili</strong>
+          </div>
+          <span class="sportigo-powered">Sportigo</span>
+        </div>
+        <div class="sportigo-widget-frame">
+          <div class="sportigo-loading" data-sportigo-loading>
+            <span></span>
+            <p>Caricamento prenotazioni</p>
+          </div>
+          <div id="sportigo-container" class="sportigo-widget"></div>
+        </div>
+      </div>
     </div>
     <div class="prenotazione-access reveal">
       <p>Hai gi&agrave; un account?</p>
@@ -597,7 +622,17 @@
       <span style="font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray-mid)">Gift Card</span>
     </div>
     <div class="gc-widget-wrap">
-      <div id="sportigo-container-giftcard"></div>
+      <div class="gc-widget-intro">
+        <span>Gift Card NEST</span>
+        <p>Scegli l&rsquo;importo e completa l&rsquo;acquisto nella piattaforma Sportigo integrata.</p>
+      </div>
+      <div class="sportigo-widget-frame sportigo-widget-frame-light">
+        <div class="sportigo-loading sportigo-loading-dark" data-sportigo-loading>
+          <span></span>
+          <p>Caricamento gift card</p>
+        </div>
+        <div id="sportigo-container-giftcard" class="sportigo-widget"></div>
+      </div>
     </div>
   </div>
 </div>
