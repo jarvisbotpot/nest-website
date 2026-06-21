@@ -146,6 +146,7 @@ runWhenReady(function(){
 
     const targetId=sectionRoutes[normalizePath(url.pathname)];
     if(!targetId) return;
+    if(!document.getElementById(targetId)) return;
 
     e.preventDefault();
     closeMobileMenu();

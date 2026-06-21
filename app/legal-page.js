@@ -1,6 +1,28 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 const SPORTIGO_PRIVACY_URL = 'https://www.sportigo.io/fr/regles-de-confidentialite';
 const SPORTIGO_TERMS_URL =
   'https://cdn.prod.website-files.com/6026a3b1f0c5d55691a55af1/65df1bea3a88d0237801aaae_CONDITIONS%20GE%CC%81NE%CC%81RALES%20DE%20VENTE.pdf';
+
+function extractHtml(source, startMarker, endMarker) {
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker, start);
+
+  if (start === -1 || end === -1) return '';
+
+  return source.slice(start, end + endMarker.length);
+}
+
+function getSiteChrome() {
+  const home = readFileSync(join(process.cwd(), 'content/home.html'), 'utf8');
+  const header = extractHtml(home, '<div class="cursor"', '<!-- HERO -->')
+    .replace('<!-- HERO -->', '')
+    .replace('<nav id="navbar">', '<nav id="navbar" class="scrolled legal-site-nav">');
+  const footer = extractHtml(home, '<footer>', '</footer>');
+
+  return { header, footer };
+}
 
 const pages = {
   privacy: {
@@ -161,30 +183,35 @@ const pages = {
 
 export function LegalPage({ type }) {
   const page = pages[type];
+  const { header, footer } = getSiteChrome();
 
   return (
-    <main className="legal-page">
-      <a href="/">Torna al sito</a>
-      <h1 className="section-title">{page.title}</h1>
-      <p className="legal-updated">Ultimo aggiornamento: {page.updatedAt}</p>
-      <p className="section-body">{page.intro}</p>
-      {page.sections.map((section) => (
-        <section className="legal-section" key={section.title}>
-          <h2>{section.title}</h2>
-          {section.body.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-          {section.links ? (
-            <div className="legal-links">
-              {section.links.map((link) => (
-                <a href={link.href} target="_blank" rel="noopener" key={link.href}>
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          ) : null}
-        </section>
-      ))}
-    </main>
+    <>
+      <div dangerouslySetInnerHTML={{ __html: header }} />
+      <main className="legal-page">
+        <a href="/">Torna al sito</a>
+        <h1 className="section-title">{page.title}</h1>
+        <p className="legal-updated">Ultimo aggiornamento: {page.updatedAt}</p>
+        <p className="section-body">{page.intro}</p>
+        {page.sections.map((section) => (
+          <section className="legal-section" key={section.title}>
+            <h2>{section.title}</h2>
+            {section.body.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            {section.links ? (
+              <div className="legal-links">
+                {section.links.map((link) => (
+                  <a href={link.href} target="_blank" rel="noopener" key={link.href}>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </section>
+        ))}
+      </main>
+      <div dangerouslySetInnerHTML={{ __html: footer }} />
+    </>
   );
 }
