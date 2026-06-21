@@ -4,6 +4,7 @@ import { join } from 'node:path';
 const SPORTIGO_PRIVACY_URL = 'https://www.sportigo.io/fr/regles-de-confidentialite';
 const SPORTIGO_TERMS_URL =
   'https://cdn.prod.website-files.com/6026a3b1f0c5d55691a55af1/65df1bea3a88d0237801aaae_CONDITIONS%20GE%CC%81NE%CC%81RALES%20DE%20VENTE.pdf';
+const META_PRIVACY_URL = 'https://www.facebook.com/privacy/policy/';
 
 function extractHtml(source, startMarker, endMarker) {
   const start = source.indexOf(startMarker);
@@ -79,41 +80,72 @@ const pages = {
     title: 'Cookie Policy',
     updatedAt: '21 giugno 2026',
     intro:
-      'Questa cookie policy descrive l’uso di cookie e tecnologie simili sul sito NEST Pavia e nei servizi integrati.',
+      'Questa Cookie Policy descrive l’uso di cookie, local storage, pixel e tecnologie simili sul sito NEST Pavia e nei servizi integrati.',
     sections: [
       {
-        title: 'Cookie tecnici',
+        title: 'Titolare e contatti',
         body: [
-          'Il sito può usare cookie o tecnologie equivalenti necessari alla corretta erogazione delle pagine, alla sicurezza, alla compatibilità tecnica e alla gestione della navigazione.',
-          'Questi strumenti non richiedono consenso quando sono strettamente necessari al funzionamento del servizio richiesto.',
+          'Il sito è riferito a NEST Pavia, spazio fitness privato con sede operativa in Viale Lodi 1, 27100 Pavia (PV).',
+          'Per richieste relative a cookie, consenso e strumenti di tracciamento puoi scrivere a info@nest-pavia.it.',
         ],
       },
       {
-        title: 'Widget Sportigo',
+        title: 'Cosa sono cookie e tecnologie simili',
         body: [
-          'Le aree di prenotazione, accesso utente e gift card possono caricare componenti Sportigo. Tali componenti possono usare cookie, local storage o richieste tecniche necessarie per account, prenotazioni, pagamenti, controllo accessi e sicurezza.',
+          'I cookie sono piccoli file salvati dal browser sul dispositivo dell’utente. Tecnologie simili, come local storage, pixel e script di terze parti, possono memorizzare informazioni o trasmettere dati tecnici durante la navigazione.',
+          'Questi strumenti possono essere necessari al funzionamento del sito oppure usati, solo con consenso, per servizi integrati e misurazione delle campagne pubblicitarie.',
+        ],
+      },
+      {
+        title: 'Cookie necessari',
+        body: [
+          'Il sito usa strumenti tecnici necessari per mostrare le pagine, mantenere sicurezza, compatibilità tecnica, preferenze essenziali e corretto funzionamento dell’interfaccia.',
+          'Questi strumenti non richiedono consenso quando sono strettamente necessari al servizio richiesto dall’utente.',
+          'Tra gli strumenti necessari rientra anche la memorizzazione locale della scelta cookie, salvata nel browser con chiave nest_cookie_consent_v1, per evitare di mostrare il banner a ogni visita.',
+        ],
+      },
+      {
+        title: 'Cookie funzionali Sportigo',
+        body: [
+          'Le aree di prenotazione, area utente e gift card possono essere fornite tramite Sportigo. Questi componenti possono usare cookie, local storage e richieste tecniche necessarie per account, prenotazioni, pagamenti, controllo accessi, sicurezza e gestione del servizio.',
+          'Sul sito NEST questi componenti vengono caricati solo se l’utente accetta i cookie funzionali dal banner o dal pannello preferenze.',
+          'Se i cookie funzionali non vengono accettati, le pagine restano navigabili, ma prenotazioni, gift card e alcune funzioni collegate a Sportigo possono non essere disponibili direttamente nel sito.',
           'Le informazioni privacy dichiarate da Sportigo sono consultabili nella relativa informativa.',
         ],
         links: [{ label: 'Informativa privacy Sportigo', href: SPORTIGO_PRIVACY_URL }],
       },
       {
-        title: 'Servizi esterni',
+        title: 'Cookie marketing e Meta Pixel',
         body: [
-          'Il sito carica font da Google Fonts e script esterni necessari per animazioni e componenti integrati. Questi servizi possono ricevere dati tecnici come indirizzo IP e informazioni sul browser.',
-          'Le campagne Meta possono usare Meta Pixel solo previo consenso marketing. In assenza di consenso marketing, il relativo codice di tracciamento non viene caricato.',
-          'Al momento non è previsto Google Analytics. Se saranno aggiunti altri strumenti di analytics o marketing, la policy dovrà essere aggiornata.',
+          'Per campagne pubblicitarie su Meta, Facebook e Instagram, il sito può usare Meta Pixel per misurare visite, interazioni e conversioni collegate alle campagne.',
+          'Meta Pixel viene caricato solo dopo consenso marketing. Se il consenso marketing viene rifiutato o non espresso, il codice Meta Pixel non viene inserito nella pagina.',
+          'Quando attivo, Meta Pixel può comunicare a Meta dati tecnici e informazioni sugli eventi di navigazione, secondo le regole e informative di Meta.',
+          'Al momento non è previsto Google Analytics.',
+        ],
+        links: [{ label: 'Informativa privacy Meta', href: META_PRIVACY_URL }],
+      },
+      {
+        title: 'Font, librerie e risorse tecniche',
+        body: [
+          'Il sito può caricare font da Google Fonts e librerie tecniche da CDN esterne, ad esempio per animazioni e componenti dell’interfaccia.',
+          'Questi servizi possono ricevere dati tecnici come indirizzo IP, informazioni sul browser e dati di richiesta necessari alla consegna delle risorse.',
+          'Queste risorse sono usate per presentazione, compatibilità e funzionamento tecnico del sito, non per profilazione autonoma da parte di NEST.',
         ],
       },
       {
-        title: 'Gestione preferenze',
+        title: 'Gestione e revoca del consenso',
         body: [
-          'L’utente può gestire o bloccare i cookie dal proprio browser. Il blocco di cookie tecnici o storage usati da Sportigo potrebbe impedire prenotazioni, login o pagamenti.',
+          'Alla prima visita viene mostrato un banner che consente di rifiutare i cookie non necessari, accettare tutto oppure personalizzare le preferenze per categoria.',
+          'Le preferenze possono essere modificate in qualsiasi momento tramite il pulsante “Cookie” presente sul sito.',
+          'La revoca del consenso non pregiudica la liceità dei trattamenti effettuati prima della revoca.',
+          'L’utente può anche cancellare cookie e dati locali dal proprio browser. La cancellazione può far ricomparire il banner alla visita successiva.',
         ],
       },
       {
-        title: 'Nota',
+        title: 'Durata e aggiornamenti',
         body: [
-          'Questa pagina è una bozza operativa. Prima del go-live va verificata con una scansione reale dei cookie e degli script effettivamente attivi.',
+          'La scelta cookie viene conservata nel browser fino a cancellazione da parte dell’utente o aggiornamento tecnico della gestione del consenso.',
+          'Questa Cookie Policy sarà aggiornata se verranno introdotti nuovi strumenti di analytics, marketing, profilazione o servizi terzi diversi da quelli indicati.',
         ],
       },
     ],
