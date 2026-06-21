@@ -317,6 +317,7 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 ═══════════════════════════════ */
 /* Desktop: hide hamburger */
 .nav-hamburger { display: none; }
+.mobile-menu { display: none; }
 
 @media (max-width: 768px) {
   /* Hide cursor on mobile */
