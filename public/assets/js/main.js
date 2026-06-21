@@ -17,9 +17,12 @@ function patchSportigoSvgClassNameStringMethods(){
 
   [
     ['toString',function(){return asString(this);}],
+    ['valueOf',function(){return asString(this);}],
     ['includes',function(search,start){return asString(this).includes(search,start);}],
     ['trim',function(){return asString(this).trim();}],
-    ['split',function(separator,limit){return asString(this).split(separator,limit);}]
+    ['split',function(separator,limit){return asString(this).split(separator,limit);}],
+    ['toLowerCase',function(){return asString(this).toLowerCase();}],
+    ['toUpperCase',function(){return asString(this).toUpperCase();}]
   ].forEach(function(entry){
     const name=entry[0];
     const value=entry[1];
@@ -28,6 +31,11 @@ function patchSportigoSvgClassNameStringMethods(){
       Object.defineProperty(proto,name,{configurable:true,value});
     }catch(e){}
   });
+  try{
+    if(typeof proto[Symbol.toPrimitive]!=='function'){
+      Object.defineProperty(proto,Symbol.toPrimitive,{configurable:true,value:function(){return asString(this);}});
+    }
+  }catch(e){}
 }
 patchSportigoSvgClassNameStringMethods();
 
@@ -264,6 +272,7 @@ function initSportigoDialogTitleGuard(){
   const visibleDialogs=new WeakMap();
   let scheduled=false;
   let lastDialogFocusIntent=0;
+  let staleLockTimer=0;
 
   function byLabelledbySelector(id){
     return `[role="dialog"][aria-labelledby="${String(id).replace(/["\\]/g,'\\$&')}"]`;
@@ -317,6 +326,7 @@ function initSportigoDialogTitleGuard(){
 
   function isVisibleDialog(dialog){
     if(!dialog||!dialog.isConnected||dialog.getAttribute('aria-hidden')==='true'||dialog.hidden) return false;
+    if(!dialog.hasAttribute('data-state')) return false;
     if(dialog.getAttribute('data-state')==='closed') return false;
     const style=getComputedStyle(dialog);
     if(style.pointerEvents==='none') return false;
@@ -354,8 +364,8 @@ function initSportigoDialogTitleGuard(){
   }
 
   function hasVisibleDialog(root=document){
-    const direct=root instanceof ShadowRoot&&Array.from(root.querySelectorAll?.('[role="dialog"]')||[]).some(isVisibleDialog);
-    if(direct) return true;
+    const directDialog=Array.from(root.querySelectorAll?.('[role="dialog"][data-state]')||[]).find(isVisibleDialog);
+    if(directDialog) return true;
     const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
     let node=walker.currentNode;
     while(node){
@@ -363,6 +373,35 @@ function initSportigoDialogTitleGuard(){
       node=walker.nextNode();
     }
     return false;
+  }
+
+  function restorePageInteractivityAfterStaleDialog(){
+    if(hasVisibleDialog()) return;
+    document.body.classList.remove('sportigo-dialog-open');
+    if(document.body.style.pointerEvents==='none') document.body.style.pointerEvents='';
+    if(document.body.style.overflow==='hidden') document.body.style.overflow='';
+    if(document.body.style.paddingRight) document.body.style.paddingRight='';
+    Array.from(document.body.children).forEach(function(element){
+      if(element.getAttribute('aria-hidden')!=='true') return;
+      const style=getComputedStyle(element);
+      if(style.display==='none'||element.tagName==='SCRIPT'||element.tagName==='STYLE'||element.tagName==='LINK'||element.tagName==='META') return;
+      element.removeAttribute('aria-hidden');
+    });
+  }
+
+  function syncDialogOpenState(){
+    const visible=hasVisibleDialog();
+    document.body.classList.toggle('sportigo-dialog-open',visible);
+    if(visible){
+      if(staleLockTimer) clearTimeout(staleLockTimer);
+      staleLockTimer=0;
+      return;
+    }
+    if(staleLockTimer) clearTimeout(staleLockTimer);
+    staleLockTimer=setTimeout(function(){
+      staleLockTimer=0;
+      restorePageInteractivityAfterStaleDialog();
+    },180);
   }
 
   function installDialogTheme(root){
@@ -426,13 +465,30 @@ function initSportigoDialogTitleGuard(){
     requestAnimationFrame(function(){
       scheduled=false;
       scanRoot(document);
-      document.body.classList.toggle('sportigo-dialog-open',hasVisibleDialog());
+      syncDialogOpenState();
+    });
+  }
+
+  function scheduleTransitionScans(){
+    scheduleScan();
+    [60,180,420,900,1600].forEach(function(delay){
+      setTimeout(scheduleScan,delay);
     });
   }
 
   const observer=new MutationObserver(scheduleScan);
   scanRoot(document);
-  document.body.classList.toggle('sportigo-dialog-open',hasVisibleDialog());
+  scanRoot(document.documentElement);
+  scanRoot(document.body);
+  syncDialogOpenState();
+  ['pointerup','click','keyup','focusin'].forEach(function(eventName){
+    document.addEventListener(eventName,scheduleTransitionScans,true);
+  });
+  setInterval(function(){
+    if(document.body.classList.contains('sportigo-dialog-open')||document.body.style.pointerEvents==='none'||document.body.style.overflow==='hidden'){
+      syncDialogOpenState();
+    }
+  },250);
 }
 runWhenReady(initSportigoDialogTitleGuard);
 
