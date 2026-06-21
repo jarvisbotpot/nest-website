@@ -494,6 +494,29 @@ function initCookieBanner(){
 }
 runWhenReady(initCookieBanner);
 
+function initCookiePreferencesFooterGuard(){
+  const preferences=document.getElementById('cookiePreferences');
+  const footer=document.querySelector('footer');
+  if(!preferences||!footer) return;
+
+  function updateByRect(){
+    const rect=footer.getBoundingClientRect();
+    preferences.classList.toggle('footer-hidden',rect.top<window.innerHeight-12);
+  }
+
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(function(entries){
+      preferences.classList.toggle('footer-hidden',entries.some(function(entry){return entry.isIntersecting;}));
+    },{threshold:0,rootMargin:'0px 0px -12px 0px'});
+    observer.observe(footer);
+  }else{
+    window.addEventListener('scroll',updateByRect,{passive:true});
+    window.addEventListener('resize',updateByRect);
+    updateByRect();
+  }
+}
+runWhenReady(initCookiePreferencesFooterGuard);
+
 document.addEventListener('click',function(e){
   const target=e.target.closest('[data-meta-event]');
   if(!target) return;

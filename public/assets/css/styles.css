@@ -48,7 +48,8 @@ body:has(.legal-page){background:var(--off-white);cursor:auto}
 .cookie-toggle input{width:42px;height:22px;accent-color:var(--accent);flex:0 0 auto}
 .cookie-toggle-disabled{opacity:0.7}
 .cookie-save{justify-self:end}
-.cookie-preferences{position:fixed;left:18px;bottom:18px;z-index:650;border:1px solid rgba(27,27,27,0.16);background:rgba(247,245,242,0.94);color:var(--black);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.12)}
+.cookie-preferences{position:fixed;left:18px;bottom:18px;z-index:650;border:1px solid rgba(27,27,27,0.16);background:rgba(247,245,242,0.94);color:var(--black);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.12);transition:opacity 0.25s ease,transform 0.25s ease}
+.cookie-preferences.footer-hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
 .sportigo-consent-message{display:flex;min-height:260px;align-items:center;justify-content:center;text-align:center;padding:28px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.72);font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8}
 .sportigo-consent-message button{margin-top:16px;border:1px solid rgba(255,255,255,0.35);background:transparent;color:var(--white);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;cursor:pointer}
 .gc-widget-wrap .sportigo-consent-message{background:var(--off-white);border-color:var(--gray-light);color:var(--gray-dark)}
