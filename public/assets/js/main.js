@@ -6,6 +6,37 @@ function runWhenReady(fn){
   }
 }
 
+const sectionRoutes={
+  '/spazio-privato/':'cosa',
+  '/come-funziona/':'funziona',
+  '/servizi/':'servizi',
+  '/trainer/':'trainer',
+  '/chi-siamo/':'chisiamo',
+  '/gift-card/':'giftcard',
+  '/prenota/':'prenotazione',
+  '/faq/':'faq',
+  '/contatti/':'contatti'
+};
+
+function normalizePath(path){
+  if(!path||path==='/') return '/';
+  return path.endsWith('/') ? path : path + '/';
+}
+
+function scrollToSectionId(sectionId, behavior='smooth'){
+  const target=document.getElementById(sectionId);
+  if(!target) return false;
+  target.scrollIntoView({block:'start',behavior});
+  requestAnimationFrame(updateNav);
+  return true;
+}
+
+function handleSectionRoute(path, behavior='smooth'){
+  const sectionId=sectionRoutes[normalizePath(path)];
+  if(!sectionId) return false;
+  return scrollToSectionId(sectionId,behavior);
+}
+
 // CURSOR
 const cursor=document.getElementById('cursor');
 const follower=document.getElementById('cursorFollower');
@@ -26,6 +57,36 @@ function updateNav(){
 }
 window.addEventListener('scroll',updateNav,{passive:true});
 updateNav();
+
+runWhenReady(function(){
+  document.addEventListener('click',function(e){
+    const link=e.target.closest('a');
+    if(!link||!link.href) return;
+
+    const url=new URL(link.href,window.location.href);
+    if(url.origin!==window.location.origin) return;
+
+    const targetId=sectionRoutes[normalizePath(url.pathname)];
+    if(!targetId) return;
+
+    e.preventDefault();
+    closeMobileMenu();
+    history.pushState({sectionId:targetId},'',url.pathname);
+    scrollToSectionId(targetId);
+  });
+
+  window.addEventListener('popstate',function(){
+    if(!handleSectionRoute(window.location.pathname)){
+      window.scrollTo({top:0,behavior:'smooth'});
+      requestAnimationFrame(updateNav);
+    }
+  });
+
+  const initialTarget=window.__NEST_TARGET_SECTION__||sectionRoutes[normalizePath(window.location.pathname)];
+  if(initialTarget) {
+    requestAnimationFrame(function(){scrollToSectionId(initialTarget,'auto');});
+  }
+});
 
 // HERO ANIMATION — GSAP cinematic entrance
 let heroAnimated=false;
