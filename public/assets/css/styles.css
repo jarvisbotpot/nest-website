@@ -65,10 +65,13 @@ body.light-bg .cursor{background:var(--black)}
 body.light-bg .cursor-follower{border-color:rgba(27,27,27,0.3)}
 body.cursor-on-dark .cursor{background:var(--white)}
 body.cursor-on-dark .cursor-follower{border-color:rgba(255,255,255,0.45)}
-body.sportigo-dialog-open{cursor:auto}
-body.sportigo-dialog-open *{cursor:auto!important}
 body.sportigo-dialog-open .cursor,
-body.sportigo-dialog-open .cursor-follower{opacity:0}
+body.sportigo-dialog-open .cursor-follower{visibility:hidden}
+body.sportigo-dialog-open .cookie-preferences{opacity:0;pointer-events:none}
+body.sportigo-dialog-open .sportigo-widget-frame,
+body.sportigo-dialog-open .sportigo-widget,
+body.sportigo-dialog-open #sportigo-container,
+body.sportigo-dialog-open #sportigo-container-giftcard{cursor:auto}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;transition:padding 0.4s ease,background 0.4s ease,box-shadow 0.4s ease}
 nav.scrolled{padding:14px 60px;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(0,0,0,0.07)}

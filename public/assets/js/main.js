@@ -138,14 +138,6 @@ function initSportigoDialogTitleGuard(){
     return false;
   }
 
-  function installDialogCursorStyle(root){
-    if(!(root instanceof ShadowRoot)||root.getElementById('nest-sportigo-dialog-cursor-style')) return;
-    const style=document.createElement('style');
-    style.id='nest-sportigo-dialog-cursor-style';
-    style.textContent='[role="dialog"],[role="dialog"] *{cursor:auto!important;}';
-    root.appendChild(style);
-  }
-
   Document.prototype.getElementById=function(id){
     const found=nativeGetElementById.call(this,id);
     if(found||this!==document||!id) return found;
@@ -161,8 +153,6 @@ function initSportigoDialogTitleGuard(){
       observedRoots.add(root);
       observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role','aria-hidden','hidden','style','class','data-state']});
     }
-    installDialogCursorStyle(root);
-
     root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
       createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
     });
