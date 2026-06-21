@@ -54,6 +54,8 @@ I widget Sportigo vengono caricati solo dopo consenso funzionale:
 
 Se il consenso funzionale non e' presente, viene mostrato un messaggio con link al pannello preferenze cookie.
 
+La preview "Prossimi slot" legge le disponibilita' tramite lo stesso servizio pubblico usato dal widget Sportigo (`/api/sportigo/service` con `url: /planningdx`). La chiamata parte solo dopo consenso funzionale, cosi' il sito resta esportabile staticamente e non richiede una route API server-side.
+
 ## Prossimo lavoro
 
 1. Confermare dominio finale: per ora i meta usano `https://nest-pavia.it/`.
