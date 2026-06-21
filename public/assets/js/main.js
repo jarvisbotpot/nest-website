@@ -35,6 +35,9 @@ const sportigoDialogThemeCss=`
 [role="dialog"][data-state]{
   box-sizing:border-box;
   width:min(calc(100vw - 32px),560px)!important;
+  height:auto!important;
+  height:fit-content!important;
+  min-height:0!important;
   max-height:calc(100vh - 88px)!important;
   padding:30px 30px 24px!important;
   gap:16px!important;
@@ -188,6 +191,8 @@ const sportigoDialogThemeCss=`
 @media (max-width:640px){
   [role="dialog"][data-state]{
     width:calc(100vw - 24px)!important;
+    height:auto!important;
+    height:fit-content!important;
     max-height:calc(100vh - 40px)!important;
     padding:22px 18px 18px!important;
   }
@@ -312,7 +317,9 @@ function initSportigoDialogTitleGuard(){
 
   function isVisibleDialog(dialog){
     if(!dialog||!dialog.isConnected||dialog.getAttribute('aria-hidden')==='true'||dialog.hidden) return false;
+    if(dialog.getAttribute('data-state')==='closed') return false;
     const style=getComputedStyle(dialog);
+    if(style.pointerEvents==='none') return false;
     if(style.display==='none'||style.visibility==='hidden') return false;
     const rect=dialog.getBoundingClientRect();
     return rect.width>0&&rect.height>0;
