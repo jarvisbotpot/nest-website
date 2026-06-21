@@ -18,6 +18,47 @@ const sectionRoutes={
   '/contatti/':'contatti'
 };
 
+function withSportigoOriginCacheBust(value){
+  if(typeof value!=='string'||!value.includes('standalone.api.sportigo.fr/api/proxy-image')) return value;
+  const url=new URL(value,window.location.href);
+  url.searchParams.set('_nest_origin',window.location.origin);
+  return url.toString();
+}
+
+const nativeFetch=window.fetch;
+if(nativeFetch){
+  window.fetch=function(input,init){
+    if(typeof input==='string'){
+      return nativeFetch.call(this,withSportigoOriginCacheBust(input),init);
+    }
+    if(input instanceof Request){
+      const nextUrl=withSportigoOriginCacheBust(input.url);
+      if(nextUrl!==input.url) input=new Request(nextUrl,input);
+    }
+    return nativeFetch.call(this,input,init);
+  };
+}
+
+const nativeSetAttribute=Element.prototype.setAttribute;
+Element.prototype.setAttribute=function(name,value){
+  if(this.tagName==='IMG'&&name&&name.toLowerCase()==='src'){
+    value=withSportigoOriginCacheBust(value);
+  }
+  return nativeSetAttribute.call(this,name,value);
+};
+
+const imageSrcDescriptor=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
+if(imageSrcDescriptor&&imageSrcDescriptor.set&&imageSrcDescriptor.get){
+  Object.defineProperty(HTMLImageElement.prototype,'src',{
+    configurable:true,
+    enumerable:imageSrcDescriptor.enumerable,
+    get:imageSrcDescriptor.get,
+    set:function(value){
+      imageSrcDescriptor.set.call(this,withSportigoOriginCacheBust(value));
+    }
+  });
+}
+
 function normalizePath(path){
   if(!path||path==='/') return '/';
   return path.endsWith('/') ? path : path + '/';
