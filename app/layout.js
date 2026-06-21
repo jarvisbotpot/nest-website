@@ -4,18 +4,30 @@ import './globals.css';
 export const metadata = {
   metadataBase: new URL('https://nest-pavia.it'),
   title: {
-    default: 'NEST Pavia - Private Space. Exclusive Training.',
+    default: 'NEST Pavia - Spazio fitness privato e personal training',
     template: '%s - NEST Pavia',
   },
   description:
-    'NEST Pavia e uno spazio fitness privato ed esclusivo per allenamenti individuali, personal trainer e piccoli gruppi fino a 4 persone.',
+    'NEST Pavia e uno spazio fitness privato in Viale Lodi 1 per allenamenti individuali, personal trainer e piccoli gruppi fino a 4 persone.',
+  alternates: {
+    canonical: '/',
+  },
+  keywords: [
+    'palestra privata Pavia',
+    'personal trainer Pavia',
+    'spazio fitness privato',
+    'allenamento privato Pavia',
+    'NEST Pavia',
+  ],
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
     type: 'website',
-    title: 'NEST Pavia - Private Space. Exclusive Training.',
+    locale: 'it_IT',
+    siteName: 'NEST Pavia',
+    title: 'NEST Pavia - Spazio fitness privato e personal training',
     description: 'Allenati in privato in uno spazio fitness esclusivo a Pavia.',
     url: '/',
     images: ['/assets/images/hero-gym.jpg'],

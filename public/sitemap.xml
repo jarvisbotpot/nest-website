@@ -5,6 +5,42 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://nest-pavia.it/spazio-privato/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/come-funziona/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/servizi/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/trainer/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/chi-siamo/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/gift-card/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/prenota/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/faq/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://nest-pavia.it/contatti/</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://nest-pavia.it/privacy/</loc>
     <priority>0.3</priority>
   </url>
