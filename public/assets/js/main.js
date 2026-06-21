@@ -59,6 +59,63 @@ if(imageSrcDescriptor&&imageSrcDescriptor.set&&imageSrcDescriptor.get){
   });
 }
 
+function initSportigoDialogTitleGuard(){
+  if(window.__nestSportigoDialogTitleGuard) return;
+  if(!document.getElementById('sportigo-container')&&!document.getElementById('sportigo-container-giftcard')) return;
+  window.__nestSportigoDialogTitleGuard=true;
+
+  const observedRoots=new WeakSet();
+  let scheduled=false;
+
+  function createHiddenDialogTitle(id,dialog){
+    if(!id||document.getElementById(id)) return;
+    const title=document.createElement('h2');
+    title.id=id;
+    title.textContent=dialog?.getAttribute('aria-label')||'Prenotazione Sportigo';
+    title.dataset.nestSportigoDialogTitle='true';
+    Object.assign(title.style,{
+      position:'absolute',
+      width:'1px',
+      height:'1px',
+      padding:'0',
+      margin:'-1px',
+      overflow:'hidden',
+      clip:'rect(0, 0, 0, 0)',
+      whiteSpace:'nowrap',
+      border:'0'
+    });
+    document.body.appendChild(title);
+  }
+
+  function scanRoot(root){
+    if(!root) return;
+    if(!observedRoots.has(root)){
+      observedRoots.add(root);
+      observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role']});
+    }
+
+    root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
+      createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
+    });
+    root.querySelectorAll?.('*').forEach(function(element){
+      if(element.shadowRoot) scanRoot(element.shadowRoot);
+    });
+  }
+
+  function scheduleScan(){
+    if(scheduled) return;
+    scheduled=true;
+    requestAnimationFrame(function(){
+      scheduled=false;
+      scanRoot(document);
+    });
+  }
+
+  const observer=new MutationObserver(scheduleScan);
+  scanRoot(document);
+}
+runWhenReady(initSportigoDialogTitleGuard);
+
 function normalizePath(path){
   if(!path||path==='/') return '/';
   return path.endsWith('/') ? path : path + '/';
