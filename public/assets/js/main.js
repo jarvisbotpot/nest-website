@@ -207,7 +207,7 @@ function closeGiftCard(){
   const ov=document.getElementById('gcOverlay');
   if(ov){ov.classList.remove('active');document.body.style.overflow='';}
 }
-document.addEventListener('DOMContentLoaded',function(){
+runWhenReady(function(){
   const ov=document.getElementById('gcOverlay');
   const back=document.getElementById('gcBack');
   if(back) back.addEventListener('click',closeGiftCard);
@@ -248,6 +248,17 @@ document.addEventListener('DOMContentLoaded',function(){
       if(nextBtn) nextBtn.disabled=current===total-1;
     };
     window.pagNav=function(dir){goToSlide(current+dir);};
+
+    document.querySelectorAll('[data-pag-nav]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        window.pagNav(Number(btn.dataset.pagNav));
+      });
+    });
+    thumbs.forEach(function(thumb,i){
+      thumb.addEventListener('click',function(){
+        window.goToSlide(Number(thumb.dataset.pagSlide ?? i));
+      });
+    });
 
     // Touch / trackpad swipe
     let touchStartX=0, touchStartY=0, isDragging=false;
