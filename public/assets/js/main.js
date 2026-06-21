@@ -256,7 +256,9 @@ function initSportigoDialogTitleGuard(){
 
   const nativeGetElementById=Document.prototype.getElementById;
   const observedRoots=new WeakSet();
+  const visibleDialogs=new WeakMap();
   let scheduled=false;
+  let lastDialogFocusIntent=0;
 
   function byLabelledbySelector(id){
     return `[role="dialog"][aria-labelledby="${String(id).replace(/["\\]/g,'\\$&')}"]`;
@@ -316,6 +318,34 @@ function initSportigoDialogTitleGuard(){
     return rect.width>0&&rect.height>0;
   }
 
+  ['pointerdown','keydown'].forEach(function(eventName){
+    document.addEventListener(eventName,function(event){
+      const path=event.composedPath?.()||[];
+      if(path.some(function(node){
+        return node?.getAttribute?.('role')==='dialog'&&isVisibleDialog(node);
+      })){
+        lastDialogFocusIntent=Date.now();
+      }
+    },true);
+  });
+
+  function getDeepActiveElement(root=document){
+    let active=root.activeElement||document.activeElement;
+    while(active?.shadowRoot?.activeElement){
+      active=active.shadowRoot.activeElement;
+    }
+    return active;
+  }
+
+  function blurSportigoDialogAutoFocus(dialog){
+    requestAnimationFrame(function(){
+      const active=getDeepActiveElement(dialog.getRootNode?.()||document);
+      if(!active||active===document.body||!dialog.contains(active)) return;
+      if(Date.now()-lastDialogFocusIntent<120) return;
+      active.blur?.();
+    });
+  }
+
   function hasVisibleDialog(root=document){
     const direct=root instanceof ShadowRoot&&Array.from(root.querySelectorAll?.('[role="dialog"]')||[]).some(isVisibleDialog);
     if(direct) return true;
@@ -371,6 +401,11 @@ function initSportigoDialogTitleGuard(){
     installDialogTheme(root);
     setSportigoItalianPhoneDefault(root);
     root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
+      const visible=isVisibleDialog(dialog);
+      if(visible&&!visibleDialogs.get(dialog)){
+        blurSportigoDialogAutoFocus(dialog);
+      }
+      visibleDialogs.set(dialog,visible);
       createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
     });
     root.querySelectorAll?.('*').forEach(function(element){
