@@ -31,6 +31,152 @@ function patchSportigoSvgClassNameStringMethods(){
 }
 patchSportigoSvgClassNameStringMethods();
 
+const sportigoDialogThemeCss=`
+[role="dialog"][data-state]{
+  box-sizing:border-box;
+  width:min(calc(100vw - 32px),560px)!important;
+  max-height:calc(100vh - 88px)!important;
+  padding:30px 30px 24px!important;
+  gap:16px!important;
+  overflow:hidden!important;
+  border:1px solid rgba(27,27,27,0.16)!important;
+  border-radius:0!important;
+  background:#F7F5F2!important;
+  color:#1B1B1B!important;
+  box-shadow:0 28px 80px rgba(0,0,0,0.28)!important;
+  font-family:Montserrat,ui-sans-serif,system-ui,sans-serif!important;
+}
+[role="dialog"] *{box-sizing:border-box;font-family:inherit;}
+[role="dialog"] h2{
+  margin:0 42px 2px 0!important;
+  color:#1B1B1B!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:1.45!important;
+  letter-spacing:2px!important;
+  text-transform:uppercase!important;
+}
+[role="dialog"] p[id^="radix-"]{
+  margin:0!important;
+  color:#6B6B6B!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.65!important;
+}
+[role="dialog"]>div[class*="overflow-y-auto"]{
+  max-height:min(60vh,520px)!important;
+  padding-right:6px!important;
+}
+[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar{width:5px;}
+[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar-track{background:rgba(27,27,27,0.06);}
+[role="dialog"]>div[class*="overflow-y-auto"]::-webkit-scrollbar-thumb{background:rgba(27,27,27,0.24);}
+[role="dialog"] hr{margin:18px 0!important;border-color:rgba(27,27,27,0.12)!important;}
+[role="dialog"] label{
+  color:#1B1B1B!important;
+  font-size:10px!important;
+  font-weight:600!important;
+  line-height:1.3!important;
+  letter-spacing:1.6px!important;
+  text-transform:uppercase!important;
+}
+[role="dialog"] input,
+[role="dialog"] select,
+[role="dialog"] button[role="combobox"],
+[role="dialog"] .PhoneInput{
+  height:42px!important;
+  border:1px solid rgba(27,27,27,0.16)!important;
+  border-radius:0!important;
+  background:#FFFFFF!important;
+  color:#1B1B1B!important;
+  box-shadow:none!important;
+  font-size:12px!important;
+  font-weight:400!important;
+}
+[role="dialog"] input::placeholder{color:#AAA5A3!important;}
+[role="dialog"] .PhoneInput{
+  align-items:center!important;
+  overflow:hidden!important;
+  padding:0 12px!important;
+}
+[role="dialog"] .PhoneInputCountry{
+  height:100%!important;
+  display:flex!important;
+  align-items:center!important;
+  margin-right:10px!important;
+  padding-right:10px!important;
+  border-right:1px solid rgba(27,27,27,0.12)!important;
+}
+[role="dialog"] .PhoneInputInput,
+[role="dialog"] .PhoneInput input{
+  height:100%!important;
+  min-width:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:0!important;
+}
+[role="dialog"] input:focus,
+[role="dialog"] input:focus-visible,
+[role="dialog"] button[role="combobox"]:focus,
+[role="dialog"] button[role="combobox"]:focus-visible,
+[role="dialog"] .PhoneInput:focus-within{
+  outline:none!important;
+  border-color:#CC8A66!important;
+  box-shadow:0 0 0 1px #CC8A66!important;
+}
+[role="dialog"] button[type="submit"]{
+  height:44px!important;
+  border:1px solid #1B1B1B!important;
+  border-radius:0!important;
+  background:#1B1B1B!important;
+  color:#FFFFFF!important;
+  box-shadow:none!important;
+  font-size:10px!important;
+  font-weight:600!important;
+  letter-spacing:2.6px!important;
+  text-transform:uppercase!important;
+}
+[role="dialog"] button[type="submit"]:hover{
+  border-color:#CC8A66!important;
+  background:#CC8A66!important;
+}
+[role="dialog"]>button[class*="right-4"][class*="top-4"]{
+  top:24px!important;
+  right:24px!important;
+  width:32px!important;
+  height:32px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:1px solid rgba(27,27,27,0.16)!important;
+  border-radius:0!important;
+  background:#FFFFFF!important;
+  color:#1B1B1B!important;
+  opacity:1!important;
+}
+[role="dialog"]>button[class*="right-4"][class*="top-4"]:hover{
+  border-color:#CC8A66!important;
+  color:#CC8A66!important;
+}
+[role="dialog"] svg{color:currentColor;}
+[role="dialog"] div[class*="items-center"][class*="gap-2"] svg{color:#CC8A66;}
+[role="dialog"] div[class*="items-center"][class*="gap-2"] span{
+  color:#1B1B1B!important;
+  font-size:12px!important;
+  font-weight:400!important;
+}
+@media (max-width:640px){
+  [role="dialog"][data-state]{
+    width:calc(100vw - 24px)!important;
+    max-height:calc(100vh - 40px)!important;
+    padding:22px 18px 18px!important;
+  }
+  [role="dialog"] h2{font-size:12px!important;letter-spacing:1.4px!important;}
+  [role="dialog"]>button[class*="right-4"][class*="top-4"]{top:16px!important;right:16px!important;}
+  [role="dialog"]>div[class*="overflow-y-auto"]{max-height:calc(100vh - 156px)!important;}
+}
+`;
+
 const sectionRoutes={
   '/spazio-privato/':'cosa',
   '/come-funziona/':'funziona',
@@ -163,6 +309,14 @@ function initSportigoDialogTitleGuard(){
     return false;
   }
 
+  function installDialogTheme(root){
+    if(!(root instanceof ShadowRoot)||root.getElementById('nest-sportigo-dialog-theme')) return;
+    const style=document.createElement('style');
+    style.id='nest-sportigo-dialog-theme';
+    style.textContent=sportigoDialogThemeCss;
+    root.appendChild(style);
+  }
+
   Document.prototype.getElementById=function(id){
     const found=nativeGetElementById.call(this,id);
     if(found||this!==document||!id) return found;
@@ -178,6 +332,7 @@ function initSportigoDialogTitleGuard(){
       observedRoots.add(root);
       observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role','aria-hidden','hidden','style','class','data-state']});
     }
+    installDialogTheme(root);
     root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
       createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
     });
