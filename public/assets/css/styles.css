@@ -68,6 +68,8 @@ body.cursor-on-dark .cursor-follower{border-color:rgba(255,255,255,0.45)}
 body.sportigo-dialog-open .cursor,
 body.sportigo-dialog-open .cursor-follower{visibility:hidden}
 body.sportigo-dialog-open .cookie-preferences{opacity:0;pointer-events:none}
+body.sportigo-dialog-open nav,
+body.sportigo-dialog-open .mobile-menu{opacity:0;visibility:hidden;pointer-events:none}
 body.sportigo-dialog-open .sportigo-widget-frame,
 body.sportigo-dialog-open .sportigo-widget,
 body.sportigo-dialog-open #sportigo-container,

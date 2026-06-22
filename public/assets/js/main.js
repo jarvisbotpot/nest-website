@@ -42,6 +42,8 @@ patchSportigoSvgClassNameStringMethods();
 const sportigoDialogThemeCss=`
 [role="dialog"][data-state]{
   box-sizing:border-box;
+  position:fixed!important;
+  z-index:1200!important;
   width:min(calc(100vw - 32px),560px)!important;
   height:auto!important;
   height:fit-content!important;
@@ -375,6 +377,14 @@ function initSportigoDialogTitleGuard(){
     return false;
   }
 
+  function closeMobileMenuForDialog(){
+    const mobileMenu=document.getElementById('mobileMenu');
+    const hamburger=document.getElementById('hamburger');
+    if(mobileMenu) mobileMenu.classList.remove('open');
+    if(hamburger) hamburger.classList.remove('open');
+    if(hamburger) hamburger.setAttribute('aria-expanded','false');
+  }
+
   function restorePageInteractivityAfterStaleDialog(){
     if(hasVisibleDialog()) return;
     document.body.classList.remove('sportigo-dialog-open');
@@ -393,6 +403,7 @@ function initSportigoDialogTitleGuard(){
     const visible=hasVisibleDialog();
     document.body.classList.toggle('sportigo-dialog-open',visible);
     if(visible){
+      closeMobileMenuForDialog();
       if(staleLockTimer) clearTimeout(staleLockTimer);
       staleLockTimer=0;
       return;
