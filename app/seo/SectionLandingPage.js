@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { absoluteUrl, siteUrl, withBasePath, withBasePathHtml } from '../site-paths';
+import { absoluteUrl, searchRobots, siteUrl, withBasePath, withBasePathHtml } from '../site-paths';
 
 export function buildSectionMetadata(section) {
   return {
@@ -9,6 +9,7 @@ export function buildSectionMetadata(section) {
     alternates: {
       canonical: section.path,
     },
+    robots: searchRobots,
     openGraph: {
       title: `${section.title} - NEST Pavia`,
       description: section.description,

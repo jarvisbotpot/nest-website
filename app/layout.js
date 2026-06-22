@@ -1,6 +1,6 @@
 import Script from 'next/script';
 import './globals.css';
-import { siteUrl, withBasePath } from './site-paths';
+import { searchRobots, siteUrl, withBasePath } from './site-paths';
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
@@ -20,10 +20,7 @@ export const metadata = {
     'allenamento privato Pavia',
     'NEST Pavia',
   ],
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: searchRobots,
   openGraph: {
     type: 'website',
     locale: 'it_IT',
