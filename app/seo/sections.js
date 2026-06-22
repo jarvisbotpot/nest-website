@@ -1,4 +1,6 @@
-export const siteUrl = 'https://nest-pavia.it';
+import { siteUrl } from '../site-paths';
+
+export { siteUrl };
 
 export const sections = {
   'spazio-privato': {

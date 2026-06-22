@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { withBasePath, withBasePathHtml } from './site-paths';
 
 const SPORTIGO_PRIVACY_URL = 'https://www.sportigo.io/fr/regles-de-confidentialite';
 const SPORTIGO_TERMS_URL =
@@ -17,10 +18,10 @@ function extractHtml(source, startMarker, endMarker) {
 
 function getSiteChrome() {
   const home = readFileSync(join(process.cwd(), 'content/home.html'), 'utf8');
-  const header = extractHtml(home, '<div class="cursor"', '<!-- HERO -->')
+  const header = withBasePathHtml(extractHtml(home, '<div class="cursor"', '<!-- HERO -->'))
     .replace('<!-- HERO -->', '')
     .replace('<nav id="navbar">', '<nav id="navbar" class="scrolled legal-site-nav">');
-  const footer = extractHtml(home, '<footer>', '</footer>');
+  const footer = withBasePathHtml(extractHtml(home, '<footer>', '</footer>'));
 
   return { header, footer };
 }
@@ -222,7 +223,7 @@ export function LegalPage({ type }) {
     <>
       <div dangerouslySetInnerHTML={{ __html: header }} />
       <main className="legal-page">
-        <a href="/">Torna al sito</a>
+        <a href={withBasePath('/')}>Torna al sito</a>
         <h1 className="section-title">{page.title}</h1>
         <p className="legal-updated">Ultimo aggiornamento: {page.updatedAt}</p>
         <p className="section-body">{page.intro}</p>

@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { faqJsonLd, localBusinessJsonLd, siteNavigationJsonLd, websiteJsonLd } from './seo/structured-data';
+import { withBasePathHtml } from './site-paths';
 
 export default function HomePage() {
-  const html = readFileSync(join(process.cwd(), 'content/home.html'), 'utf8');
+  const html = withBasePathHtml(readFileSync(join(process.cwd(), 'content/home.html'), 'utf8'));
 
   return (
     <>

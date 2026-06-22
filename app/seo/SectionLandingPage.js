@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { absoluteUrl, siteUrl, withBasePath, withBasePathHtml } from '../site-paths';
 
 export function buildSectionMetadata(section) {
   return {
@@ -12,23 +13,23 @@ export function buildSectionMetadata(section) {
       title: `${section.title} - NEST Pavia`,
       description: section.description,
       url: section.path,
-      images: ['/assets/images/hero-gym.jpg'],
+      images: [withBasePath('/assets/images/hero-gym.jpg')],
     },
   };
 }
 
 export function SectionLandingPage({ section, targetId }) {
-  const html = readFileSync(join(process.cwd(), 'content/home.html'), 'utf8');
+  const html = withBasePathHtml(readFileSync(join(process.cwd(), 'content/home.html'), 'utf8'));
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${section.title} - NEST Pavia`,
     description: section.description,
-    url: `https://nest-pavia.it${section.path}`,
+    url: absoluteUrl(section.path),
     isPartOf: {
       '@type': 'WebSite',
       name: 'NEST Pavia',
-      url: 'https://nest-pavia.it',
+      url: siteUrl,
     },
   };
 

@@ -1,13 +1,13 @@
 {
   "name": "NEST Pavia",
   "short_name": "NEST",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#1B1B1B",
   "theme_color": "#1B1B1B",
   "icons": [
     {
-      "src": "/assets/images/favicon.svg",
+      "src": "assets/images/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }

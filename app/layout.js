@@ -1,8 +1,9 @@
 import Script from 'next/script';
 import './globals.css';
+import { siteUrl, withBasePath } from './site-paths';
 
 export const metadata = {
-  metadataBase: new URL('https://nest-pavia.it'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'NEST Pavia - Spazio fitness privato e personal training',
     template: '%s - NEST Pavia',
@@ -30,15 +31,15 @@ export const metadata = {
     title: 'NEST Pavia - Spazio fitness privato e personal training',
     description: 'Allenati in privato in uno spazio fitness esclusivo a Pavia.',
     url: '/',
-    images: ['/assets/images/hero-gym.jpg'],
+    images: [withBasePath('/assets/images/hero-gym.jpg')],
   },
   twitter: {
     card: 'summary_large_image',
   },
   icons: {
-    icon: '/assets/images/favicon.svg',
+    icon: withBasePath('/assets/images/favicon.svg'),
   },
-  manifest: '/site.webmanifest',
+  manifest: withBasePath('/site.webmanifest'),
 };
 
 export const viewport = {
@@ -57,7 +58,7 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Bodoni+Moda:ital,wght@1,400;1,500;1,600&display=swap"
           rel="stylesheet"
         />
-        <link rel="stylesheet" href="/assets/css/styles.css" />
+        <link rel="stylesheet" href={withBasePath('/assets/css/styles.css')} />
       </head>
       <body>
         {children}
@@ -72,7 +73,7 @@ export default function RootLayout({ children }) {
               Usiamo cookie tecnici necessari. Con il tuo consenso possiamo attivare servizi funzionali per
               prenotazioni/gift card e strumenti marketing come Meta Pixel per misurare le campagne.
             </p>
-            <a href="/cookie/">Leggi la Cookie Policy</a>
+            <a href={withBasePath('/cookie/')}>Leggi la Cookie Policy</a>
           </div>
           <div className="cookie-actions">
             <button className="cookie-btn cookie-btn-muted" id="cookieReject" type="button">
@@ -124,7 +125,7 @@ export default function RootLayout({ children }) {
         />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" strategy="afterInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" strategy="afterInteractive" />
-        <Script src="/assets/js/main.js" strategy="afterInteractive" />
+        <Script src={withBasePath('/assets/js/main.js')} strategy="afterInteractive" />
       </body>
     </html>
   );
