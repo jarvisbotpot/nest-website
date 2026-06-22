@@ -508,6 +508,15 @@ function normalizePath(path){
   return path.endsWith('/') ? path : path + '/';
 }
 
+function getSectionIdForPath(path){
+  const normalized=normalizePath(path);
+  if(sectionRoutes[normalized]) return sectionRoutes[normalized];
+  const route=Object.keys(sectionRoutes).find(function(routePath){
+    return normalized.endsWith(routePath);
+  });
+  return route ? sectionRoutes[route] : null;
+}
+
 function scrollToSectionId(sectionId, behavior='smooth'){
   const target=document.getElementById(sectionId);
   if(!target) return false;
@@ -517,7 +526,7 @@ function scrollToSectionId(sectionId, behavior='smooth'){
 }
 
 function handleSectionRoute(path, behavior='smooth'){
-  const sectionId=sectionRoutes[normalizePath(path)];
+  const sectionId=getSectionIdForPath(path);
   if(!sectionId) return false;
   return scrollToSectionId(sectionId,behavior);
 }
@@ -588,7 +597,7 @@ runWhenReady(function(){
     const url=new URL(link.href,window.location.href);
     if(url.origin!==window.location.origin) return;
 
-    const targetId=sectionRoutes[normalizePath(url.pathname)];
+    const targetId=getSectionIdForPath(url.pathname);
     if(!targetId) return;
     if(!document.getElementById(targetId)) return;
 
@@ -607,7 +616,7 @@ runWhenReady(function(){
     trackMetaPageView();
   });
 
-  const initialTarget=window.__NEST_TARGET_SECTION__||sectionRoutes[normalizePath(window.location.pathname)];
+  const initialTarget=window.__NEST_TARGET_SECTION__||getSectionIdForPath(window.location.pathname);
   if(initialTarget) {
     requestAnimationFrame(function(){scrollToSectionId(initialTarget,'auto');});
   }
