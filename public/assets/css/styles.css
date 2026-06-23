@@ -189,7 +189,7 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .equipment-board-head{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 34px;border-bottom:1px solid var(--gray-light)}
 .equipment-board-head span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray-mid)}
 .equipment-board-head strong{font-family:var(--serif);font-size:48px;font-style:italic;font-weight:500;line-height:1;color:var(--accent)}
-.equipment-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light)}
+.equipment-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light);border-top:1px solid var(--gray-light)}
 .equipment-column{background:var(--white);padding:36px 32px;min-height:300px}
 .equipment-kicker{display:block;font-family:var(--serif);font-size:34px;font-style:italic;color:var(--accent);line-height:1;margin-bottom:28px}
 .equipment-column h3{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--black);margin-bottom:18px}
