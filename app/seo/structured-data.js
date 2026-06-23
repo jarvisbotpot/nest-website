@@ -21,8 +21,8 @@ export const localBusinessJsonLd = {
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      opens: '06:00',
-      closes: '22:00',
+      opens: '05:00',
+      closes: '23:59',
     },
   ],
   sameAs: ['https://www.instagram.com/nest.pavia/'],
@@ -53,26 +53,42 @@ export const faqJsonLd = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'Quante persone possono allenarsi contemporaneamente?',
+      name: 'Come posso registrarmi?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Fino a un massimo di 4 persone, per garantire privacy, spazio e qualita dell allenamento.',
+        text: 'Scarica l app NEST dal tuo store digitale e crea un account personale inserendo i dati richiesti.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Come si prenota?',
+      name: 'Come effettuo una prenotazione?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Tramite app o piattaforma online, selezionando la fascia oraria desiderata. La cancellazione e gratuita fino a 24 ore prima.',
+        text: 'Acquista Crediti prepagati dall app NEST, poi seleziona il pulsante Prenota dalla Home e scegli data e orario desiderati.',
       },
     },
     {
       '@type': 'Question',
-      name: 'Posso portare il mio personal trainer?',
+      name: 'Qual e la politica di cancellazione?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Si, il trainer deve registrarsi per accedere. E possibile anche scegliere uno dei professionisti NEST.',
+        text: 'Puoi cancellare la prenotazione fino a 18 ore prima dell inizio dello slot, ottenendo il rimborso totale dei Crediti utilizzati.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Come si accede allo spazio?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Accedi all app NEST, seleziona il pulsante QR Code e scansiona il QR code di accesso fuori dalla porta d ingresso.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Sono presenti servizi igienici e docce?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Lo spazio dispone di servizi igienici con lavabo e wc, ma non e dotato di docce.',
       },
     },
   ],

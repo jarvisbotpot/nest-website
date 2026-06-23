@@ -17,12 +17,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nest-pavia.it/trainer/</loc>
-    <priority>0.8</priority>
+    <loc>https://nest-pavia.it/equipment/</loc>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nest-pavia.it/chi-siamo/</loc>
-    <priority>0.6</priority>
+    <loc>https://nest-pavia.it/trainer/</loc>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nest-pavia.it/gift-card/</loc>

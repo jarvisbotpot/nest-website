@@ -1,10 +1,13 @@
-import { buildSectionMetadata, SectionLandingPage } from '../seo/SectionLandingPage';
-import { sections } from '../seo/sections';
+import { redirect } from 'next/navigation';
 
-const section = sections['chi-siamo'];
-
-export const metadata = buildSectionMetadata(section);
+export const metadata = {
+  title: 'Cos e NEST',
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function ChiSiamoPage() {
-  return <SectionLandingPage section={section} targetId="chisiamo" />;
+  redirect('/spazio-privato/');
 }

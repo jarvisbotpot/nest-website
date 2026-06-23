@@ -177,6 +177,15 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .servizio-title{font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
 .servizio-desc{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8;color:var(--gray-dark)}
 
+/* ── EQUIPMENT ── */
+#equipment{padding:120px 60px;background:var(--off-white)}
+.equipment-inner{max-width:1200px;margin:0 auto}
+.equipment-top{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(320px,0.7fr);gap:80px;align-items:end;margin-bottom:64px}
+.equipment-top .section-body{margin-top:0}
+.equipment-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light)}
+.equipment-list span{background:var(--white);padding:22px 24px;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.55;color:var(--gray-dark);min-height:76px;display:flex;align-items:center}
+.equipment-list span::before{content:'';width:6px;height:6px;border:1px solid var(--accent);margin-right:14px;flex:0 0 auto}
+
 /* ── TRAINER EXPANDING CARDS ── */
 #trainer{padding:120px 60px;background:var(--off-white)}
 .trainer-inner{max-width:1200px;margin:0 auto}
@@ -314,9 +323,9 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 
 /* ── FAQ ── */
 #faq{padding:120px 60px;background:var(--white)}
-.faq-inner{max-width:1000px;margin:0 auto}
+.faq-inner{max-width:1200px;margin:0 auto}
 .faq-header{margin-bottom:72px}
-.faq-categories{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--gray-light)}
+.faq-categories{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--gray-light)}
 .faq-category{background:var(--white)}
 .faq-cat-title{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);padding:28px 32px 0}
 .faq-item{border-bottom:1px solid var(--gray-light);overflow:hidden}
@@ -330,7 +339,7 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .faq-icon::after{width:1px;height:10px;top:50%;left:50%;transform:translate(-50%,-50%)}
 .faq-question.open .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);opacity:0}
 .faq-answer{max-height:0;overflow:hidden;transition:max-height 0.4s ease}
-.faq-answer.open{max-height:200px}
+.faq-answer.open{max-height:360px}
 .faq-answer p{font-family:var(--sans);font-size:13px;font-weight:300;line-height:1.8;color:var(--gray-dark);padding:0 32px 24px}
 
 /* ── CONTATTI ── */
@@ -403,6 +412,14 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 .gc-widget-intro{padding:36px 0 24px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}
 .gc-widget-intro span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
 .gc-widget-intro p{max-width:360px;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.7;color:var(--gray-dark);text-align:right}
+
+@media (max-width: 1180px) and (min-width: 769px) {
+  nav { padding: 20px 32px; }
+  nav.scrolled { padding: 14px 32px; }
+  .nav-links { gap: 18px; }
+  .nav-links a { font-size: 9px; letter-spacing: 2px; }
+  .nav-cta { padding: 10px 18px; font-size: 9px; letter-spacing: 2px; }
+}
 
 
 /* ═══════════════════════════════
@@ -545,6 +562,12 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .servizi-top { margin-bottom: 48px; }
   .servizi-grid { grid-template-columns: repeat(2, 1fr); }
 
+  /* EQUIPMENT */
+  #equipment { padding: 80px 20px; }
+  .equipment-top { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+  .equipment-list { grid-template-columns: 1fr; }
+  .equipment-list span { min-height: auto; padding: 18px 20px; font-size: 11px; }
+
   /* TRAINER — vertical expanding cards on mobile */
   #trainer { padding: 80px 20px; }
   .expanding-cards {
@@ -573,14 +596,6 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .exp-card { min-height: 0; }
   .trainer-name { font-size: 15px; }
   .trainer-bio { opacity: 1; font-size: 11px; }
-
-  /* CHI SIAMO */
-  #chisiamo { padding: 80px 20px; }
-  .chisiamo-inner { grid-template-columns: 1fr; gap: 60px; }
-  .chisiamo-img { aspect-ratio: 4/3; }
-  .chisiamo-badge { bottom: -16px; right: -8px; padding: 14px 18px; }
-  .chisiamo-badge span { font-size: 11px; }
-  .chisiamo-mantra { font-size: 17px; }
 
   /* GIFT CARD */
   #giftcard { padding: 80px 20px; }
