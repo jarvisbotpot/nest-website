@@ -178,13 +178,28 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .servizio-desc{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8;color:var(--gray-dark)}
 
 /* ── EQUIPMENT ── */
-#equipment{padding:120px 60px;background:var(--off-white)}
+#equipment{padding:120px 60px;background:#201E1B;color:var(--white)}
 .equipment-inner{max-width:1200px;margin:0 auto}
-.equipment-top{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(320px,0.7fr);gap:80px;align-items:end;margin-bottom:64px}
-.equipment-top .section-body{margin-top:0}
-.equipment-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-light)}
-.equipment-list span{background:var(--white);padding:22px 24px;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.55;color:var(--gray-dark);min-height:76px;display:flex;align-items:center}
-.equipment-list span::before{content:'';width:6px;height:6px;border:1px solid var(--accent);margin-right:14px;flex:0 0 auto}
+.equipment-copy{max-width:720px;margin-bottom:56px}
+.equipment-copy .section-title{color:var(--white)}
+.equipment-copy .section-body{color:rgba(255,255,255,0.58);max-width:640px}
+.equipment-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.equipment-tags span{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.68);border:1px solid rgba(255,255,255,0.14);padding:10px 14px;background:rgba(255,255,255,0.035)}
+.equipment-panel{display:grid;grid-template-columns:minmax(360px,0.88fr) minmax(0,1fr);gap:1px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.1)}
+.equipment-panel.reveal,.equipment-panel.reveal.visible{transform:none}
+.equipment-visual{position:relative;min-height:520px;overflow:hidden;background:#141210}
+.equipment-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(16%) saturate(0.95) brightness(0.66)}
+.equipment-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,16,0.1),rgba(20,18,16,0.72))}
+.equipment-count{position:absolute;left:32px;bottom:32px;z-index:1;display:flex;align-items:flex-end;gap:18px}
+.equipment-count strong{font-family:var(--serif);font-size:92px;font-style:italic;font-weight:500;line-height:0.78;color:var(--accent)}
+.equipment-count span{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;line-height:1.55;color:rgba(255,255,255,0.72);padding-bottom:4px}
+.equipment-groups{display:grid;grid-template-rows:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.1)}
+.equipment-group{background:#272420;padding:34px 36px;display:grid;grid-template-columns:54px 1fr;column-gap:22px;align-content:center}
+.equipment-group-num{font-family:var(--serif);font-size:34px;font-style:italic;color:var(--accent);line-height:1}
+.equipment-group h3{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:16px}
+.equipment-group ul{grid-column:2;list-style:none;display:grid;gap:9px}
+.equipment-group li{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.55;color:rgba(255,255,255,0.62);position:relative;padding-left:16px}
+.equipment-group li::before{content:'';position:absolute;left:0;top:0.72em;width:5px;height:1px;background:var(--accent)}
 
 /* ── TRAINER EXPANDING CARDS ── */
 #trainer{padding:120px 60px;background:var(--off-white)}
@@ -564,9 +579,19 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 
   /* EQUIPMENT */
   #equipment { padding: 80px 20px; }
-  .equipment-top { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
-  .equipment-list { grid-template-columns: 1fr; }
-  .equipment-list span { min-height: auto; padding: 18px 20px; font-size: 11px; }
+  .equipment-copy { margin-bottom: 40px; }
+  .equipment-tags { gap: 8px; }
+  .equipment-tags span { font-size: 8px; letter-spacing: 1.6px; padding: 9px 11px; }
+  .equipment-panel { grid-template-columns: 1fr; }
+  .equipment-visual { min-height: 280px; }
+  .equipment-count { left: 22px; bottom: 22px; gap: 12px; }
+  .equipment-count strong { font-size: 64px; }
+  .equipment-count span { font-size: 8px; letter-spacing: 2px; }
+  .equipment-groups { grid-template-rows: auto; }
+  .equipment-group { padding: 26px 22px; grid-template-columns: 42px 1fr; column-gap: 14px; }
+  .equipment-group-num { font-size: 28px; }
+  .equipment-group h3 { font-size: 10px; letter-spacing: 2px; margin-bottom: 12px; }
+  .equipment-group li { font-size: 11px; }
 
   /* TRAINER — vertical expanding cards on mobile */
   #trainer { padding: 80px 20px; }
