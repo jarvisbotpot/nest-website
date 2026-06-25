@@ -370,7 +370,6 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 .footer-contacts-title{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;display:block}
 .footer-contacts a,.footer-contacts p{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;display:block;margin-bottom:6px;line-height:1.6;transition:color 0.3s}
 .footer-contacts a:hover{color:var(--accent)}
-.footer-company{margin-top:16px;color:rgba(255,255,255,0.34)!important}
 .footer-social{display:flex;gap:20px;margin-top:8px}
 .footer-social a{font-family:var(--sans);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.3s}
 .footer-social a:hover{color:var(--accent)}
