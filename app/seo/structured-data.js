@@ -5,6 +5,9 @@ export const localBusinessJsonLd = {
   '@type': 'HealthClub',
   '@id': `${siteUrl}/#nest-pavia`,
   name: 'NEST Pavia',
+  legalName: 'ESSEPI S.R.L.',
+  taxID: '03016970182',
+  vatID: 'IT03016970182',
   url: siteUrl,
   image: `${siteUrl}/assets/images/hero-gym.jpg`,
   description:

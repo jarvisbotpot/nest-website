@@ -6,6 +6,9 @@ const SPORTIGO_PRIVACY_URL = 'https://www.sportigo.io/fr/regles-de-confidentiali
 const SPORTIGO_TERMS_URL =
   'https://cdn.prod.website-files.com/6026a3b1f0c5d55691a55af1/65df1bea3a88d0237801aaae_CONDITIONS%20GE%CC%81NE%CC%81RALES%20DE%20VENTE.pdf';
 const META_PRIVACY_URL = 'https://www.facebook.com/privacy/policy/';
+const COMPANY_LEGAL_NAME = 'ESSEPI S.R.L.';
+const COMPANY_LEGAL_ADDRESS = 'Via G. Moruzzi n. 45/c, 27100 Pavia';
+const COMPANY_TAX_ID = 'C.F./P.IVA 03016970182';
 
 function extractHtml(source, startMarker, endMarker) {
   const start = source.indexOf(startMarker);
@@ -29,14 +32,14 @@ function getSiteChrome() {
 const pages = {
   privacy: {
     title: 'Privacy Policy',
-    updatedAt: '21 giugno 2026',
+    updatedAt: '25 giugno 2026',
     intro:
       'Questa informativa descrive in modo sintetico come NEST Pavia tratta i dati personali raccolti tramite il sito e i servizi digitali collegati.',
     sections: [
       {
         title: 'Titolare del trattamento',
         body: [
-          'Il titolare del trattamento sarà indicato nella versione definitiva con ragione sociale, sede, P.IVA e recapiti ufficiali di NEST Pavia.',
+          `Il titolare del trattamento è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
           'Per richieste privacy e informazioni puoi usare il contatto email indicato sul sito: info@nest-pavia.it.',
         ],
       },
@@ -72,21 +75,21 @@ const pages = {
       {
         title: 'Nota',
         body: [
-          'Questa pagina è una bozza operativa e deve essere verificata con dati societari definitivi e consulente legale prima della pubblicazione finale.',
+          'Questa pagina deve essere verificata con un consulente legale prima della pubblicazione finale.',
         ],
       },
     ],
   },
   cookie: {
     title: 'Cookie Policy',
-    updatedAt: '21 giugno 2026',
+    updatedAt: '25 giugno 2026',
     intro:
       'Questa Cookie Policy descrive l’uso di cookie, local storage, pixel e tecnologie simili sul sito NEST Pavia e nei servizi integrati.',
     sections: [
       {
         title: 'Titolare e contatti',
         body: [
-          'Il sito è riferito a NEST Pavia, spazio fitness privato con sede operativa in Viale Lodi 1, 27100 Pavia (PV).',
+          `Il sito è riferito a NEST Pavia, spazio fitness privato con sede operativa in Viale Lodi 1, 27100 Pavia (PV). Il titolare è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
           'Per richieste relative a cookie, consenso e strumenti di tracciamento puoi scrivere a info@nest-pavia.it.',
         ],
       },
@@ -153,10 +156,17 @@ const pages = {
   },
   terms: {
     title: 'Termini e Condizioni',
-    updatedAt: '21 giugno 2026',
+    updatedAt: '25 giugno 2026',
     intro:
       'Questi termini regolano l’uso del sito NEST Pavia e, in forma sintetica, l’accesso ai servizi di prenotazione dello spazio.',
     sections: [
+      {
+        title: 'Gestore',
+        body: [
+          `NEST Pavia è gestito da ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
+          'La sede operativa dello spazio è in Viale Lodi 1, 27100 Pavia (PV).',
+        ],
+      },
       {
         title: 'Oggetto del servizio',
         body: [
@@ -208,7 +218,7 @@ const pages = {
       {
         title: 'Nota',
         body: [
-          'Questi termini sono una bozza operativa. Prima della pubblicazione finale vanno completati con dati societari, prezzi, policy definitive di cancellazione e validazione legale.',
+          'Questi termini devono essere verificati con un consulente legale prima della pubblicazione finale.',
         ],
       },
     ],
