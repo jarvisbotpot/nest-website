@@ -276,7 +276,7 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .app-download-copy{min-height:500px;padding:54px 48px;background:rgba(255,255,255,0.045);display:flex;flex-direction:column;justify-content:space-between;gap:34px}
 .app-download-copy h3{max-width:520px;font-family:var(--sans);font-size:34px;font-weight:300;line-height:1.22;color:var(--white);letter-spacing:0}
 .app-download-copy p{max-width:520px;font-family:var(--sans);font-size:13px;font-weight:300;line-height:1.85;color:rgba(255,255,255,0.56)}
-.app-store-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:auto}
+.app-store-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:auto}
 .store-badge-link{display:inline-flex;align-items:center;justify-content:center;min-height:64px;text-decoration:none;transition:opacity 0.25s,transform 0.25s}
 .store-badge-link:hover{opacity:0.86;transform:translateY(-1px)}
 .store-badge-link:focus-visible{outline:1px solid var(--accent);outline-offset:6px}
@@ -293,7 +293,11 @@ html[data-app-device="android"] .app-qr-card{display:none}
 html[data-app-device="ios"] .app-download-panel,
 html[data-app-device="android"] .app-download-panel{grid-template-columns:minmax(0,760px);justify-content:center}
 html[data-app-device="ios"] .app-download-copy,
-html[data-app-device="android"] .app-download-copy{min-height:360px}
+html[data-app-device="android"] .app-download-copy{min-height:360px;text-align:center;align-items:center}
+html[data-app-device="ios"] .app-store-actions,
+html[data-app-device="android"] .app-store-actions{justify-content:center;margin-top:4px}
+html[data-app-device="ios"] .app-download-copy .store-legal-note,
+html[data-app-device="android"] .app-download-copy .store-legal-note{text-align:center}
 .app-download-panel-compact .app-download-copy{min-height:420px}
 .prenotazione-access{text-align:center;margin-top:44px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .prenotazione-access p{font-family:var(--sans);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25)}
@@ -598,12 +602,13 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   #prenotazione { padding: 80px 20px; }
   .app-download-section-page { min-height: 0; padding: 120px 20px 80px; }
   .app-download-panel { grid-template-columns: 1fr; }
-  .app-download-copy { min-height: auto; padding: 28px 22px; gap: 22px; }
+  .app-download-copy { min-height: auto; padding: 30px 22px 32px; gap: 18px; text-align: center; align-items: center; }
   .app-download-copy h3 { font-size: 22px; max-width: none; }
-  .app-download-copy p { font-size: 12px; }
-  .app-store-actions { order: -1; flex-direction: column; align-items: flex-start; min-height: 64px; }
+  .app-download-copy p { font-size: 12px; max-width: 310px; }
+  .app-store-actions { flex-direction: column; align-items: center; justify-content: center; min-height: 64px; margin-top: 4px; }
   .store-badge-link img { height: 46px; }
   .store-badge-link[data-store-target="android"] img { height: 54px; }
+  .app-download-copy .store-legal-note { margin-top: -4px; text-align: center; max-width: 310px; }
   html:not([data-app-device]) .app-store-actions .store-badge-link { display: none; }
   .app-qr-card { display: none; padding: 26px 22px 28px; }
   .app-qr-card img { width: min(100%, 220px); border-width: 12px; }
