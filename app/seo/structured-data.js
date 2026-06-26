@@ -28,7 +28,7 @@ export const localBusinessJsonLd = {
       closes: '23:59',
     },
   ],
-  sameAs: ['https://www.instagram.com/nest.pavia/'],
+  sameAs: ['https://www.instagram.com/nesttrainingspace'],
 };
 
 export const websiteJsonLd = {
