@@ -4,7 +4,7 @@
 
 - Confermare claim principale e testi finali.
 - Confermare indirizzo: Viale Lodi 1, 27100 Pavia.
-- Confermare email pubblica: `info@nest-pavia.it`.
+- Confermare email pubblica protetta nel sito.
 - Aggiungere telefono o WhatsApp se deve essere visibile.
 - Confermare link Instagram/social.
 - Confermare link di prenotazione Sportigo o piattaforma finale.

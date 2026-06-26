@@ -40,7 +40,7 @@ const pages = {
         title: 'Titolare del trattamento',
         body: [
           `Il titolare del trattamento è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
-          'Per richieste privacy e informazioni puoi usare il contatto email indicato sul sito: info@nest-pavia.it.',
+          'Per richieste privacy e informazioni puoi usare il contatto email indicato nella sezione Contatti del sito.',
         ],
       },
       {
@@ -90,7 +90,7 @@ const pages = {
         title: 'Titolare e contatti',
         body: [
           `Il sito è riferito a NEST Pavia, spazio fitness privato con sede operativa in Viale Lodi 1, 27100 Pavia (PV). Il titolare è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
-          'Per richieste relative a cookie, consenso e strumenti di tracciamento puoi scrivere a info@nest-pavia.it.',
+          'Per richieste relative a cookie, consenso e strumenti di tracciamento puoi usare il contatto email indicato nella sezione Contatti del sito.',
         ],
       },
       {

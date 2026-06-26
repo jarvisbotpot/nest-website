@@ -1143,6 +1143,33 @@ function initWhatsAppContact(){
 }
 runWhenReady(initWhatsAppContact);
 
+function getNestEmailAddress(){
+  return [
+    [105,110,102,111],
+    [110,101,115,116,45,112,97,118,105,97],
+    [105,116]
+  ].map(function(part){
+    return part.map(function(code){return String.fromCharCode(code);}).join('');
+  }).join(String.fromCharCode(64)).replace('@it','.it');
+}
+function initEmailContact(){
+  const buttons=document.querySelectorAll('[data-nest-email]');
+  if(!buttons.length) return;
+  const email=getNestEmailAddress();
+  buttons.forEach(function(button){
+    button.setAttribute('aria-label',`Scrivi a NEST via email a ${email}`);
+    button.querySelectorAll('[data-nest-email-label]').forEach(function(node){
+      node.textContent=email;
+    });
+  });
+  document.addEventListener('click',function(e){
+    const button=e.target.closest('[data-nest-email]');
+    if(!button||e.isTrusted===false) return;
+    window.location.href=`mailto:${email}`;
+  });
+}
+runWhenReady(initEmailContact);
+
 // SPORTIGO WIDGETS
 function loadSportigoScript(){
   loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);

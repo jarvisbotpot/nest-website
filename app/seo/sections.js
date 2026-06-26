@@ -135,7 +135,7 @@ export const sections = {
       'Viale Lodi 1, 27100 Pavia',
       'Aperto 7 giorni su 7',
       'Orari 05:00-24:00',
-      'Email: info@nest-pavia.it',
+      'Contatto email nella sezione Contatti',
     ],
   },
 };
