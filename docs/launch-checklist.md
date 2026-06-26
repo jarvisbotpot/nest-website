@@ -7,7 +7,8 @@
 - Confermare email pubblica protetta nel sito.
 - Aggiungere telefono o WhatsApp se deve essere visibile.
 - Confermare link Instagram/social.
-- Confermare link di prenotazione Sportigo o piattaforma finale.
+- Confermare link App Store e Google Play dell'app NEST.
+- Rigenerare QR code app sul dominio definitivo.
 
 ## Asset
 

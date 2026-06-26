@@ -1,31 +1,26 @@
 import { AppDownloadPanel } from '../AppDownloadPanel';
 import { appStoreLinks } from '../app-links';
+import { AppRedirect } from './AppRedirect';
 import { getSiteChrome } from '../site-chrome';
 import { absoluteUrl, searchRobots } from '../site-paths';
 
 export const metadata = {
-  title: 'Scarica l app NEST',
-  description:
-    'Scarica l app NEST per acquistare crediti, prenotare il tuo slot e gestire l accesso allo spazio fitness privato a Pavia.',
+  title: 'Download app NEST',
+  description: 'Apri lo store corretto per scaricare l app NEST su iPhone, iPad o Android.',
   alternates: {
-    canonical: '/prenota/',
+    canonical: '/app/',
   },
   robots: searchRobots,
-  openGraph: {
-    title: 'Scarica l app NEST - NEST Pavia',
-    description: 'Prenotazioni, crediti e accesso allo spazio NEST direttamente dallo smartphone.',
-    url: '/prenota/',
-  },
 };
 
-export default function PrenotaPage() {
+export default function AppPage() {
   const { header, footer } = getSiteChrome();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Scarica l app NEST - NEST Pavia',
+    name: 'Download app NEST',
     description: metadata.description,
-    url: absoluteUrl('/prenota/'),
+    url: absoluteUrl('/app/'),
     potentialAction: appStoreLinks.map((store) => ({
       '@type': 'DownloadAction',
       target: store.href,
@@ -36,23 +31,24 @@ export default function PrenotaPage() {
 
   return (
     <>
+      <AppRedirect />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div dangerouslySetInnerHTML={{ __html: header }} />
       <main className="app-page">
-        <section id="prenotazione" className="app-download-section app-download-section-page">
+        <section className="app-download-section app-download-section-page">
           <div className="prenotazione-inner">
             <div className="prenotazione-header">
               <span className="eyebrow" style={{ color: 'var(--accent)' }}>
-                Prenota
+                Download app
               </span>
               <h1 className="section-title">
-                Scarica l'app <em>NEST.</em>
+                Apri l'app <em>NEST.</em>
               </h1>
               <p className="section-body">
-                Prenota il tuo slot, acquista crediti e gestisci l'accesso allo spazio direttamente dallo smartphone.
+                Se il redirect automatico non parte, scegli manualmente lo store del tuo dispositivo.
               </p>
             </div>
-            <AppDownloadPanel />
+            <AppDownloadPanel compact />
           </div>
         </section>
       </main>

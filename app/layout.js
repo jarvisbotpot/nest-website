@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
             <h2 id="cookieTitle">Gestione cookie</h2>
             <p>
               Usiamo cookie tecnici necessari. Con il tuo consenso possiamo attivare servizi funzionali per
-              prenotazioni/gift card e strumenti marketing come Meta Pixel per misurare le campagne.
+              gift card e servizi collegati, oltre a strumenti marketing come Meta Pixel per misurare le campagne.
             </p>
             <a href={withBasePath('/cookie/')}>Leggi la Cookie Policy</a>
           </div>
@@ -94,7 +94,7 @@ export default function RootLayout({ children }) {
             <label className="cookie-toggle">
               <span>
                 <strong>Funzionali</strong>
-                <small>Attivano Sportigo per prenotazioni, area utente e gift card.</small>
+                <small>Attivano Sportigo per gift card e servizi collegati.</small>
               </span>
               <input id="cookieFunctional" type="checkbox" />
             </label>

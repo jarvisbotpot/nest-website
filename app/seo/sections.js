@@ -94,18 +94,18 @@ export const sections = {
     ],
   },
   prenota: {
-    title: 'Prenota NEST Pavia',
-    eyebrow: 'Prenotazione',
+    title: 'Scarica l app NEST',
+    eyebrow: 'App NEST',
     description:
-      'Prenota il tuo slot NEST a Pavia e allenati in uno spazio privato per 75 minuti, da solo, con trainer o in piccolo gruppo.',
+      'Scarica l app NEST per acquistare crediti, prenotare il tuo slot e gestire l accesso allo spazio fitness privato a Pavia.',
     path: '/prenota/',
-    cta: 'Vai alla prenotazione',
+    cta: 'Scarica l app',
     ctaHref: '/#prenotazione',
     bullets: [
+      'Download da App Store',
+      'Download da Google Play',
       'Slot da 75 minuti',
-      'Massimo 4 persone',
-      'Accesso digitale',
-      'Prenotazione online tramite Sportigo',
+      'Prenotazione e accesso dall app',
     ],
   },
   faq: {
