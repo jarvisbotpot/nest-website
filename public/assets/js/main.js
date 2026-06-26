@@ -1110,65 +1110,101 @@ function initDynamicSlots(){
 runWhenReady(initDynamicSlots);
 window.addEventListener('nest:consent-changed',loadDynamicSlots);
 
-function getNestWhatsAppDigits(){
-  return [51,57,51,51,57,51,53,53,56,53,50,49].map(function(code){
-    return String.fromCharCode(code);
-  }).join('');
+const nestContactShield={
+  salt:'b/JtBAPRfrYOU6U680kSfA==',
+  iv:'2Pe00mZ3mfW5J7j3',
+  data:'CSiF8f7zXg5qGhqnFoFU88gEkhQ4v9XvzmjIELinMgRSttLU1bnhkn9bJNRiC23yNR7IRpn1e8mJqLosQlc925B54ZXD9l8='
+};
+let nestContactCache=null;
+let nestContactArmedAt=0;
+
+function bytesFromBase64(value){
+  return Uint8Array.from(atob(value),function(char){return char.charCodeAt(0);});
 }
-function formatNestWhatsAppLabel(digits){
-  return `+${digits.slice(0,2)} ${digits.slice(2,5)} ${digits.slice(5,12)}`;
+function contactKeyMaterial(){
+  return ['NEST','Pavia','Private Space','Exclusive Training','Viale Lodi','Moruzzi','contatti','2026','shield-v2'].join('|');
 }
-function initWhatsAppContact(){
-  const buttons=document.querySelectorAll('[data-nest-whatsapp]');
+async function decryptNestContacts(){
+  if(nestContactCache) return nestContactCache;
+  if(!window.crypto?.subtle) throw new Error('contact_crypto_unavailable');
+
+  const encoder=new TextEncoder();
+  const material=await crypto.subtle.importKey('raw',encoder.encode(contactKeyMaterial()),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:bytesFromBase64(nestContactShield.salt),iterations:180000,hash:'SHA-256'},
+    material,
+    {name:'AES-GCM',length:256},
+    false,
+    ['decrypt']
+  );
+  const decrypted=await crypto.subtle.decrypt(
+    {name:'AES-GCM',iv:bytesFromBase64(nestContactShield.iv)},
+    key,
+    bytesFromBase64(nestContactShield.data)
+  );
+  nestContactCache=JSON.parse(new TextDecoder().decode(decrypted));
+  return nestContactCache;
+}
+function armNestContact(e){
+  if(e.isTrusted===false) return;
+  if(!e.target.closest('[data-nest-contact]')) return;
+  nestContactArmedAt=Date.now();
+}
+function isNestContactGesture(e){
+  if(e.isTrusted===false) return false;
+  if(navigator.webdriver===true) return false;
+  if(!document.hasFocus()) return false;
+  return Date.now()-nestContactArmedAt<2500;
+}
+function buildContactUrl(type,contacts){
+  if(type==='email') return ['ma','il','to',':'].join('')+contacts.mailbox;
+  if(type==='whatsapp') return ['https://','wa','.me','/'].join('')+contacts.whats;
+  return '';
+}
+function setContactBusy(button,busy){
+  button.disabled=busy;
+  button.classList.toggle('is-resolving',busy);
+}
+function initProtectedContacts(){
+  const buttons=document.querySelectorAll('[data-nest-contact]');
   if(!buttons.length) return;
-  const digits=getNestWhatsAppDigits();
-  const label=formatNestWhatsAppLabel(digits);
   buttons.forEach(function(button){
-    button.setAttribute('aria-label',`Apri WhatsApp per contattare NEST al ${label}`);
-    button.querySelectorAll('[data-nest-whatsapp-label]').forEach(function(node){
-      node.textContent=label;
-    });
+    const type=button.dataset.nestContact;
+    button.setAttribute('aria-label',type==='email'?'Scrivi a NEST via email':'Apri WhatsApp per contattare NEST');
   });
-  document.addEventListener('click',function(e){
-    const button=e.target.closest('[data-nest-whatsapp]');
-    if(!button||e.isTrusted===false) return;
-    const url=`https://wa.me/${digits}`;
-    const opened=window.open(url,'_blank');
-    if(opened){
-      opened.opener=null;
-    }else{
-      window.location.href=url;
+  document.addEventListener('pointerdown',armNestContact,true);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' ') armNestContact(e);
+  },true);
+  document.addEventListener('click',async function(e){
+    const button=e.target.closest('[data-nest-contact]');
+    if(!button||!isNestContactGesture(e)) return;
+
+    const type=button.dataset.nestContact;
+    const pendingWindow=type==='whatsapp'?window.open('','_blank'):null;
+    setContactBusy(button,true);
+    try{
+      const contacts=await decryptNestContacts();
+      const url=buildContactUrl(type,contacts);
+      if(!url) return;
+      if(type==='whatsapp'){
+        if(pendingWindow){
+          pendingWindow.opener=null;
+          pendingWindow.location.href=url;
+        }else{
+          window.location.href=url;
+        }
+      }else{
+        window.location.href=url;
+      }
+    }catch(error){
+      if(pendingWindow) pendingWindow.close();
+    }finally{
+      setContactBusy(button,false);
     }
   });
 }
-runWhenReady(initWhatsAppContact);
-
-function getNestEmailAddress(){
-  return [
-    [105,110,102,111],
-    [110,101,115,116,45,112,97,118,105,97],
-    [105,116]
-  ].map(function(part){
-    return part.map(function(code){return String.fromCharCode(code);}).join('');
-  }).join(String.fromCharCode(64)).replace('@it','.it');
-}
-function initEmailContact(){
-  const buttons=document.querySelectorAll('[data-nest-email]');
-  if(!buttons.length) return;
-  const email=getNestEmailAddress();
-  buttons.forEach(function(button){
-    button.setAttribute('aria-label',`Scrivi a NEST via email a ${email}`);
-    button.querySelectorAll('[data-nest-email-label]').forEach(function(node){
-      node.textContent=email;
-    });
-  });
-  document.addEventListener('click',function(e){
-    const button=e.target.closest('[data-nest-email]');
-    if(!button||e.isTrusted===false) return;
-    window.location.href=`mailto:${email}`;
-  });
-}
-runWhenReady(initEmailContact);
+runWhenReady(initProtectedContacts);
 
 // SPORTIGO WIDGETS
 function loadSportigoScript(){
