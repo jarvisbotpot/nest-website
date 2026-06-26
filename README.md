@@ -45,7 +45,7 @@ Le PageView e gli eventi Meta sono inviati solo dopo consenso marketing. Gli eve
 
 ### App NEST
 
-La pagina `/prenota/` mostra il QR code dell'app e i link App Store / Google Play. La pagina `/app/` fa redirect client-side allo store corretto in base al dispositivo. La CTA gift card porta all'app NEST.
+La pagina `/prenota/` mostra i badge ufficiali App Store / Google Play. Da mobile resta visibile solo lo store compatibile con il dispositivo; da desktop restano entrambi i badge e il QR per aprire `/app/` dallo smartphone. La pagina `/app/` fa redirect client-side allo store corretto. La CTA gift card porta all'app NEST.
 
 ## Prossimo lavoro
 

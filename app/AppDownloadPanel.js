@@ -1,5 +1,5 @@
 import { absoluteUrl, withBasePath } from './site-paths';
-import { appStoreLinks } from './app-links';
+import { AppStoreSelector } from './AppStoreSelector';
 
 export function AppDownloadPanel({ compact = false }) {
   return (
@@ -10,27 +10,15 @@ export function AppDownloadPanel({ compact = false }) {
         <p>
           Scarica l'app NEST per acquistare crediti, prenotare lo slot e gestire l'accesso allo spazio.
         </p>
-        <div className="app-store-actions" aria-label="Link download app NEST">
-          {appStoreLinks.map((store) => (
-            <a
-              className="store-button"
-              href={store.href}
-              target="_blank"
-              rel="noopener"
-              key={store.href}
-              data-meta-event="Lead"
-              data-meta-source={`app_${store.platform.toLowerCase()}`}
-            >
-              <span>{store.platform}</span>
-              <strong>{store.label}</strong>
-            </a>
-          ))}
-        </div>
+        <AppStoreSelector />
+        <p className="store-legal-note">
+          Apple, il logo Apple e App Store sono marchi di Apple Inc. Google Play e il logo Google Play sono marchi di Google LLC.
+        </p>
       </div>
-      <div className="app-qr-card">
-        <span>QR unico</span>
+      <div className="app-qr-card" data-app-qr-card>
+        <span>Scansiona per scaricare l'app</span>
         <img src={withBasePath('/assets/images/nest-app-qr.svg')} alt={`QR code download app NEST: ${absoluteUrl('/app/')}`} />
-        <p>Scansionalo con la fotocamera: ti porta allo store corretto in base al dispositivo.</p>
+        <p>Da desktop inquadra il codice con la fotocamera del telefono e apri lo store del tuo dispositivo.</p>
       </div>
     </div>
   );

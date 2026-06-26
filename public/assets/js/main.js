@@ -46,6 +46,27 @@ function handleSectionRoute(path, behavior='smooth'){
   return scrollToSectionId(sectionId,behavior);
 }
 
+function detectAppStoreDevice(){
+  const ua=navigator.userAgent||navigator.vendor||'';
+  if(/android/i.test(ua)) return 'android';
+  if(/iPad|iPhone|iPod/.test(ua)) return 'ios';
+  if(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1) return 'ios';
+  return 'desktop';
+}
+
+function initAppStoreTargeting(){
+  const device=detectAppStoreDevice();
+  document.documentElement.dataset.appDevice=device;
+  document.querySelectorAll('.app-store-actions').forEach(function(actions){
+    actions.dataset.device=device;
+    actions.querySelectorAll('[data-store-target]').forEach(function(link){
+      const target=link.dataset.storeTarget;
+      link.hidden=(device==='ios'||device==='android')&&target!==device;
+    });
+  });
+}
+runWhenReady(initAppStoreTargeting);
+
 // CURSOR
 const cursor=document.getElementById('cursor');
 const follower=document.getElementById('cursorFollower');
