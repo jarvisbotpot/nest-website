@@ -357,6 +357,9 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .contatti-detail{display:flex;gap:24px;margin-bottom:28px}
 .contatti-label{font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);min-width:80px;padding-top:2px}
 .contatti-value{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.75;color:var(--black)}
+.contatti-whatsapp{appearance:none;border:0;border-bottom:1px solid var(--accent);border-radius:0;background:transparent;color:var(--black);cursor:pointer;font:inherit;font-size:14px;font-weight:300;line-height:1.75;padding:0 0 2px;text-align:left;transition:color 0.3s}
+.contatti-whatsapp:hover,.contatti-whatsapp:focus-visible{color:var(--accent)}
+.contatti-whatsapp:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
 .contatti-social{display:flex;gap:20px;margin-top:44px;align-items:center}
 .contatti-social a{font-family:var(--sans);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:3px;transition:color 0.3s;display:flex;align-items:center;gap:8px}
 .contatti-social a:hover{color:var(--accent)}
@@ -370,6 +373,9 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 .footer-contacts-title{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;display:block}
 .footer-contacts a,.footer-contacts p{font-family:var(--sans);font-size:12px;font-weight:300;color:rgba(255,255,255,0.5);text-decoration:none;display:block;margin-bottom:6px;line-height:1.6;transition:color 0.3s}
 .footer-contacts a:hover{color:var(--accent)}
+.footer-whatsapp{appearance:none;border:0;border-radius:0;background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;display:block;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.6;margin:0 0 6px;padding:0;text-align:left;text-decoration:none;transition:color 0.3s}
+.footer-whatsapp:hover,.footer-whatsapp:focus-visible{color:var(--accent)}
+.footer-whatsapp:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
 .footer-social{display:flex;gap:20px;margin-top:8px}
 .footer-social a{font-family:var(--sans);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.3s}
 .footer-social a:hover{color:var(--accent)}

@@ -1110,6 +1110,39 @@ function initDynamicSlots(){
 runWhenReady(initDynamicSlots);
 window.addEventListener('nest:consent-changed',loadDynamicSlots);
 
+function getNestWhatsAppDigits(){
+  return [51,57,51,51,57,51,53,53,56,53,50,49].map(function(code){
+    return String.fromCharCode(code);
+  }).join('');
+}
+function formatNestWhatsAppLabel(digits){
+  return `+${digits.slice(0,2)} ${digits.slice(2,5)} ${digits.slice(5,12)}`;
+}
+function initWhatsAppContact(){
+  const buttons=document.querySelectorAll('[data-nest-whatsapp]');
+  if(!buttons.length) return;
+  const digits=getNestWhatsAppDigits();
+  const label=formatNestWhatsAppLabel(digits);
+  buttons.forEach(function(button){
+    button.setAttribute('aria-label',`Apri WhatsApp per contattare NEST al ${label}`);
+    button.querySelectorAll('[data-nest-whatsapp-label]').forEach(function(node){
+      node.textContent=label;
+    });
+  });
+  document.addEventListener('click',function(e){
+    const button=e.target.closest('[data-nest-whatsapp]');
+    if(!button||e.isTrusted===false) return;
+    const url=`https://wa.me/${digits}`;
+    const opened=window.open(url,'_blank');
+    if(opened){
+      opened.opener=null;
+    }else{
+      window.location.href=url;
+    }
+  });
+}
+runWhenReady(initWhatsAppContact);
+
 // SPORTIGO WIDGETS
 function loadSportigoScript(){
   loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);
