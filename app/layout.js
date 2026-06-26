@@ -67,8 +67,8 @@ export default function RootLayout({ children }) {
             <span className="cookie-eyebrow">Privacy</span>
             <h2 id="cookieTitle">Gestione cookie</h2>
             <p>
-              Usiamo cookie tecnici necessari. Con il tuo consenso possiamo attivare servizi funzionali per
-              gift card e servizi collegati, oltre a strumenti marketing come Meta Pixel per misurare le campagne.
+              Usiamo cookie tecnici necessari. Con il tuo consenso possiamo attivare strumenti marketing come Meta
+              Pixel per misurare le campagne.
             </p>
             <a href={withBasePath('/cookie/')}>Leggi la Cookie Policy</a>
           </div>
@@ -90,13 +90,6 @@ export default function RootLayout({ children }) {
                 <small>Richiesti per sicurezza e funzionamento del sito.</small>
               </span>
               <input type="checkbox" checked disabled readOnly />
-            </label>
-            <label className="cookie-toggle">
-              <span>
-                <strong>Funzionali</strong>
-                <small>Attivano Sportigo per gift card e servizi collegati.</small>
-              </span>
-              <input id="cookieFunctional" type="checkbox" />
             </label>
             <label className="cookie-toggle">
               <span>

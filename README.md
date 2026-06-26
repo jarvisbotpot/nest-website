@@ -7,10 +7,9 @@ Sito NEST Pavia migrato a Next.js.
 - `app/`: route Next.js.
 - `content/home.html`: markup principale della landing, importato dalla homepage.
 - `public/assets/css/styles.css`: stile principale.
-- `public/assets/js/main.js`: interazioni, consenso cookie, Meta Pixel, contatti protetti e widget gift card Sportigo.
+- `public/assets/js/main.js`: interazioni, consenso cookie, Meta Pixel e contatti protetti.
 - `public/assets/images/hero-gym.jpg`: immagine hero.
 - `app/privacy`, `app/cookie`, `app/terms`: pagine legali.
-- `source/nest-static-before-next.html`: ultima versione statica prima della migrazione.
 - `docs/launch-checklist.md`: cose da chiudere prima del go-live.
 
 ## Comandi
@@ -30,10 +29,9 @@ npm run preview
 Il sito mostra un banner al primo accesso e salva le preferenze in `localStorage` con chiave `nest_cookie_consent_v1`.
 
 - `necessari`: sempre attivi.
-- `funzionali`: abilitano il caricamento del widget gift card Sportigo.
 - `marketing`: abilita Meta Pixel e gli eventi pubblicitari.
 
-Sportigo e Meta Pixel non vengono caricati nel markup iniziale. Vengono iniettati via JavaScript solo dopo il consenso relativo.
+Meta Pixel non viene caricato nel markup iniziale. Viene iniettato via JavaScript solo dopo consenso marketing.
 
 ### Meta Pixel
 
@@ -45,15 +43,9 @@ NEXT_PUBLIC_META_PIXEL_ID=1234567890
 
 Le PageView e gli eventi Meta sono inviati solo dopo consenso marketing. Gli eventi sono agganciati con attributi `data-meta-event` / `data-meta-source` su CTA di download app e gift card; le PageView vengono aggiornate anche quando il menu cambia URL senza ricaricare la pagina. Senza consenso marketing o senza Pixel ID, tutto resta disattivato.
 
-### Sportigo
+### App NEST
 
-Il widget Sportigo viene caricato solo dopo consenso funzionale:
-
-- `GiftCard` su `#sportigo-container-giftcard`
-
-Se il consenso funzionale non e' presente, viene mostrato un messaggio con link al pannello preferenze cookie.
-
-La pagina `/prenota/` non integra piu' il widget prenotazioni: mostra il QR code dell'app e i link App Store / Google Play. La pagina `/app/` fa redirect client-side allo store corretto in base al dispositivo.
+La pagina `/prenota/` mostra il QR code dell'app e i link App Store / Google Play. La pagina `/app/` fa redirect client-side allo store corretto in base al dispositivo. La CTA gift card porta all'app NEST.
 
 ## Prossimo lavoro
 

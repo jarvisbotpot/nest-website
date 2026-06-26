@@ -84,13 +84,13 @@ export const sections = {
     description:
       'La gift card NEST e un regalo ideale per condividere un esperienza esclusiva di allenamento in uno spazio privato e curato.',
     path: '/gift-card/',
-    cta: 'Acquista Gift Card',
-    ctaHref: '/#giftcard',
+    cta: 'Apri app NEST',
+    ctaHref: '/app/',
     bullets: [
       'Idea regalo per allenarsi in privato',
       'Utilizzabile per slot NEST',
       'Esperienza fitness riservata e curata',
-      'Gestione digitale tramite Sportigo',
+      'Gestione digitale tramite app NEST',
     ],
   },
   prenota: {

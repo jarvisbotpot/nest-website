@@ -6,211 +6,6 @@ function runWhenReady(fn){
   }
 }
 
-function patchSportigoSvgClassNameStringMethods(){
-  const proto=window.SVGAnimatedString&&window.SVGAnimatedString.prototype;
-  if(!proto||window.__nestSportigoSvgClassNamePatch) return;
-  window.__nestSportigoSvgClassNamePatch=true;
-
-  function asString(value){
-    return String(value?.baseVal||'');
-  }
-
-  [
-    ['toString',function(){return asString(this);}],
-    ['valueOf',function(){return asString(this);}],
-    ['includes',function(search,start){return asString(this).includes(search,start);}],
-    ['trim',function(){return asString(this).trim();}],
-    ['split',function(separator,limit){return asString(this).split(separator,limit);}],
-    ['toLowerCase',function(){return asString(this).toLowerCase();}],
-    ['toUpperCase',function(){return asString(this).toUpperCase();}]
-  ].forEach(function(entry){
-    const name=entry[0];
-    const value=entry[1];
-    if(typeof proto[name]==='function') return;
-    try{
-      Object.defineProperty(proto,name,{configurable:true,value});
-    }catch(e){}
-  });
-  try{
-    if(typeof proto[Symbol.toPrimitive]!=='function'){
-      Object.defineProperty(proto,Symbol.toPrimitive,{configurable:true,value:function(){return asString(this);}});
-    }
-  }catch(e){}
-}
-patchSportigoSvgClassNameStringMethods();
-
-const sportigoDialogThemeCss=`
-[role="dialog"][data-state]{
-  box-sizing:border-box;
-  position:fixed!important;
-  z-index:1200!important;
-  width:min(calc(100vw - 32px),560px)!important;
-  height:auto!important;
-  height:fit-content!important;
-  min-height:0!important;
-  max-height:calc(100vh - 88px)!important;
-  padding:30px 30px 24px!important;
-  gap:16px!important;
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
-  border:1px solid rgba(27,27,27,0.16)!important;
-  border-radius:0!important;
-  background:#F7F5F2!important;
-  color:#1B1B1B!important;
-  box-shadow:0 28px 80px rgba(0,0,0,0.28)!important;
-  font-family:Montserrat,ui-sans-serif,system-ui,sans-serif!important;
-}
-[role="dialog"] *{box-sizing:border-box;font-family:inherit;}
-[role="dialog"] h2{
-  margin:0 42px 2px 0!important;
-  color:#1B1B1B!important;
-  font-size:13px!important;
-  font-weight:600!important;
-  line-height:1.45!important;
-  letter-spacing:2px!important;
-  text-transform:uppercase!important;
-}
-[role="dialog"] p[id^="radix-"]{
-  margin:0!important;
-  color:#6B6B6B!important;
-  font-size:12px!important;
-  font-weight:300!important;
-  line-height:1.65!important;
-}
-[role="dialog"]>div[class*="overflow-y-auto"]{
-  height:auto!important;
-  max-height:none!important;
-  overflow:visible!important;
-  padding-right:0!important;
-}
-[role="dialog"]::-webkit-scrollbar{width:5px;}
-[role="dialog"]::-webkit-scrollbar-track{background:rgba(27,27,27,0.06);}
-[role="dialog"]::-webkit-scrollbar-thumb{background:rgba(27,27,27,0.24);}
-[role="dialog"] hr{margin:18px 0!important;border-color:rgba(27,27,27,0.12)!important;}
-[role="dialog"] label{
-  color:#1B1B1B!important;
-  font-size:10px!important;
-  font-weight:600!important;
-  line-height:1.3!important;
-  letter-spacing:1.6px!important;
-  text-transform:uppercase!important;
-}
-[role="dialog"] input,
-[role="dialog"] select,
-[role="dialog"] button[role="combobox"],
-[role="dialog"] .PhoneInput{
-  height:42px!important;
-  border:1px solid rgba(27,27,27,0.16)!important;
-  border-radius:0!important;
-  background:#FFFFFF!important;
-  color:#1B1B1B!important;
-  box-shadow:none!important;
-  font-size:12px!important;
-  font-weight:400!important;
-}
-[role="dialog"] input::placeholder{color:#AAA5A3!important;}
-[role="dialog"] .PhoneInput{
-  align-items:center!important;
-  overflow:hidden!important;
-  padding:0 12px!important;
-}
-[role="dialog"] .PhoneInputCountry{
-  height:100%!important;
-  display:flex!important;
-  align-items:center!important;
-  margin-right:10px!important;
-  padding-right:10px!important;
-  border-right:1px solid rgba(27,27,27,0.12)!important;
-}
-[role="dialog"] .PhoneInputInput,
-[role="dialog"] .PhoneInput input{
-  height:100%!important;
-  min-width:0!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-  padding:0!important;
-}
-[role="dialog"] input:focus,
-[role="dialog"] input:focus-visible,
-[role="dialog"] button[role="combobox"]:focus,
-[role="dialog"] button[role="combobox"]:focus-visible,
-[role="dialog"] .PhoneInput:focus-within{
-  outline:none!important;
-  border-color:#CC8A66!important;
-  box-shadow:0 0 0 1px #CC8A66!important;
-}
-[role="dialog"] .PhoneInputInput:focus,
-[role="dialog"] .PhoneInputInput:focus-visible,
-[role="dialog"] .PhoneInput input:focus,
-[role="dialog"] .PhoneInput input:focus-visible,
-[role="dialog"] .PhoneInputCountrySelect,
-[role="dialog"] .PhoneInputCountrySelect:focus,
-[role="dialog"] .PhoneInputCountrySelect:focus-visible{
-  outline:none!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-[role="dialog"] .PhoneInputCountrySelect{
-  height:100%!important;
-  min-height:0!important;
-  padding:0!important;
-  background:transparent!important;
-}
-[role="dialog"] button[type="submit"]{
-  height:44px!important;
-  border:1px solid #1B1B1B!important;
-  border-radius:0!important;
-  background:#1B1B1B!important;
-  color:#FFFFFF!important;
-  box-shadow:none!important;
-  font-size:10px!important;
-  font-weight:600!important;
-  letter-spacing:2.6px!important;
-  text-transform:uppercase!important;
-}
-[role="dialog"] button[type="submit"]:hover{
-  border-color:#CC8A66!important;
-  background:#CC8A66!important;
-}
-[role="dialog"]>button[class*="right-4"][class*="top-4"]{
-  top:24px!important;
-  right:24px!important;
-  width:32px!important;
-  height:32px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  border:1px solid rgba(27,27,27,0.16)!important;
-  border-radius:0!important;
-  background:#FFFFFF!important;
-  color:#1B1B1B!important;
-  opacity:1!important;
-}
-[role="dialog"]>button[class*="right-4"][class*="top-4"]:hover{
-  border-color:#CC8A66!important;
-  color:#CC8A66!important;
-}
-[role="dialog"] svg{color:currentColor;}
-[role="dialog"] div[class*="items-center"][class*="gap-2"] svg{color:#CC8A66;}
-[role="dialog"] div[class*="items-center"][class*="gap-2"] span{
-  color:#1B1B1B!important;
-  font-size:12px!important;
-  font-weight:400!important;
-}
-@media (max-width:640px){
-  [role="dialog"][data-state]{
-    width:calc(100vw - 24px)!important;
-    height:auto!important;
-    height:fit-content!important;
-    max-height:calc(100vh - 40px)!important;
-    padding:22px 18px 18px!important;
-  }
-  [role="dialog"] h2{font-size:12px!important;letter-spacing:1.4px!important;}
-  [role="dialog"]>button[class*="right-4"][class*="top-4"]{top:16px!important;right:16px!important;}
-}
-`;
-
 const sectionRoutes={
   '/spazio-privato/':'cosa',
   '/come-funziona/':'funziona',
@@ -222,286 +17,6 @@ const sectionRoutes={
   '/faq/':'faq',
   '/contatti/':'contatti'
 };
-
-function withSportigoOriginCacheBust(value){
-  if(typeof value!=='string'||!value.includes('standalone.api.sportigo.fr/api/proxy-image')) return value;
-  const url=new URL(value,window.location.href);
-  url.searchParams.set('_nest_origin',window.location.origin);
-  return url.toString();
-}
-
-const nativeFetch=window.fetch;
-if(nativeFetch){
-  window.fetch=function(input,init){
-    if(typeof input==='string'){
-      return nativeFetch.call(this,withSportigoOriginCacheBust(input),init);
-    }
-    if(input instanceof Request){
-      const nextUrl=withSportigoOriginCacheBust(input.url);
-      if(nextUrl!==input.url) input=new Request(nextUrl,input);
-    }
-    return nativeFetch.call(this,input,init);
-  };
-}
-
-const nativeSetAttribute=Element.prototype.setAttribute;
-Element.prototype.setAttribute=function(name,value){
-  if(this.tagName==='IMG'&&name&&name.toLowerCase()==='src'){
-    value=withSportigoOriginCacheBust(value);
-  }
-  return nativeSetAttribute.call(this,name,value);
-};
-
-const imageSrcDescriptor=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
-if(imageSrcDescriptor&&imageSrcDescriptor.set&&imageSrcDescriptor.get){
-  Object.defineProperty(HTMLImageElement.prototype,'src',{
-    configurable:true,
-    enumerable:imageSrcDescriptor.enumerable,
-    get:imageSrcDescriptor.get,
-    set:function(value){
-      imageSrcDescriptor.set.call(this,withSportigoOriginCacheBust(value));
-    }
-  });
-}
-
-function initSportigoDialogTitleGuard(){
-  if(window.__nestSportigoDialogTitleGuard) return;
-  if(!document.getElementById('sportigo-container-giftcard')) return;
-  window.__nestSportigoDialogTitleGuard=true;
-
-  const nativeGetElementById=Document.prototype.getElementById;
-  const observedRoots=new WeakSet();
-  const visibleDialogs=new WeakMap();
-  let scheduled=false;
-  let lastDialogFocusIntent=0;
-  let staleLockTimer=0;
-
-  function byLabelledbySelector(id){
-    return `[role="dialog"][aria-labelledby="${String(id).replace(/["\\]/g,'\\$&')}"]`;
-  }
-
-  function findInShadowRoots(id,root=document){
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
-    let node=walker.currentNode;
-    while(node){
-      if(node.shadowRoot){
-        const found=node.shadowRoot.getElementById?.(id);
-        if(found) return found;
-        const nested=findInShadowRoots(id,node.shadowRoot);
-        if(nested) return nested;
-      }
-      node=walker.nextNode();
-    }
-    return null;
-  }
-
-  function findDialogByLabelledby(id,root=document){
-    const selector=byLabelledbySelector(id);
-    const direct=root.querySelector?.(selector);
-    if(direct) return direct;
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
-    let node=walker.currentNode;
-    while(node){
-      if(node.shadowRoot){
-        const found=findDialogByLabelledby(id,node.shadowRoot);
-        if(found) return found;
-      }
-      node=walker.nextNode();
-    }
-    return null;
-  }
-
-  function createHiddenDialogTitle(id,dialog){
-    if(!id||nativeGetElementById.call(document,id)||findInShadowRoots(id)) return null;
-    const shadowRoot=dialog?.getRootNode?.();
-    const title=document.createElement('h2');
-    title.id=id;
-    title.textContent=dialog?.getAttribute('aria-label')||'Gift card Sportigo';
-    title.style.cssText='position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0;';
-    if(shadowRoot instanceof ShadowRoot){
-      shadowRoot.appendChild(title);
-    }else{
-      document.body.appendChild(title);
-    }
-    return title;
-  }
-
-  function isVisibleDialog(dialog){
-    if(!dialog||!dialog.isConnected||dialog.getAttribute('aria-hidden')==='true'||dialog.hidden) return false;
-    if(!dialog.hasAttribute('data-state')) return false;
-    if(dialog.getAttribute('data-state')==='closed') return false;
-    const style=getComputedStyle(dialog);
-    if(style.pointerEvents==='none') return false;
-    if(style.display==='none'||style.visibility==='hidden') return false;
-    const rect=dialog.getBoundingClientRect();
-    return rect.width>0&&rect.height>0;
-  }
-
-  ['pointerdown','keydown'].forEach(function(eventName){
-    document.addEventListener(eventName,function(event){
-      const path=event.composedPath?.()||[];
-      if(path.some(function(node){
-        return node?.getAttribute?.('role')==='dialog'&&isVisibleDialog(node);
-      })){
-        lastDialogFocusIntent=Date.now();
-      }
-    },true);
-  });
-
-  function getDeepActiveElement(root=document){
-    let active=root.activeElement||document.activeElement;
-    while(active?.shadowRoot?.activeElement){
-      active=active.shadowRoot.activeElement;
-    }
-    return active;
-  }
-
-  function blurSportigoDialogAutoFocus(dialog){
-    requestAnimationFrame(function(){
-      const active=getDeepActiveElement(dialog.getRootNode?.()||document);
-      if(!active||active===document.body||!dialog.contains(active)) return;
-      if(Date.now()-lastDialogFocusIntent<120) return;
-      active.blur?.();
-    });
-  }
-
-  function hasVisibleDialog(root=document){
-    const directDialog=Array.from(root.querySelectorAll?.('[role="dialog"][data-state]')||[]).find(isVisibleDialog);
-    if(directDialog) return true;
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_ELEMENT);
-    let node=walker.currentNode;
-    while(node){
-      if(node.shadowRoot&&hasVisibleDialog(node.shadowRoot)) return true;
-      node=walker.nextNode();
-    }
-    return false;
-  }
-
-  function closeMobileMenuForDialog(){
-    const mobileMenu=document.getElementById('mobileMenu');
-    const hamburger=document.getElementById('hamburger');
-    if(mobileMenu) mobileMenu.classList.remove('open');
-    if(hamburger) hamburger.classList.remove('open');
-    if(hamburger) hamburger.setAttribute('aria-expanded','false');
-  }
-
-  function restorePageInteractivityAfterStaleDialog(){
-    if(hasVisibleDialog()) return;
-    document.body.classList.remove('sportigo-dialog-open');
-    if(document.body.style.pointerEvents==='none') document.body.style.pointerEvents='';
-    if(document.body.style.overflow==='hidden') document.body.style.overflow='';
-    if(document.body.style.paddingRight) document.body.style.paddingRight='';
-    Array.from(document.body.children).forEach(function(element){
-      if(element.getAttribute('aria-hidden')!=='true') return;
-      const style=getComputedStyle(element);
-      if(style.display==='none'||element.tagName==='SCRIPT'||element.tagName==='STYLE'||element.tagName==='LINK'||element.tagName==='META') return;
-      element.removeAttribute('aria-hidden');
-    });
-  }
-
-  function syncDialogOpenState(){
-    const visible=hasVisibleDialog();
-    document.body.classList.toggle('sportigo-dialog-open',visible);
-    if(visible){
-      closeMobileMenuForDialog();
-      if(staleLockTimer) clearTimeout(staleLockTimer);
-      staleLockTimer=0;
-      return;
-    }
-    if(staleLockTimer) clearTimeout(staleLockTimer);
-    staleLockTimer=setTimeout(function(){
-      staleLockTimer=0;
-      restorePageInteractivityAfterStaleDialog();
-    },180);
-  }
-
-  function installDialogTheme(root){
-    if(!(root instanceof ShadowRoot)||root.getElementById('nest-sportigo-dialog-theme')) return;
-    const style=document.createElement('style');
-    style.id='nest-sportigo-dialog-theme';
-    style.textContent=sportigoDialogThemeCss;
-    root.appendChild(style);
-  }
-
-  function setSportigoItalianPhoneDefault(root){
-    root.querySelectorAll?.('.PhoneInputCountrySelect').forEach(function(select){
-      if(select.dataset.nestDefaultCountryApplied==='true') return;
-      if(!select.querySelector('option[value="IT"]')) return;
-      select.dataset.nestDefaultCountryApplied='true';
-      if(select.value==='IT') return;
-      const setter=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value')?.set;
-      if(setter){
-        setter.call(select,'IT');
-      }else{
-        select.value='IT';
-      }
-      select.dispatchEvent(new Event('input',{bubbles:true}));
-      select.dispatchEvent(new Event('change',{bubbles:true}));
-    });
-  }
-
-  Document.prototype.getElementById=function(id){
-    const found=nativeGetElementById.call(this,id);
-    if(found||this!==document||!id) return found;
-    const shadowTitle=findInShadowRoots(String(id));
-    if(shadowTitle) return shadowTitle;
-    const dialog=findDialogByLabelledby(String(id));
-    return dialog ? createHiddenDialogTitle(String(id),dialog) : null;
-  };
-
-  function scanRoot(root){
-    if(!root) return;
-    if(!observedRoots.has(root)){
-      observedRoots.add(root);
-      observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-labelledby','role','aria-hidden','hidden','style','class','data-state']});
-    }
-    installDialogTheme(root);
-    setSportigoItalianPhoneDefault(root);
-    root.querySelectorAll?.('[role="dialog"][aria-labelledby]').forEach(function(dialog){
-      const visible=isVisibleDialog(dialog);
-      if(visible&&!visibleDialogs.get(dialog)){
-        blurSportigoDialogAutoFocus(dialog);
-      }
-      visibleDialogs.set(dialog,visible);
-      createHiddenDialogTitle(dialog.getAttribute('aria-labelledby'),dialog);
-    });
-    root.querySelectorAll?.('*').forEach(function(element){
-      if(element.shadowRoot) scanRoot(element.shadowRoot);
-    });
-  }
-
-  function scheduleScan(){
-    if(scheduled) return;
-    scheduled=true;
-    requestAnimationFrame(function(){
-      scheduled=false;
-      scanRoot(document);
-      syncDialogOpenState();
-    });
-  }
-
-  function scheduleTransitionScans(){
-    scheduleScan();
-    [60,180,420,900,1600].forEach(function(delay){
-      setTimeout(scheduleScan,delay);
-    });
-  }
-
-  const observer=new MutationObserver(scheduleScan);
-  scanRoot(document);
-  scanRoot(document.documentElement);
-  scanRoot(document.body);
-  syncDialogOpenState();
-  ['pointerup','click','keyup','focusin'].forEach(function(eventName){
-    document.addEventListener(eventName,scheduleTransitionScans,true);
-  });
-  setInterval(function(){
-    if(document.body.classList.contains('sportigo-dialog-open')||document.body.style.pointerEvents==='none'||document.body.style.overflow==='hidden'){
-      syncDialogOpenState();
-    }
-  },250);
-}
-runWhenReady(initSportigoDialogTitleGuard);
 
 function normalizePath(path){
   if(!path||path==='/') return '/';
@@ -541,7 +56,6 @@ const darkCursorSelector=[
   '#parallax-gallery',
   '#prenotazione',
   '.exp-card',
-  '.gc-overlay.active',
   'footer'
 ].join(',');
 function isDarkBackground(color){
@@ -691,25 +205,7 @@ document.querySelectorAll('.faq-question').forEach(q=>{
   });
 });
 
-// GIFT CARD OVERLAY
-function openGiftCard(){
-  const ov=document.getElementById('gcOverlay');
-  if(ov){ov.classList.add('active');document.body.style.overflow='hidden';}
-}
-function closeGiftCard(){
-  const ov=document.getElementById('gcOverlay');
-  if(ov){ov.classList.remove('active');document.body.style.overflow='';}
-}
 runWhenReady(function(){
-  const ov=document.getElementById('gcOverlay');
-  const back=document.getElementById('gcBack');
-  document.querySelectorAll('[data-open-gift-card]').forEach(function(btn){
-    btn.addEventListener('click',openGiftCard);
-  });
-  if(back) back.addEventListener('click',closeGiftCard);
-  if(ov) ov.addEventListener('click',function(e){if(e.target===this) closeGiftCard();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape') closeGiftCard();});
-
   // HIGHLIGHT TEXT ON SCROLL
   const words=document.querySelectorAll('.highlight-word');
   if(words.length){
@@ -828,7 +324,7 @@ runWhenReady(function() {
 
 // COOKIE CONSENT
 const consentKey='nest_cookie_consent_v1';
-const defaultConsent={functional:false,marketing:false};
+const defaultConsent={marketing:false};
 let lastMetaPageViewUrl='';
 function getCookieConsent(){
   try{
@@ -844,21 +340,6 @@ function saveCookieConsent(consent){
     localStorage.setItem(consentKey,JSON.stringify(nextConsent));
   }catch(e){}
   applyCookieConsent(nextConsent);
-  window.dispatchEvent(new CustomEvent('nest:consent-changed',{detail:nextConsent}));
-}
-function loadScriptOnce(id,src,onload){
-  const existing=document.getElementById(id);
-  if(existing){
-    if(onload) existing.addEventListener('load',onload,{once:true});
-    return existing;
-  }
-  const script=document.createElement('script');
-  script.id=id;
-  script.async=true;
-  script.src=src;
-  if(onload) script.addEventListener('load',onload,{once:true});
-  document.head.appendChild(script);
-  return script;
 }
 function loadMetaPixel(){
   const pixelId=window.NEST_META_PIXEL_ID;
@@ -907,9 +388,7 @@ function openCookieBanner(showPanel=false){
   const preferences=document.getElementById('cookiePreferences');
   const panel=document.getElementById('cookiePanel');
   const saved=getCookieConsent()||defaultConsent;
-  const functional=document.getElementById('cookieFunctional');
   const marketing=document.getElementById('cookieMarketing');
-  if(functional) functional.checked=!!saved.functional;
   if(marketing) marketing.checked=!!saved.marketing;
   if(panel) panel.hidden=!showPanel;
   if(banner) banner.hidden=false;
@@ -921,22 +400,21 @@ function initCookieBanner(){
   const saved=getCookieConsent();
   const preferences=document.getElementById('cookiePreferences');
   const panel=document.getElementById('cookiePanel');
-  const functional=document.getElementById('cookieFunctional');
   const marketing=document.getElementById('cookieMarketing');
   document.getElementById('cookieAccept')?.addEventListener('click',function(){
-    saveCookieConsent({functional:true,marketing:true});
+    saveCookieConsent({marketing:true});
   });
   document.getElementById('cookieReject')?.addEventListener('click',function(){
-    saveCookieConsent({functional:false,marketing:false});
+    saveCookieConsent({marketing:false});
   });
   document.getElementById('cookieClose')?.addEventListener('click',function(){
-    saveCookieConsent({functional:false,marketing:false});
+    saveCookieConsent({marketing:false});
   });
   document.getElementById('cookieCustomize')?.addEventListener('click',function(){
     if(panel) panel.hidden=!panel.hidden;
   });
   document.getElementById('cookieSave')?.addEventListener('click',function(){
-    saveCookieConsent({functional:!!functional?.checked,marketing:!!marketing?.checked});
+    saveCookieConsent({marketing:!!marketing?.checked});
   });
   preferences?.addEventListener('click',function(){openCookieBanner(true);});
   if(saved){
@@ -978,8 +456,6 @@ document.addEventListener('click',function(e){
     content_category:target.dataset.metaSource||'site_interaction'
   });
 });
-
-const sportigoPublicKey='4cfc7c8b-a49f-4b96-b89b-4fc332bfd22d';
 
 const nestContactShield={
   salt:'b/JtBAPRfrYOU6U680kSfA==',
@@ -1076,63 +552,3 @@ function initProtectedContacts(){
   });
 }
 runWhenReady(initProtectedContacts);
-
-// SPORTIGO WIDGETS
-function loadSportigoScript(){
-  loadScriptOnce('sportigo-standalone','https://standalone.api.sportigo.fr/component-standalone.js',initSportigoWidgets);
-}
-function getSportigoFrame(container){
-  return container?.closest('.sportigo-widget-frame');
-}
-function resetSportigoFrame(container){
-  const frame=getSportigoFrame(container);
-  if(!frame) return;
-  frame.classList.remove('has-consent-message');
-  frame.classList.toggle('is-ready',container?.dataset.initialized==='true');
-}
-function markSportigoReady(container){
-  const frame=getSportigoFrame(container);
-  if(frame) frame.classList.add('is-ready');
-}
-function showSportigoConsentMessage(container){
-  if(!container||container.dataset.consentMessage==='true') return;
-  const frame=getSportigoFrame(container);
-  if(frame) frame.classList.add('has-consent-message');
-  container.dataset.consentMessage='true';
-  container.dataset.initialized='';
-  container.innerHTML='<div class="sportigo-consent-message"><div><strong>Consenso funzionale richiesto</strong>Per usare la gift card devi abilitare i cookie funzionali.<br><button type="button" data-open-cookie-preferences>Gestisci cookie</button></div></div>';
-}
-function initSportigoWidgets(){
-  const consent=getCookieConsent();
-  const giftcard = document.getElementById('sportigo-container-giftcard');
-
-  if(!consent?.functional){
-    showSportigoConsentMessage(giftcard);
-    return;
-  }
-  resetSportigoFrame(giftcard);
-  if(typeof initComponent !== 'function'){
-    loadSportigoScript();
-    return;
-  }
-  if(typeof initComponent !== 'function') return;
-  if(giftcard && !giftcard.dataset.initialized){
-    giftcard.dataset.initialized = 'true';
-    giftcard.dataset.consentMessage='';
-    giftcard.innerHTML='';
-    initComponent('GiftCard','sportigo-container-giftcard',sportigoPublicKey);
-    markSportigoReady(giftcard);
-  }
-}
-runWhenReady(initSportigoWidgets);
-window.addEventListener('load', initSportigoWidgets);
-window.addEventListener('nest:consent-changed', initSportigoWidgets);
-document.addEventListener('click',function(e){
-  if(e.target.closest('[data-open-cookie-preferences]')) openCookieBanner(true);
-});
-let sportigoAttempts=0;
-const sportigoTimer=setInterval(function(){
-  initSportigoWidgets();
-  sportigoAttempts++;
-  if(sportigoAttempts>20||document.querySelector('[data-initialized="true"]')) clearInterval(sportigoTimer);
-},500);

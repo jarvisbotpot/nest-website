@@ -51,30 +51,12 @@ body:has(.app-page){background:#201E1B;cursor:auto}
 .cookie-save{justify-self:end}
 .cookie-preferences{position:fixed;left:18px;bottom:18px;z-index:650;border:1px solid rgba(27,27,27,0.16);background:rgba(247,245,242,0.94);color:var(--black);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 14px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,0.12);transition:opacity 0.25s ease,transform 0.25s ease}
 .cookie-preferences.footer-hidden{opacity:0;pointer-events:none;transform:translateY(8px)}
-.sportigo-consent-message{display:flex;min-height:360px;align-items:center;justify-content:center;text-align:center;padding:36px;border:1px solid rgba(255,255,255,0.12);background:linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.025));color:rgba(255,255,255,0.72);font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.8}
-.sportigo-consent-message strong{display:block;font-family:var(--sans);font-size:15px;font-weight:400;letter-spacing:1px;color:var(--white);margin-bottom:8px}
-.sportigo-consent-message button{margin-top:18px;border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);color:var(--white);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 16px;cursor:pointer;transition:border-color 0.25s,background 0.25s,color 0.25s}
-.sportigo-consent-message button:hover{border-color:var(--accent);background:var(--accent);color:var(--white)}
-.sportigo-widget-frame-light .sportigo-consent-message{background:var(--off-white);border-color:var(--gray-light);color:var(--gray-dark)}
-.sportigo-widget-frame-light .sportigo-consent-message strong{color:var(--black)}
-.sportigo-widget-frame-light .sportigo-consent-message button{border-color:rgba(27,27,27,0.2);background:var(--white);color:var(--black)}
-.sportigo-widget-frame-light .sportigo-consent-message button:hover{background:var(--black);border-color:var(--black);color:var(--white)}
-
 .cursor{width:8px;height:8px;background:var(--white);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
 .cursor-follower{width:30px;height:30px;border:1px solid rgba(255,255,255,0.4);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998}
 body.light-bg .cursor{background:var(--black)}
 body.light-bg .cursor-follower{border-color:rgba(27,27,27,0.3)}
 body.cursor-on-dark .cursor{background:var(--white)}
 body.cursor-on-dark .cursor-follower{border-color:rgba(255,255,255,0.45)}
-body.sportigo-dialog-open .cursor,
-body.sportigo-dialog-open .cursor-follower{visibility:hidden}
-body.sportigo-dialog-open .cookie-preferences{opacity:0;pointer-events:none}
-body.sportigo-dialog-open nav,
-body.sportigo-dialog-open .mobile-menu{opacity:0;visibility:hidden;pointer-events:none}
-body.sportigo-dialog-open .sportigo-widget-frame,
-body.sportigo-dialog-open .sportigo-widget,
-body.sportigo-dialog-open #sportigo-container-giftcard{cursor:auto}
-
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;transition:padding 0.4s ease,background 0.4s ease,box-shadow 0.4s ease}
 nav.scrolled{padding:14px 60px;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(0,0,0,0.07)}
 .nav-logo{display:block;height:50px;line-height:0}
@@ -278,7 +260,7 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .giftcard-title em{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.06em;color:var(--accent)}
 .giftcard-desc{font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.85;color:var(--gray-dark);max-width:480px}
 .giftcard-eyebrow{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;display:block}
-.giftcard-cta{border:none;cursor:pointer}
+.giftcard-cta{cursor:pointer}
 
 /* ── PRENOTAZIONE ── */
 #prenotazione{padding:120px 60px;background:#201E1B}
@@ -286,47 +268,7 @@ nav.scrolled .nav-cta{color:var(--black);border-color:rgba(0,0,0,0.22)}
 .prenotazione-header{text-align:center;margin-bottom:60px}
 .prenotazione-header .section-title{color:var(--white)}
 .prenotazione-header .section-body{color:rgba(255,255,255,0.4);max-width:480px;margin:0 auto;text-align:center}
-.sportigo-booking-shell{display:grid;grid-template-columns:minmax(260px,0.36fr) minmax(0,1fr);gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1)}
-.sportigo-booking-shell.reveal,.sportigo-booking-shell.reveal.visible{transform:none}
-.booking-summary{background:rgba(255,255,255,0.045);padding:44px 36px;display:flex;flex-direction:column;justify-content:space-between;gap:32px;min-height:620px}
 .booking-kicker{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
-.booking-summary h3{font-family:var(--sans);font-size:28px;font-weight:300;line-height:1.25;color:var(--white);letter-spacing:0;margin-top:18px;max-width:280px}
-.booking-points{list-style:none;display:grid;gap:18px;margin-top:auto}
-.booking-points li{font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.6;color:rgba(255,255,255,0.62);display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
-.booking-points span{font-family:var(--serif);font-size:20px;font-style:italic;color:var(--accent);line-height:1}
-.booking-summary p{font-family:var(--sans);font-size:11px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.36);border-top:1px solid rgba(255,255,255,0.08);padding-top:22px}
-.sportigo-panel{background:var(--off-white);min-width:0}
-.sportigo-panel-top{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 28px;border-bottom:1px solid var(--gray-light);background:var(--white)}
-.sportigo-panel-top span{display:block;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.sportigo-panel-top strong{display:block;font-family:var(--sans);font-size:14px;font-weight:400;letter-spacing:1px;color:var(--black);text-transform:uppercase}
-.sportigo-panel-top .sportigo-powered{margin:0;padding:8px 12px;border:1px solid var(--gray-light);color:var(--gray-mid);font-size:8px}
-.slots-preview{border-bottom:1px solid var(--gray-light);background:#FBFAF8;padding:22px 28px}
-.slots-preview-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:16px}
-.slots-preview-head span{display:block;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.slots-preview-head strong{display:block;font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:1px;text-transform:uppercase;color:var(--black)}
-.slots-refresh{border:1px solid rgba(27,27,27,0.14);background:var(--white);color:var(--black);font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:9px 12px;cursor:pointer;transition:border-color 0.25s,color 0.25s}
-.slots-refresh:hover{border-color:var(--accent);color:var(--accent)}
-.slots-preview-body{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.slot-card{border:1px solid rgba(27,27,27,0.09);background:var(--white);padding:14px 12px;text-align:left;cursor:pointer;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s}
-.slot-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 22px rgba(27,27,27,0.08)}
-.slot-card-day{display:block;font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid);margin-bottom:8px}
-.slot-card-time{display:block;font-family:var(--serif);font-size:28px;font-style:italic;line-height:1;color:var(--black);margin-bottom:8px}
-.slot-card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:var(--gray-dark)}
-.slot-card-badge{color:var(--accent)}
-.slots-loading,.slots-empty{border:1px solid rgba(27,27,27,0.08);background:var(--white);padding:18px;text-align:center;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray-mid);grid-column:1 / -1}
-.slots-empty button{display:inline-block;margin-top:12px;border:1px solid rgba(27,27,27,0.16);background:transparent;color:var(--black);font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:10px 12px;cursor:pointer}
-.slots-updated{min-height:14px;margin-top:12px;font-family:var(--sans);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gray-mid)}
-.sportigo-widget-frame{position:relative;min-height:544px;background:var(--off-white);padding:18px;overflow:visible}
-.sportigo-widget-frame::before{content:'';position:absolute;inset:18px;border:1px solid rgba(27,27,27,0.06);pointer-events:none;z-index:1}
-.sportigo-widget-frame.is-ready::before,.sportigo-widget-frame.has-consent-message::before{display:none}
-.sportigo-widget{position:relative;z-index:2;min-height:508px}
-.sportigo-widget iframe{width:100%;min-height:508px;border:0;display:block;background:var(--white)}
-.sportigo-loading{position:absolute;z-index:3;inset:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:linear-gradient(145deg,var(--white),var(--off-white));border:1px solid var(--gray-light);font-family:var(--sans)}
-.sportigo-loading span{width:34px;height:34px;border:1px solid rgba(27,27,27,0.16);border-top-color:var(--accent);border-radius:50%;animation:sportigoSpin 0.9s linear infinite}
-.sportigo-loading p{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gray-mid)}
-.sportigo-loading-dark{background:linear-gradient(145deg,var(--white),var(--off-white))}
-.sportigo-widget-frame.is-ready .sportigo-loading,.sportigo-widget-frame.has-consent-message .sportigo-loading{display:none}
-@keyframes sportigoSpin{to{transform:rotate(360deg)}}
 .app-download-section{background:#201E1B}
 .app-download-section-page{min-height:calc(100svh - 96px);padding:150px 60px 120px}
 .app-download-panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,360px);gap:1px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.1)}
@@ -436,16 +378,6 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
 .pag-thumb.active .pag-thumb-line{width:100%}
 
 /* ── GIFT CARD OVERLAY ── */
-.gc-overlay{position:fixed;inset:0;z-index:500;background:rgba(27,27,27,0.92);display:flex;align-items:flex-start;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s ease;overflow-y:auto}
-.gc-overlay.active{opacity:1;pointer-events:all}
-.gc-overlay-inner{background:var(--white);width:100%;max-width:920px;min-height:100vh;position:relative}
-.gc-overlay-bar{position:sticky;top:0;z-index:10;background:var(--white);border-bottom:1px solid var(--gray-light);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-.gc-overlay-back{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--black);cursor:pointer;border:none;background:none;transition:color 0.3s;padding:0}
-.gc-overlay-back:hover{color:var(--accent)}
-.gc-widget-wrap{padding:0 40px 60px}
-.gc-widget-intro{padding:36px 0 24px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}
-.gc-widget-intro span{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
-.gc-widget-intro p{max-width:360px;font-family:var(--sans);font-size:12px;font-weight:300;line-height:1.7;color:var(--gray-dark);text-align:right}
 
 @media (max-width: 1180px) and (min-width: 769px) {
   nav { padding: 20px 32px; }
@@ -678,12 +610,6 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .section-title { font-size: clamp(26px, 6vw, 40px); }
 
   /* GIFT CARD OVERLAY */
-  .gc-overlay-inner { min-height: 100svh; }
-  .gc-overlay-bar { padding: 14px 20px; }
-  .gc-widget-wrap { padding: 0 16px 40px; }
-  .gc-widget-intro { display:block; padding: 28px 0 18px; }
-  .gc-widget-intro p { max-width: none; text-align:left; margin-top: 10px; }
-
   /* BUTTONS */
   .btn-primary { padding: 14px 32px; }
   .btn-dark { padding: 14px 24px; font-size: 9px; }

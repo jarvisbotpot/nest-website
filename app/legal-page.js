@@ -1,9 +1,6 @@
 import { withBasePath } from './site-paths';
 import { getSiteChrome } from './site-chrome';
 
-const SPORTIGO_PRIVACY_URL = 'https://www.sportigo.io/fr/regles-de-confidentialite';
-const SPORTIGO_TERMS_URL =
-  'https://cdn.prod.website-files.com/6026a3b1f0c5d55691a55af1/65df1bea3a88d0237801aaae_CONDITIONS%20GE%CC%81NE%CC%81RALES%20DE%20VENTE.pdf';
 const META_PRIVACY_URL = 'https://www.facebook.com/privacy/policy/';
 const COMPANY_LEGAL_NAME = 'ESSEPI S.R.L.';
 const COMPANY_LEGAL_ADDRESS = 'Via G. Moruzzi n. 45/c, 27100 Pavia';
@@ -27,7 +24,7 @@ const pages = {
         title: 'Dati trattati',
         body: [
           'Il sito pubblico può trattare dati tecnici di navigazione, indirizzo IP, informazioni sul dispositivo e dati inviati volontariamente tramite email o link esterni.',
-          'Le funzionalità di prenotazione, account, pagamento, accesso e gift card possono essere gestite tramite l’app NEST, Sportigo o servizi collegati. In quel caso possono essere trattati dati come nome, cognome, email, telefono, dati di accesso, dati di prenotazione e dati necessari alla gestione degli abbonamenti o pagamenti.',
+          'Le funzionalità di prenotazione, account, pagamento, accesso e servizi collegati possono essere gestite tramite l’app NEST o piattaforme collegate. In quel caso possono essere trattati dati come nome, cognome, email, telefono, dati di accesso, dati di prenotazione e dati necessari alla gestione degli abbonamenti o pagamenti.',
         ],
       },
       {
@@ -40,16 +37,15 @@ const pages = {
       {
         title: 'Servizi terzi',
         body: [
-          'NEST può utilizzare Sportigo come piattaforma tecnica per prenotazioni, area utente, gift card e servizi collegati. Le modalità di trattamento dichiarate da Sportigo sono consultabili nella sua informativa privacy.',
+          'Il sito può inviare l’utente verso gli store Apple e Google per scaricare l’app NEST.',
           'Il sito usa inoltre font remoti e contenuti tecnici necessari al funzionamento della pagina.',
         ],
-        links: [{ label: 'Informativa privacy Sportigo', href: SPORTIGO_PRIVACY_URL }],
       },
       {
         title: 'Diritti degli utenti',
         body: [
           'L’utente può chiedere accesso, rettifica, cancellazione, limitazione, opposizione e portabilità dei dati nei limiti previsti dal GDPR.',
-          'Per dati trattati direttamente dentro Sportigo, alcune richieste potrebbero dover essere gestite tramite la piattaforma o tramite Sportigo, ferma restando l’assistenza di NEST quando applicabile.',
+          'Per dati trattati dentro l’app NEST o piattaforme collegate, alcune richieste potrebbero dover essere gestite tramite quei servizi, ferma restando l’assistenza di NEST quando applicabile.',
         ],
       },
       {
@@ -87,16 +83,6 @@ const pages = {
           'Questi strumenti non richiedono consenso quando sono strettamente necessari al servizio richiesto dall’utente.',
           'Tra gli strumenti necessari rientra anche la memorizzazione locale della scelta cookie, salvata nel browser con chiave nest_cookie_consent_v1, per evitare di mostrare il banner a ogni visita.',
         ],
-      },
-      {
-        title: 'Cookie funzionali Sportigo',
-        body: [
-          'La gift card e alcuni servizi collegati possono essere forniti tramite Sportigo. Questi componenti possono usare cookie, local storage e richieste tecniche necessarie per account, pagamenti, sicurezza e gestione del servizio.',
-          'Sul sito NEST questi componenti vengono caricati solo se l’utente accetta i cookie funzionali dal banner o dal pannello preferenze.',
-          'Se i cookie funzionali non vengono accettati, le pagine restano navigabili, ma gift card e alcune funzioni collegate a Sportigo possono non essere disponibili direttamente nel sito.',
-          'Le informazioni privacy dichiarate da Sportigo sono consultabili nella relativa informativa.',
-        ],
-        links: [{ label: 'Informativa privacy Sportigo', href: SPORTIGO_PRIVACY_URL }],
       },
       {
         title: 'Cookie marketing e Meta Pixel',
@@ -157,12 +143,8 @@ const pages = {
       {
         title: 'Prenotazioni, account e pagamenti',
         body: [
-          'La gestione di prenotazioni, account utente, eventuali gift card e pagamenti può avvenire tramite app NEST, Sportigo o piattaforme collegate.',
-          'L’uso delle funzionalità Sportigo può essere soggetto anche alle condizioni e informative pubblicate da Sportigo, inclusi aspetti tecnici, account, pagamenti, disponibilità del servizio e trattamento dei dati.',
-        ],
-        links: [
-          { label: 'Informativa privacy Sportigo', href: SPORTIGO_PRIVACY_URL },
-          { label: 'CGV Sportigo', href: SPORTIGO_TERMS_URL },
+          'La gestione di prenotazioni, account utente, eventuali gift card e pagamenti può avvenire tramite app NEST o piattaforme collegate.',
+          'L’uso dell’app NEST e delle piattaforme collegate può essere soggetto anche alle relative condizioni e informative, inclusi aspetti tecnici, account, pagamenti, disponibilità del servizio e trattamento dei dati.',
         ],
       },
       {
