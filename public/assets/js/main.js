@@ -508,6 +508,30 @@ function buildContactUrl(type,contacts){
   if(type==='whatsapp') return ['https://','wa','.me','/'].join('')+contacts.whats;
   return '';
 }
+function formatWhatsNumber(value){
+  const digits=String(value||'').replace(/\D/g,'');
+  if(digits.startsWith('39')&&digits.length===12){
+    return '+39 '+digits.slice(2,5)+' '+digits.slice(5,8)+' '+digits.slice(8);
+  }
+  return digits?('+'+digits):'';
+}
+function getContactDisplayValue(type,contacts){
+  if(type==='email') return contacts.mailbox;
+  if(type==='whatsapp') return formatWhatsNumber(contacts.whats);
+  return '';
+}
+function revealContactValue(button,type,contacts){
+  const wrapper=button.closest('.protected-contact');
+  const display=wrapper?.querySelector('[data-nest-contact-display="'+type+'"]');
+  const value=getContactDisplayValue(type,contacts);
+  if(display&&value){
+    display.textContent=value;
+    wrapper.classList.add('is-revealed');
+  }
+  button.dataset.nestContactReveal='false';
+  button.textContent=type==='email'?'Scrivi email':'Apri WhatsApp';
+  button.setAttribute('aria-label',type==='email'?'Scrivi a '+value:'Apri WhatsApp al numero '+value);
+}
 function setContactBusy(button,busy){
   button.disabled=busy;
   button.classList.toggle('is-resolving',busy);
@@ -517,7 +541,10 @@ function initProtectedContacts(){
   if(!buttons.length) return;
   buttons.forEach(function(button){
     const type=button.dataset.nestContact;
-    button.setAttribute('aria-label',type==='email'?'Scrivi a NEST via email':'Apri WhatsApp per contattare NEST');
+    const reveal=button.dataset.nestContactReveal==='true';
+    button.setAttribute('aria-label',type==='email'
+      ?(reveal?'Mostra email NEST':'Scrivi a NEST via email')
+      :(reveal?'Mostra numero WhatsApp NEST':'Apri WhatsApp per contattare NEST'));
   });
   document.addEventListener('pointerdown',armNestContact,true);
   document.addEventListener('keydown',function(e){
@@ -528,10 +555,15 @@ function initProtectedContacts(){
     if(!button||!isNestContactGesture(e)) return;
 
     const type=button.dataset.nestContact;
-    const pendingWindow=type==='whatsapp'?window.open('','_blank'):null;
+    const revealOnly=button.dataset.nestContactReveal==='true';
+    const pendingWindow=!revealOnly&&type==='whatsapp'?window.open('','_blank'):null;
     setContactBusy(button,true);
     try{
       const contacts=await decryptNestContacts();
+      if(revealOnly){
+        revealContactValue(button,type,contacts);
+        return;
+      }
       const url=buildContactUrl(type,contacts);
       if(!url) return;
       if(type==='whatsapp'){
