@@ -329,7 +329,6 @@ html[data-app-device="android"] .app-download-copy .store-legal-note{text-align:
 .contatti-copy .section-body{margin-bottom:30px;max-width:420px}
 .contatti-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid rgba(27,27,27,0.12);border-left:1px solid rgba(27,27,27,0.12)}
 .contatti-detail{min-height:108px;padding:22px 24px;border-right:1px solid rgba(27,27,27,0.12);border-bottom:1px solid rgba(27,27,27,0.12);display:flex;flex-direction:column;justify-content:space-between;gap:14px}
-.contatti-company{grid-column:1/-1;min-height:118px}
 .contatti-instagram{grid-column:1/-1;color:var(--black);min-height:88px;text-decoration:none;transition:background 0.3s}
 .contatti-instagram:hover{background:rgba(182,112,67,0.08)}
 .contatti-instagram:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
