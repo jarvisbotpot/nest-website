@@ -5,6 +5,7 @@ const META_PRIVACY_URL = 'https://www.facebook.com/privacy/policy/';
 const COMPANY_LEGAL_NAME = 'ESSEPI S.R.L.';
 const COMPANY_LEGAL_ADDRESS = 'Via G. Moruzzi n. 45/c, 27100 Pavia';
 const COMPANY_TAX_ID = 'C.F./P.IVA 03016970182';
+const CONTACT_EMAIL = 'info@nesttraining.it';
 
 const pages = {
   privacy: {
@@ -17,7 +18,7 @@ const pages = {
         title: 'Titolare del trattamento',
         body: [
           `Il titolare del trattamento è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
-          'Per richieste privacy e informazioni puoi usare il contatto email indicato nella sezione Contatti del sito.',
+          `Per richieste privacy e informazioni puoi scrivere a ${CONTACT_EMAIL}.`,
         ],
       },
       {
@@ -66,7 +67,7 @@ const pages = {
         title: 'Titolare e contatti',
         body: [
           `Il sito è riferito a NEST Pavia, spazio fitness privato con sede operativa in Viale Lodi 1, 27100 Pavia (PV). Il titolare è ${COMPANY_LEGAL_NAME}, con sede in ${COMPANY_LEGAL_ADDRESS}, ${COMPANY_TAX_ID}.`,
-          'Per richieste relative a cookie, consenso e strumenti di tracciamento puoi usare il contatto email indicato nella sezione Contatti del sito.',
+          `Per richieste relative a cookie, consenso e strumenti di tracciamento puoi scrivere a ${CONTACT_EMAIL}.`,
         ],
       },
       {

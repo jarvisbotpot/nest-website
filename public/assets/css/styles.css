@@ -620,7 +620,6 @@ footer{background:var(--black);padding:48px 60px 32px;border-top:1px solid rgba(
   .contatti-inner { grid-template-columns: 1fr; gap: 34px; }
   .contatti-grid { grid-template-columns: 1fr; }
   .contatti-detail { min-height: 96px; padding: 20px; }
-  .contatti-company { grid-column: auto; }
   .protected-contact { align-items: flex-start; gap: 10px; }
   .contatti-map { aspect-ratio: 16/9; min-height: 0; }
 
